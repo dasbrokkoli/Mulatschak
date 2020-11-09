@@ -9,7 +9,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private final List<Card> cards = new ArrayList<>();
-    private Algorithm algorithm = new Algorithm(cards);
+    private Algorithm algorithm = new Algorithm(cards,null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

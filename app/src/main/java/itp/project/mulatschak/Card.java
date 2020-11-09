@@ -2,8 +2,11 @@ package itp.project.mulatschak;
 
 import android.graphics.drawable.Drawable;
 
-public class Card {
+import java.util.Objects;
+
+public class Card{
     private final Drawable picture;
+    private int tempValue;
     private Colors color;
     private int value;
 
@@ -24,4 +27,12 @@ public class Card {
     public Colors getColor(){
         return color;
     }
+
+    public void setTempValue(int tempValue) {
+        this.tempValue = tempValue;
+    }
+    public int getTempValue() {
+        return tempValue;
+    }
+
 }
