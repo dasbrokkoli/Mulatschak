@@ -4,25 +4,24 @@ import android.graphics.drawable.Drawable;
 
 public class Card {
     private final Drawable picture;
-    private int cardValue;
+    private Colors color;
+    private int value;
 
-    public Card(Drawable picture){
+    public Card(Drawable picture, Colors color, int value){
         this.picture = picture;
+        this.color = color;
+        this.value = value;
     }
 
     public Drawable getPicture(){
         return picture;
     }
 
-    public int getCardValue() {
-        return cardValue;
+    public int getValue() {
+        return value;
     }
 
-    public void setCardValue(int cardValue) {
-        if(0<cardValue&&cardValue<34){
-            this.cardValue = cardValue;
-        }else{
-            throw new IllegalArgumentException();
-        }
+    public Colors getColor(){
+        return color;
     }
 }

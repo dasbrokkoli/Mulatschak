@@ -1,6 +1,5 @@
 package itp.project.mulatschak;
 
-import android.content.res.Resources;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -9,7 +8,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
+    private Algorithm algorithm = new Algorithm(cards);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initCards() {
-        cards.add(new Card(getResources().getDrawable(R.drawable.card_heart7, null)));
+        cards.add(new Card(getResources().getDrawable(R.drawable.card_heart7, null), Colors.HERZ, Values.W7));
+    }
+
+    public List<Card> getCards(){
+        return cards;
     }
 }
