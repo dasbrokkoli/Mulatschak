@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*View play = findViewById(R.id.play);
+        View play = findViewById(R.id.play);
         play.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Playground.class));
             }
-        });*/
+        });
 
 
 
