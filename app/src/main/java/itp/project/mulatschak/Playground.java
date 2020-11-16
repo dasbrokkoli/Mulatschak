@@ -11,4 +11,12 @@ public class Playground extends AppCompatActivity {
         setContentView(R.layout.activity_playground);
 
     }
+
+    public static Colors getAdout() {
+        return null;
+    }
+
+    public static Difficulty getDifficulty() { return null;
+    }
+
 }

@@ -16,7 +16,7 @@ public class Algorithm {
 
     public void setValues(){
         for (Card card: cards) {
-            if(card.getColor() == Mulatschakround.getAdout()){
+            if(card.getColor() == Playground.getAdout()){
                 card.setTempValue(card.getValue() + 10);
             }else{
                 card.setTempValue(card.getValue());
@@ -35,7 +35,7 @@ public class Algorithm {
     }
 
     public void setWinChance(){
-        switch (Mulatschakround.getDifficulty()){
+        switch (Playground.getDifficulty()){
             case EASY:
                 winChance = 25;
                 break;
