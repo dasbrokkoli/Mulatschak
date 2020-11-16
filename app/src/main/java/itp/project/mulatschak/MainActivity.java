@@ -1,5 +1,8 @@
 package itp.project.mulatschak;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -14,8 +17,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_main);
         initCards();
+
+        View settings = findViewById(R.id.settings);
+        settings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            }
+       });
     }
 
     private void initCards() {
