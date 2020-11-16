@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Playground"
-        android:screenOrientation="landscape" android:background="#4CAF50" android:id="@+id/atout">
+        android:screenOrientation="landscape" android:background="#4CAF50">
 
     <ImageView
             android:layout_width="45dp"
@@ -26,40 +26,122 @@
             android:layout_width="200dp"
             android:layout_height="50dp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:id="@+id/player2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.499"/>
+    <ImageView
+            android:src="@android:drawable/editbox_dropdown_dark_frame"
+            android:layout_width="50dp"
+            android:layout_height="200dp" android:id="@+id/player1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     <ImageView
             android:src="@android:drawable/editbox_dropdown_dark_frame"
-            android:layout_width="35dp"
-            android:layout_height="26dp" android:id="@+id/player1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" app:layout_constraintBottom_toBottomOf="parent"
-    />
-    <ImageView
-            android:src="@android:drawable/editbox_dropdown_dark_frame"
-            android:layout_width="35dp"
-            android:layout_height="26dp" android:id="@+id/player3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="700dp" app:layout_constraintVertical_bias="0.465"/>
+            android:layout_width="50dp"
+            android:layout_height="200dp" android:id="@+id/player3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
     <ImageView
             android:src="@drawable/empty"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/imageView6"
+            app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/atout"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"/>
     <TextView
             android:text="/"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/pl1_announced"
-            android:background="@drawable/empty" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="76dp" android:layout_marginEnd="576dp"/>
+            android:id="@+id/pl1_announced"
+            android:background="@drawable/empty"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/player1" android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/pl1_stitches" android:textAlignment="center"
+            android:paddingTop="15dp"/>
     <TextView
             android:text="/"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/pl2_announced"
-            android:background="@drawable/empty" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="272dp" android:layout_marginEnd="524dp"/>
+            android:id="@+id/pl3_announced"
+            android:background="@drawable/empty"
+            android:textAlignment="center"
+            android:paddingTop="15dp"
+            app:layout_constraintEnd_toStartOf="@+id/player3"
+            android:layout_marginEnd="16dp" app:layout_constraintTop_toTopOf="@+id/player3"
+    />
+    <TextView
+            android:text="0"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/pl1_stitches"
+            android:background="@drawable/empty"
+            app:layout_constraintStart_toStartOf="@+id/pl1_announced"
+            android:paddingTop="15dp" android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/player1"/>
+    <TextView
+            android:text="0"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/pl3_stitches"
+            android:background="@drawable/empty"
+            android:paddingTop="15dp" android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/player3" android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/pl3_announced"/>
+    <TextView
+            android:text="/"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/pl2_announced"
+            android:background="@drawable/empty"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/player2" android:layout_marginEnd="16dp"
+            android:paddingTop="15dp"/>
+    <TextView
+            android:text="0"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/pl2_stitches"
+            android:background="@drawable/empty"
+            android:textAlignment="center"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/pl2_announced"
+            app:layout_constraintStart_toStartOf="@+id/pl2_announced" android:paddingTop="15dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
+            android:id="@+id/textView2"/>
+    <ImageView
+            android:src="@drawable/schelle_acht"
+            android:layout_width="50dp"
+            android:layout_height="100dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp" android:id="@+id/card1"
+            android:layout_marginStart="16dp" app:layout_constraintStart_toEndOf="@+id/card3"/>
+    <ImageView
+            android:src="@drawable/schelle_acht"
+            android:layout_width="50dp"
+            android:layout_height="100dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp" android:id="@+id/card"
+            app:layout_constraintStart_toStartOf="@+id/atout" android:layout_marginStart="140dp"/>
+    <ImageView
+            android:src="@drawable/schelle_acht"
+            android:layout_width="50dp"
+            android:layout_height="100dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp" android:id="@+id/card2"
+            android:layout_marginStart="16dp" app:layout_constraintStart_toEndOf="@+id/card"/>
+    <ImageView
+            android:src="@drawable/schelle_acht"
+            android:layout_width="50dp"
+            android:layout_height="100dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp" android:id="@+id/card3"
+            app:layout_constraintStart_toEndOf="@+id/card2" android:layout_marginStart="14dp"/>
+    <ImageView
+            android:src="@drawable/schelle_acht"
+            android:layout_width="50dp"
+            android:layout_height="100dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp" android:id="@+id/card4"
+            android:layout_marginStart="16dp" app:layout_constraintStart_toEndOf="@+id/card1"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
