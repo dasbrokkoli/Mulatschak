@@ -17,10 +17,7 @@
                 android:name=".TutorialActivity"
                 android:screenOrientation="landscape">
         </activity>
-        <activity
-                android:name=".SettingsActivity"
-                android:screenOrientation="landscape">
-        <activity android:name=".Spielflaeche">
+        <activity android:name=".Playground">
         </activity>
         <activity
                 android:name=".SettingsActivity"
