@@ -10,6 +10,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".PopupDifficulty"
+                android:screenOrientation="landscape">
+        </activity>
+        <activity
                 android:name=".LogActivity"
                 android:screenOrientation="landscape">
         </activity>
@@ -25,8 +29,9 @@
                 android:name=".SettingsActivity"
                 android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".MainActivity"
-            android:screenOrientation="landscape">
+        <activity
+                android:name=".MainActivity"
+                android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
