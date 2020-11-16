@@ -22,27 +22,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="16dp" android:layout_marginTop="20dp"/>
     <ImageView
-            android:src="@android:drawable/editbox_dropdown_dark_frame"
-            android:layout_width="200dp"
-            android:layout_height="50dp" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/player2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.499"/>
-    <ImageView
-            android:src="@android:drawable/editbox_dropdown_dark_frame"
-            android:layout_width="50dp"
-            android:layout_height="200dp" android:id="@+id/player1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-    <ImageView
-            android:src="@android:drawable/editbox_dropdown_dark_frame"
-            android:layout_width="50dp"
-            android:layout_height="200dp" android:id="@+id/player3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
-    <ImageView
             android:src="@drawable/empty"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -55,10 +34,10 @@
             android:layout_height="50dp"
             android:id="@+id/pl1_announced"
             android:background="@drawable/empty"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@+id/player1" android:layout_marginBottom="16dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/pl1_stitches" android:textAlignment="center"
-            android:paddingTop="15dp"/>
+            android:paddingTop="15dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView7" android:layout_marginStart="16dp"/>
     <TextView
             android:text="/"
             android:layout_width="50dp"
@@ -67,9 +46,19 @@
             android:background="@drawable/empty"
             android:textAlignment="center"
             android:paddingTop="15dp"
-            app:layout_constraintEnd_toStartOf="@+id/player3"
-            android:layout_marginEnd="16dp" app:layout_constraintTop_toTopOf="@+id/player3"
-    />
+            app:layout_constraintTop_toTopOf="@+id/player3" app:layout_constraintEnd_toStartOf="@+id/player3"
+            android:layout_marginEnd="16dp"/>
+    <TextView
+            android:text="/"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/player_announced"
+            android:background="@drawable/empty"
+            android:textAlignment="center"
+            android:paddingTop="15dp"
+            app:layout_constraintStart_toEndOf="@+id/card4"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/player_stitches"/>
     <TextView
             android:text="0"
             android:layout_width="50dp"
@@ -78,7 +67,7 @@
             android:background="@drawable/empty"
             app:layout_constraintStart_toStartOf="@+id/pl1_announced"
             android:paddingTop="15dp" android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@+id/player1"/>
+            app:layout_constraintBottom_toBottomOf="@+id/imageView7"/>
     <TextView
             android:text="0"
             android:layout_width="50dp"
@@ -86,8 +75,17 @@
             android:id="@+id/pl3_stitches"
             android:background="@drawable/empty"
             android:paddingTop="15dp" android:textAlignment="center"
-            app:layout_constraintEnd_toStartOf="@+id/player3" android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/pl3_announced"/>
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/pl3_announced"
+            app:layout_constraintEnd_toStartOf="@+id/player3" android:layout_marginEnd="16dp"/>
+    <TextView
+            android:text="0"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/player_stitches"
+            android:background="@drawable/empty"
+            android:paddingTop="15dp" android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/player_announced"/>
     <TextView
             android:text="/"
             android:layout_width="50dp"
@@ -96,8 +94,8 @@
             android:background="@drawable/empty"
             android:textAlignment="center"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/player2" android:layout_marginEnd="16dp"
-            android:paddingTop="15dp"/>
+            android:paddingTop="15dp" app:layout_constraintEnd_toStartOf="@+id/player2"
+            android:layout_marginEnd="16dp"/>
     <TextView
             android:text="0"
             android:layout_width="50dp"
@@ -125,7 +123,7 @@
             android:layout_width="50dp"
             android:layout_height="100dp" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="16dp" android:id="@+id/card"
-            app:layout_constraintStart_toStartOf="@+id/atout" android:layout_marginStart="140dp"/>
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="190dp"/>
     <ImageView
             android:src="@drawable/schelle_acht"
             android:layout_width="50dp"
@@ -144,4 +142,20 @@
             android:layout_height="100dp" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="16dp" android:id="@+id/card4"
             android:layout_marginStart="16dp" app:layout_constraintStart_toEndOf="@+id/card1"/>
+    <ImageView
+            android:layout_width="200dp"
+            android:layout_height="50sp" app:srcCompat="@drawable/card_back"
+            app:layout_constraintTop_toTopOf="parent" android:id="@+id/player2"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="200dp" app:srcCompat="@drawable/card_right" android:id="@+id/player3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView7"/>
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="200dp" app:srcCompat="@drawable/card_left" android:id="@+id/imageView7"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+    />
 </androidx.constraintlayout.widget.ConstraintLayout>
