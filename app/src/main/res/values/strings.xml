@@ -2,4 +2,6 @@
     <string name="app_name">Mulatschak</string>
     <string name="play">Spielen</string>
     <string name="log">Log</string>
+    <string name="settings_name">Einstellungen</string>
+
 </resources>
