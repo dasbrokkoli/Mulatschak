@@ -26,6 +26,30 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             }
        });
+
+        View help = findViewById(R.id.help);
+        help.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+            }
+        });
+
+        View log = findViewById(R.id.log);
+        log.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LogActivity.class));
+            }
+        });
+
+        /*View play = findViewById(R.id.play);
+        play.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Playground.class));
+            }
+        });*/
+
+
+
     }
 
     private void initCards() {
