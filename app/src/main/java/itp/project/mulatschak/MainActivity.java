@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initCards();
 
+
         View settings = findViewById(R.id.settings);
         settings.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

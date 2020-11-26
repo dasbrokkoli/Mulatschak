@@ -9,6 +9,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".PopupStichansage"
+        android:theme="@style/AppTheme.Popup"
+                  android:screenOrientation="landscape"
+                  android:label="Stichansage">
+        </activity>
         <activity
                 android:name=".PopupDifficulty"
                 android:screenOrientation="landscape">
@@ -19,8 +24,8 @@
         </activity>
         <activity
                 android:name=".TutorialActivity"
-                android:screenOrientation="landscape"
-                android:parentActivityName=".MainActivity">
+                android:parentActivityName=".MainActivity"
+                android:screenOrientation="landscape">
         </activity>
         <activity
                 android:name=".Playground"
@@ -29,8 +34,8 @@
         </activity>
         <activity
                 android:name=".SettingsActivity"
-                android:screenOrientation="landscape"
-                android:parentActivityName=".MainActivity">
+                android:parentActivityName=".MainActivity"
+                android:screenOrientation="landscape">
         </activity>
         <activity
                 android:name=".MainActivity"
