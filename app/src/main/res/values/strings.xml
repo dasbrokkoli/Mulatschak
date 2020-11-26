@@ -14,4 +14,7 @@
     <string name="skip">Skip</string>
     <string name="muli">Muli</string>
     <string name="stichansage">Stichansage</string>
+    <string name="atout">Atout</string>
+    <string name="mitgehen">Mitgehen</string>
+    <string name="aussteigen">Aussteigen</string>
 </resources>

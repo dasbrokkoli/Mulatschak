@@ -31,6 +31,8 @@ public class PopupStichansage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Popup schließen
+                finish();
             }
         });
 
@@ -40,6 +42,8 @@ public class PopupStichansage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Popup schließen
+                finish();
             }
         });
 
@@ -49,6 +53,8 @@ public class PopupStichansage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Popup schließen
+                finish();
             }
         });
 
@@ -58,6 +64,9 @@ public class PopupStichansage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+                //Popup schließen
+                finish();
             }
         });
 
@@ -67,6 +76,8 @@ public class PopupStichansage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Popup schließen
+                finish();
             }
         });
 
@@ -76,6 +87,8 @@ public class PopupStichansage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Popup schließen
+                finish();
             }
         });
 

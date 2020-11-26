@@ -9,10 +9,15 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".PopupStichansage"
-        android:theme="@style/AppTheme.Popup"
+
+        <activity android:name=".Popup_atout"
                   android:screenOrientation="landscape"
-                  android:label="Stichansage">
+                  android:theme="@style/AppTheme.Popup">
+        </activity>
+        <activity
+                android:name=".PopupStichansage"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name=".PopupDifficulty"

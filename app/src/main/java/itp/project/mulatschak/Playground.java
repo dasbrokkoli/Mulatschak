@@ -26,12 +26,21 @@ public class Playground extends AppCompatActivity {
 
         ImageView atout = findViewById(R.id.atout);
 
-        //PopUp
+        //PopUp Stichansage aufrufen
         Button b = findViewById(R.id.button2);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity( new Intent(Playground.this, PopupStichansage.class));
+            }
+        });
+
+        //PopUp Atout aufrufen
+        Button a = findViewById(R.id.button3);
+        a.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity( new Intent(Playground.this, Popup_atout.class));
             }
         });
 
