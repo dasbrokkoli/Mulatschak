@@ -6,4 +6,12 @@
     <string name="next">Next</string>
     <string name="settings_name">Settings</string>
     <string name="tutorial_name">Tutorial</string>
+    <string name="names">Player Names</string>
+    <string name="name1">Player 1 - you </string>
+    <string name="name2">Player 2</string>
+    <string name="name3">Player 3</string>
+    <string name="name4">Player 4</string>
+    <string name="difficulty1">Easy</string>
+    <string name="difficulty2">Medium</string>
+    <string name="difficulty3">Hard</string>
 </resources>

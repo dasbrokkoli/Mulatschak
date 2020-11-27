@@ -20,11 +20,12 @@ public class MainActivity extends AppCompatActivity {
     private final List<Card> cards = new ArrayList<>();
     private Algorithm algorithm = new Algorithm(cards,null);
 
-    //fuer PopUp
+    //fuer PopUp - Schwierigkeit
     Button showPopupBtn;
     ImageButton closePopupBtn;
     PopupWindow popupWindow;
     ConstraintLayout constraintLayout;
+    Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +54,84 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //PopUp
+        //PopUp - Schwierigkeit
         showPopupBtn = (Button) findViewById(R.id.showPopupBtn);
+        showPopupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, PopupDifficulty.class));
+            }
+        });
+
+
+
+
+        /*showPopupBtn = (Button) findViewById(R.id.showPopupBtn);
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
         showPopupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View customView = layoutInflater.inflate(R.layout.popup_difficulty,null);
-
+                final View customView = layoutInflater.inflate(R.layout.popup_difficulty,null);
                 closePopupBtn = (ImageButton) customView.findViewById(R.id.closePopupBtn);
+
+                popupWindow = new PopupWindow(customView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                popupWindow.showAtLocation(constraintLayout, Gravity.CENTER,0,0);
+
+                //Next
+                next = (Button) customView.findViewById(R.id.showNamePopup);
+                next.setOnClickListener(new View.OnClickListener() {
+                    //PopUp - Names
+                    @Override
+                    public void onClick(View view) {
+                        showPopupBtn = (Button) customView.findViewById(R.id.showNamePopup);
+                        //System.out.println(showPopupBtn.getText());
+                        constraintLayout = (ConstraintLayout) customView.findViewById(R.id.cLayout);
+
+                        System.out.println("Beginn");
+                        LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View customView = layoutInflater.inflate(R.layout.popup_name,null);
+
+                        closePopupBtn = (ImageButton) customView.findViewById(R.id.closePopupBtn2);
+
+                        popupWindow = new PopupWindow(customView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                        popupWindow.showAtLocation(constraintLayout, Gravity.CENTER,0,0);
+                        closePopupBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                System.out.println("Closing 2");
+                                popupWindow.dismiss();
+                            }
+                        });
+                        System.out.println("ende");
+
+                    }
+                });
+
+                //Close
+                closePopupBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popupWindow.dismiss();
+                        System.out.println("Closing 1");
+                    }
+                });
+            }
+        });*/
+
+        //PopUp - Namen
+        /*showPopupBtn = (Button) constraintLayout.findViewById(R.id.showNamePopup);
+        System.out.println(showPopupBtn.getText());
+        constraintLayout = (ConstraintLayout) findViewById(R.id.cLayout);
+        System.out.println("vor onClick");
+        showPopupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Beginn");
+                LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View customView = layoutInflater.inflate(R.layout.popup_name,null);
+
+                closePopupBtn = (ImageButton) customView.findViewById(R.id.closePopupBtn2);
 
                 popupWindow = new PopupWindow(customView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
                 popupWindow.showAtLocation(constraintLayout, Gravity.CENTER,0,0);
@@ -72,10 +141,11 @@ public class MainActivity extends AppCompatActivity {
                         popupWindow.dismiss();
                     }
                 });
+                System.out.println("ende");
             }
         });
-
-
+        System.out.println("Nach onClick");
+*/
 
 
 
