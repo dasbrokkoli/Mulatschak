@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         initCards();
 
 
+        startActivity(new Intent(MainActivity.this, Playground.class));
+
         View settings = findViewById(R.id.settings);
         settings.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

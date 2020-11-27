@@ -44,6 +44,15 @@ public class Playground extends AppCompatActivity {
             }
         });
 
+        //PopUp Select Atout aufrufen
+        Button sa = findViewById(R.id.button4);
+        sa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity( new Intent(Playground.this, Popup_selectAtout.class));
+            }
+        });
+
     }
 
     public static Colors getAdout() {

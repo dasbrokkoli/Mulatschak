@@ -17,4 +17,5 @@
     <string name="atout">Atout</string>
     <string name="mitgehen">Mitgehen</string>
     <string name="aussteigen">Aussteigen</string>
+    <string name="selectAtout">Atout wählen</string>
 </resources>
