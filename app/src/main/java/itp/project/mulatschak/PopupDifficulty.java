@@ -1,6 +1,7 @@
 package itp.project.mulatschak;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,7 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+/**
+ * PopUp bei welchem man die Schwierigkeit waehlen kann
+ */
 public class PopupDifficulty extends AppCompatActivity {
+
+    Button showNamePopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +31,16 @@ public class PopupDifficulty extends AppCompatActivity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8),(int)(height*.6));
+        getWindow().setLayout((int)(width*.8),(int)(height*.8));
+
+        //Weiterleitung zu PopUpName
+        showNamePopup = (Button) findViewById(R.id.showNamePopup);
+        showNamePopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PopupDifficulty.this, PopupName.class));
+            }
+        });
 
 
     }

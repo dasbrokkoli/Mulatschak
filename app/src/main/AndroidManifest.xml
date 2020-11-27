@@ -9,7 +9,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".PopupName">
+        <activity
+                android:name=".PopupName"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name=".PopupDifficulty"
