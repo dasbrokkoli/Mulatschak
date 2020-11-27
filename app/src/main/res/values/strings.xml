@@ -7,4 +7,7 @@
     <string name="settings_name">Settings</string>
     <string name="tutorial_name">Tutorial</string>
     <string name="logHead">Last Games:</string>
+    <string name="weliDraw">Withdraw Weli:</string>
+    <string name="withdraw">withdraw</string>
+    <string name="okay">OK</string>
 </resources>
