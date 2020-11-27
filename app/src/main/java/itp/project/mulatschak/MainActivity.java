@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
     PopupWindow popupWindow;
     ConstraintLayout constraintLayout;
 
+    //LogPopup
+    Button showLogBtn;
+    ImageButton closeLogView;
+    PopupWindow logWindow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +48,6 @@ public class MainActivity extends AppCompatActivity {
         help.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, TutorialActivity.class));
-            }
-        });
-
-        View log = findViewById(R.id.log);
-        log.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LogActivity.class));
             }
         });
 
@@ -75,8 +73,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //LogPopup
+        showLogBtn = findViewById(R.id.log);
+        showLogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View logView = layoutInflater.inflate(R.layout.popup_log, null);
 
+                closeLogView = logView.findViewById(R.id.closeLogBtn);
 
+                logWindow = new PopupWindow(logView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                logWindow.showAtLocation(constraintLayout,Gravity.CENTER,0,0);
+                closeLogView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        logWindow.dismiss();
+                    }
+                });
+            }
+        });
 
 
     }
