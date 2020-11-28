@@ -26,30 +26,55 @@ public class Playground extends AppCompatActivity {
 
         ImageView atout = findViewById(R.id.atout);
 
+        //Settings Button
+        View settings = findViewById(R.id.settings);
+        settings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(Playground.this, SettingsActivity.class));
+            }
+        });
+
+        //Tutorial Button
+        View help = findViewById(R.id.help);
+        help.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(Playground.this, TutorialActivity.class));
+            }
+        });
+
+        //PopUp Stichansage aufrufen
+//        Button b = findViewById(R.id.button2);
+//        b.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity( new Intent(Playground.this, PopupStichansage.class));
+//            }
+//        });
+//
+//        //PopUp Atout aufrufen
+//        Button a = findViewById(R.id.button3);
+//        a.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity( new Intent(Playground.this, Popup_atout.class));
+//            }
+//        });
+//
+//        //PopUp Select Atout aufrufen
+//        Button sa = findViewById(R.id.button4);
+//        sa.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity( new Intent(Playground.this, Popup_selectAtout.class));
+//            }
+//        });
+
         //PopUp Stichansage aufrufen
         Button b = findViewById(R.id.button2);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity( new Intent(Playground.this, PopupStichansage.class));
-            }
-        });
-
-        //PopUp Atout aufrufen
-        Button a = findViewById(R.id.button3);
-        a.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity( new Intent(Playground.this, Popup_atout.class));
-            }
-        });
-
-        //PopUp Select Atout aufrufen
-        Button sa = findViewById(R.id.button4);
-        sa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity( new Intent(Playground.this, Popup_selectAtout.class));
+                startActivity( new Intent(Playground.this, Popup_kartentausch.class));
             }
         });
 
