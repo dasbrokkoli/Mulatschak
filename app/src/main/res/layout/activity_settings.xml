@@ -13,7 +13,7 @@
             app:layout_constraintStart_toEndOf="@+id/volume_button"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/music_seekbar"
-            app:layout_constraintBottom_toTopOf="@+id/button"/>
+            app:layout_constraintBottom_toTopOf="@+id/design_button"/>
     <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp" app:srcCompat="@drawable/volume_up" android:id="@+id/volume_button"
@@ -23,9 +23,9 @@
             app:layout_constraintTop_toTopOf="@+id/volume_seekbar"
             app:layout_constraintBottom_toBottomOf="@+id/volume_seekbar"/>
     <Button
-            android:text="Design"
+            android:text="@string/design"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/button"
+            android:layout_height="wrap_content" android:id="@+id/design_button"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/volume_seekbar"/>
