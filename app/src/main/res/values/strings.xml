@@ -7,4 +7,6 @@
     <string name="settings_name">Settings</string>
     <string name="tutorial_name">Tutorial</string>
     <string name="design">Design</string>
+    <string name="choose">Choose</string>
+    <string name="video">Video</string>
 </resources>

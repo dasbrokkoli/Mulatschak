@@ -1,11 +1,11 @@
 package itp.project.mulatschak;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -45,8 +45,24 @@ public class PopupDesign extends AppCompatActivity {
                 card.setForeground(getDrawable(R.drawable.hintergrund_test2));
                 break;
         }
+
+        // Auswählen
+        /*Button choosePack = findViewById(R.id.select_pack);
+        choosePack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DesignPackActivity.i1.set(20,20,20,20);
+                DesignPackActivity.i1.setBackgroundColor(Color.GREEN);
+                finish();
+            }
+        });*/
     }
 
+    /**
+     * Schließt das Popup wieder
+     *
+     * @param view Button
+     */
     public void closePopup(View view) {
         finish();
     }
