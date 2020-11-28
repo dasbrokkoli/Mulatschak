@@ -9,7 +9,33 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+                android:name=".PopupDifficulty"
+                android:screenOrientation="landscape">
+        </activity>
+        <activity
+                android:name=".LogActivity"
+                android:screenOrientation="landscape">
+        </activity>
+        <activity
+                android:name=".TutorialActivity"
+                android:screenOrientation="landscape"
+                android:parentActivityName=".MainActivity">
+        </activity>
+        <activity
+                android:name=".Playground"
+                android:screenOrientation="landscape"
+                android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+                android:name=".SettingsActivity"
+                android:screenOrientation="landscape"
+                android:parentActivityName=".MainActivity">
+        </activity>
+        <activity
+                android:name=".MainActivity"
+                android:screenOrientation="landscape"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
