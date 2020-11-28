@@ -11,7 +11,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="AllowBackup">
-        <activity android:name=".PopupTutorialVideo">
+        <activity android:name=".PopupTutorialVideo"
+        android:screenOrientation="landscape"
+        android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name=".PopupDesign"

@@ -1,5 +1,8 @@
 package itp.project.mulatschak;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,5 +37,14 @@ public class TutorialActivity extends AppCompatActivity {
                         "\n" +
                         "Sagittis vitae et leo duis. Ornare suspendisse sed nisi lacus sed viverra tellus. Tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Duis at consectetur lorem donec massa. In nulla posuere sollicitudin aliquam ultrices sagittis orci a scelerisque. Eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum. Et ligula ullamcorper malesuada proin libero nunc consequat interdum varius. Fermentum et sollicitudin ac orci phasellus egestas. Nunc aliquet bibendum enim facilisis. Ipsum dolor sit amet consectetur adipiscing. A erat nam at lectus."
         );
+
+        Button tutorial = findViewById(R.id.video_button);
+        tutorial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PopupTutorialVideo.class);
+                startActivity(intent);
+            }
+        });
     }
 }
