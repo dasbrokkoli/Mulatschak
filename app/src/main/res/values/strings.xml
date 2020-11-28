@@ -6,4 +6,8 @@
     <string name="next">Next</string>
     <string name="settings_name">Settings</string>
     <string name="tutorial_name">Tutorial</string>
+    <string name="save">Save Game</string>
+    <string name="game_name">Name:</string>
+    <string name="del">Delete</string>
+    <string name="save2">Save</string>
 </resources>

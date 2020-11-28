@@ -1,5 +1,6 @@
 package itp.project.mulatschak;
 
+import android.util.DisplayMetrics;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
