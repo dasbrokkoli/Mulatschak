@@ -4,8 +4,13 @@ import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * PopUp bei welchem man die Spielernamen eingeben kann
@@ -27,12 +32,32 @@ public class PopupName extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.8),(int)(height*.8));
 
+
+        //Leitet zum Playground weiter
         play = (Button) findViewById(R.id.play);
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                List<String> l = getNames(view);
+                System.out.println(l.get(0));
                 startActivity(new Intent(PopupName.this, Playground.class));
             }
         });
+    }
+
+    public List<String> getNames(View v) {
+        List<String> names = new ArrayList();
+        String tmp;
+        EditText ed;
+
+        LinearLayout linlay = findViewById(R.id.nameList);
+
+        for(int i = 0; i < linlay.getChildCount(); i++) {
+            ed = (EditText) linlay.getChildAt(i);;
+            System.out.println("ARGH" + findViewById(R.id.name+i));
+            tmp = ed.toString();
+            names.add(tmp);
+        }
+        return names;
     }
 }
