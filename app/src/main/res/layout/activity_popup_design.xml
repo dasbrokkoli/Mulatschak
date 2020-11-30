@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PopupDesign">
+    <Button
+            android:text="@string/choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/select_pack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chosen_card" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
+    <ImageView
+            android:src="@drawable/schelle_acht"
+            android:layout_width="95dp"
+            android:layout_height="148dp"
+            android:id="@+id/chosen_card"
+            android:scrollbarThumbHorizontal="@drawable/hintergrund"
+            android:scrollbarThumbVertical="@drawable/hintergrund"
+            android:scrollbarTrackVertical="@drawable/hintergrund" android:foreground="@drawable/hintergrund"
+            app:layout_constraintTop_toBottomOf="@+id/chosen_pack_name"
+            app:layout_constraintBottom_toTopOf="@+id/select_pack" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/chosen_pack_name"
+            android:textSize="24sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/chosen_card" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/close" android:id="@+id/click_button"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp" android:layout_marginEnd="16dp" android:onClick="closePopup"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

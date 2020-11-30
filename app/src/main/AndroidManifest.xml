@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="itp.project.mulatschak">
 
     <application
@@ -8,7 +9,22 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            tools:ignore="AllowBackup">
+        <activity android:name=".PopupTutorialVideo"
+        android:screenOrientation="landscape"
+        android:theme="@style/AppTheme.Popup">
+        </activity>
+        <activity
+                android:name=".PopupDesign"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.Popup">
+        </activity>
+        <activity
+                android:name=".DesignPackActivity"
+                android:parentActivityName=".SettingsActivity"
+                android:screenOrientation="landscape">
+        </activity>
         <activity
                 android:name=".PopupName"
                 android:screenOrientation="landscape"
@@ -28,8 +44,8 @@
         </activity>
         <activity
                 android:name=".TutorialActivity"
-                android:screenOrientation="landscape"
-                android:parentActivityName=".MainActivity">
+                android:parentActivityName=".MainActivity"
+                android:screenOrientation="landscape">
         </activity>
         <activity
                 android:name=".Playground"
@@ -38,8 +54,8 @@
         </activity>
         <activity
                 android:name=".SettingsActivity"
-                android:screenOrientation="landscape"
-                android:parentActivityName=".MainActivity">
+                android:parentActivityName=".MainActivity"
+                android:screenOrientation="landscape">
         </activity>
         <activity
                 android:name=".MainActivity"
