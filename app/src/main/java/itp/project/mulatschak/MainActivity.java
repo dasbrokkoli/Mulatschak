@@ -20,11 +20,12 @@ public class MainActivity extends AppCompatActivity {
     private final List<Card> cards = new ArrayList<>();
     private Algorithm algorithm = new Algorithm(cards,null);
 
-    //fuer PopUp
+    //fuer PopUp - Schwierigkeit
     Button showPopupBtn;
     ImageButton closePopupBtn;
     PopupWindow popupWindow;
     ConstraintLayout constraintLayout;
+    Button next;
 
     //LogPopup
     Button showLogBtn;
@@ -53,23 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
         //PopUp
         showPopupBtn = (Button) findViewById(R.id.showPopupBtn);
-        constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
         showPopupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View customView = layoutInflater.inflate(R.layout.popup_difficulty,null);
-
-                closePopupBtn = (ImageButton) customView.findViewById(R.id.closePopupBtn);
-
-                popupWindow = new PopupWindow(customView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-                popupWindow.showAtLocation(constraintLayout, Gravity.CENTER,0,0);
-                closePopupBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        popupWindow.dismiss();
-                    }
-                });
+                startActivity(new Intent(MainActivity.this, PopupDifficulty.class));
             }
         });
 

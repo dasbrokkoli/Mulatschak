@@ -9,18 +9,27 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity
+                android:name=".PopupName"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.Popup">
+        </activity>
+        <activity
+                android:name=".PopupDifficulty"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.Popup">
         <activity android:name=".PopupLog"
                   android:screenOrientation="landscape"
                   android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
-                android:name=".PopupDifficulty"
+                android:name=".LogActivity"
                 android:screenOrientation="landscape">
         </activity>
         <activity
                 android:name=".TutorialActivity"
-                android:parentActivityName=".MainActivity"
-                android:screenOrientation="landscape">
+                android:screenOrientation="landscape"
+                android:parentActivityName=".MainActivity">
         </activity>
         <activity
                 android:name=".Playground"
@@ -29,8 +38,8 @@
         </activity>
         <activity
                 android:name=".SettingsActivity"
-                android:parentActivityName=".MainActivity"
-                android:screenOrientation="landscape">
+                android:screenOrientation="landscape"
+                android:parentActivityName=".MainActivity">
         </activity>
         <activity
                 android:name=".MainActivity"
