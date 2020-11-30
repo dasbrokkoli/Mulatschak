@@ -66,15 +66,19 @@ public class PopupDifficulty extends AppCompatActivity {
             case R.id.easy:
                 if(checked)
                     d = Difficulty.EASY;
-                    break;
+                break;
             case R.id.medium:
                 if(checked)
                     d = Difficulty.MEDIUM;
-                    break;
+                break;
             case R.id.hard:
                 if(checked)
                     d = Difficulty.HARD;
-                    break;
+                break;
+            case R.id.unbeatable:
+                if(checked)
+                    d = Difficulty.UNBEATABLE;
+                break;
         }
 
         return d;

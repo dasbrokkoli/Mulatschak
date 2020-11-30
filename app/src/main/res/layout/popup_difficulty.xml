@@ -36,6 +36,10 @@
                 android:text="@string/difficulty3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/hard"/>
+        <RadioButton
+                android:text="@string/difficulty4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/unbeatable"/>
     </RadioGroup>
     <Button
             android:text="@string/next"
