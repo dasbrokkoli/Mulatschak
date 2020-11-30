@@ -31,11 +31,11 @@ public class Popup_kartentausch extends AppCompatActivity {
 
         //Karten des SPielers in liste
         cards = new ArrayList<>();
-        cards.add(R.drawable.schelle_acht);
-        cards.add(R.drawable.schelle_acht);
-        cards.add(R.drawable.schelle_acht);
-        cards.add(R.drawable.schelle_acht);
-        cards.add(R.drawable.schelle_acht);
+        cards.add(R.drawable.card_standard_schelle_acht);
+        cards.add(R.drawable.card_standard_schelle_acht);
+        cards.add(R.drawable.card_standard_schelle_acht);
+        cards.add(R.drawable.card_standard_schelle_acht);
+        cards.add(R.drawable.card_standard_schelle_acht);
 
         //Karten des SPielers anzeigen
         card1 = findViewById(R.id.card1);

@@ -14,7 +14,7 @@
             app:layout_constraintTop_toBottomOf="@+id/chosen_card" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
     <ImageView
-            android:src="@drawable/schelle_acht"
+            android:src="@drawable/card_standard_schelle_acht"
             android:layout_width="95dp"
             android:layout_height="148dp"
             android:id="@+id/chosen_card"

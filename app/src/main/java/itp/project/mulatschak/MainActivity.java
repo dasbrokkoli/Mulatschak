@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initCards() {
-        cards.add(new Card(getResources().getDrawable(R.drawable.card_heart7, null), Colors.HERZ, Values.W7));
+        cards.add(new Card(getResources().getDrawable(R.drawable.card_standard_herz_sieben, null), Colors.HERZ, Values.W7));
     }
 
     public List<Card> getCards(){

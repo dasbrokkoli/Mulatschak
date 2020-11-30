@@ -57,42 +57,6 @@ public class Playground extends AppCompatActivity {
             }
         });
 
-        //PopUp Stichansage aufrufen
-//        Button b = findViewById(R.id.button2);
-//        b.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity( new Intent(Playground.this, PopupStichansage.class));
-//            }
-//        });
-//
-//        //PopUp Atout aufrufen
-//        Button a = findViewById(R.id.button3);
-//        a.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity( new Intent(Playground.this, Popup_atout.class));
-//            }
-//        });
-//
-//        //PopUp Select Atout aufrufen
-//        Button sa = findViewById(R.id.button4);
-//        sa.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity( new Intent(Playground.this, Popup_selectAtout.class));
-//            }
-//        });
-
-        //PopUp Stichansage aufrufen
-        Button b = findViewById(R.id.button2);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity( new Intent(Playground.this, Popup_kartentausch.class));
-            }
-        });
-
         constraintLayout = (ConstraintLayout) findViewById(R.id.playgroundConstraintLayout);
         showLogBtn = findViewById(R.id.logButton);
         showLogBtn.setOnClickListener(new View.OnClickListener() {

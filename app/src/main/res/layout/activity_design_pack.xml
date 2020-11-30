@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         tools:context=".DesignPackActivity">
     <ImageView
-            android:src="@drawable/schelle_acht"
+            android:src="@drawable/card_standard_schelle_acht"
             android:layout_width="95dp"
             android:layout_height="148dp"
             android:id="@+id/pack3"
@@ -18,7 +18,7 @@
             app:layout_constraintEnd_toStartOf="@+id/pack4" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/pack7"/>
     <ImageView
-            android:src="@drawable/schelle_acht"
+            android:src="@drawable/card_standard_schelle_acht"
             android:layout_width="95dp"
             android:layout_height="148dp"
             android:id="@+id/pack7"
@@ -29,7 +29,7 @@
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/pack8"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/pack3"/>
     <ImageView
-            android:src="@drawable/schelle_acht"
+            android:src="@drawable/card_standard_schelle_acht"
             android:layout_width="95dp"
             android:layout_height="148dp"
             android:id="@+id/pack5"
@@ -40,7 +40,7 @@
             app:layout_constraintEnd_toStartOf="@+id/pack6" app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/pack1"/>
     <ImageView
-            android:src="@drawable/schelle_acht"
+            android:src="@drawable/card_standard_schelle_acht"
             android:layout_width="95dp"
             android:layout_height="148dp"
             android:id="@+id/pack6"
@@ -51,7 +51,7 @@
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/pack7"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/pack2"/>
     <ImageView
-            android:src="@drawable/schelle_acht"
+            android:src="@drawable/card_standard_schelle_acht"
             android:layout_width="95dp"
             android:layout_height="148dp"
             android:id="@+id/pack8"
@@ -62,7 +62,7 @@
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/pack4"/>
     <ImageView
-            android:src="@drawable/schelle_acht"
+            android:src="@drawable/card_standard_schelle_acht"
             android:layout_width="95dp"
             android:layout_height="148dp"
             android:id="@+id/pack4"
@@ -73,7 +73,7 @@
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/pack8"/>
     <ImageView
-            android:src="@drawable/schelle_acht"
+            android:src="@drawable/card_standard_schelle_acht"
             android:layout_width="95dp"
             android:layout_height="148dp"
             android:id="@+id/pack2"
@@ -84,7 +84,7 @@
             app:layout_constraintEnd_toStartOf="@+id/pack3" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/pack6"/>
     <ImageView
-            android:src="@drawable/schelle_acht"
+            android:src="@drawable/card_standard_schelle_acht"
             android:layout_width="95dp"
             android:layout_height="148dp"
             android:id="@+id/pack1"

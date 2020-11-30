@@ -15,7 +15,7 @@ public class PopupStichansage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_popup_stichansage);
+        setContentView(R.layout.popup_stichansage);
 
         //Popup größe
         DisplayMetrics dm = new DisplayMetrics();

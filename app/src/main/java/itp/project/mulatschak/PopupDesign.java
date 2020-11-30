@@ -1,9 +1,6 @@
 package itp.project.mulatschak;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +11,7 @@ public class PopupDesign extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_popup_design);
+        setContentView(R.layout.popup_design);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
