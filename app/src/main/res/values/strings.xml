@@ -31,4 +31,7 @@
     <string name="aussteigen">Aussteigen</string>
     <string name="selectAtout">Atout wählen</string>
     <string name="change">Kartentausch</string>
+    <string name="weliDraw">Withdraw Weli:</string>
+    <string name="withdraw">withdraw</string>
+    <string name="okay">OK</string>
 </resources>

@@ -54,9 +54,16 @@
                 android:name=".PopupDifficulty"
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
-        <activity android:name=".PopupLog"
-                  android:screenOrientation="landscape"
-                  android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+                android:name=".PopupLog"
+                android:screenOrientation="landscape"
+                android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+                android:name=".PopupWeli"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name=".LogActivity"

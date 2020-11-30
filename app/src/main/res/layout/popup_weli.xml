@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PopupWeli" android:id="@+id/PopupWeli">
+    <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp" app:srcCompat="@drawable/eye" android:id="@+id/eyeBtn"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" android:layout_marginTop="16dp"/>
+    <TextView
+            android:text="@string/weliDraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/weliWithdraw"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@id/showCard"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:textSize="36sp"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/ic_launcher_background"
+            android:id="@+id/showCard"
+            app:layout_constraintTop_toBottomOf="@+id/weliWithdraw"
+            app:layout_constraintBottom_toTopOf="@+id/drawBtn" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <Button
+            android:text="@string/withdraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/drawBtn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/showCard" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
