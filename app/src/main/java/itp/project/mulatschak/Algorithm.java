@@ -14,7 +14,7 @@ public class Algorithm {
         this.holdingCards = holdingCards;
     }
 
-    public void setValues(){
+    private void setValues(){
         for (Card card: cards) {
             if(card.getColor() == Playground.getAdout()){
                 card.setTempValue(card.getValue() + 10);
@@ -34,7 +34,7 @@ public class Algorithm {
         }
     }
 
-    public void setWinChance(){
+    private void setWinChance(){
         switch (Playground.getDifficulty()){
             case EASY:
                 winChance = 25;
@@ -52,6 +52,9 @@ public class Algorithm {
     }
 
     public Card getResponseCard(Card inputCard){
+        this.setValues();
+        this.setHoldingValues();
+        this.setWinChance();
         boolean winMove = new Random().nextInt(101) < winChance;
         if (!winMove){
             return holdingCards.get(new Random().nextInt(holdingCards.size()));

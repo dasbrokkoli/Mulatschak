@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startActivity(new Intent(this,Playground.class));
-
         setContentView(R.layout.activity_main);
         initCards();
 
@@ -65,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //LogPopup
+        constraintLayout = (ConstraintLayout) findViewById(R.id.mainConstraintLayout);
         showLogBtn = findViewById(R.id.log);
         showLogBtn.setOnClickListener(new View.OnClickListener() {
             @Override

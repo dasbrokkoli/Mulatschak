@@ -77,8 +77,6 @@ public class Playground extends AppCompatActivity {
                 });
             }
         });
-
-        startActivity(new Intent(Playground.this, PopupWeli.class));
     }
 
     public static Colors getAdout() {

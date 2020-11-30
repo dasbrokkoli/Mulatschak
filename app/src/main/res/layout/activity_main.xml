@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
-        android:id="@+id/constraintLayout">
+        android:id="@+id/mainConstraintLayout">
     <ImageView
             android:layout_width="45dp"
             android:layout_height="56dp" app:srcCompat="@drawable/settings" android:id="@+id/settings"
