@@ -99,6 +99,11 @@ public class Playground extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showAtout();
+    }
 
     public static Colors getAdout() {
         return null;
