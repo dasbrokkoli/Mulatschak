@@ -8,6 +8,8 @@ public class Algorithm {
     private final List<Card> cards;
     private List<Card> holdingCards;
     private int winChance;
+    private static int dealer;
+
 
     public Algorithm(List<Card> cards, List<Card> holdingCards){
         this.cards = cards;
@@ -89,7 +91,45 @@ public class Algorithm {
         }
     }
 
+
     public void setHoldingCards(List<Card> holdingCards) {
         this.holdingCards = holdingCards;
+    }
+
+    /**
+     * Es wird geprüft ob der Benutzer den Wehli ziehen darf.
+     * Dazu wird das Int-Attribut dealer verwendet.
+     * @return ob der Spieler den Wehli ziehen darf
+     */
+    public boolean WehliZiehen() {
+        if(dealer < 4) {
+            dealer += 1;
+        }else {
+            dealer = 0;
+        }
+
+        boolean gamer = false;
+        switch (dealer){
+            case 0:
+                //Spieler
+                gamer = true;
+                break;
+            case 1:
+            case 2:
+            case 3:
+                //KI 1-3
+                gamer = false;
+                break;
+        }
+        return gamer;
+    }
+
+    /**
+     * Zu Rundenbeginn wird die Zufallszahl für den aktuellen Dealer
+     * (der, der den Wehli abheben darf) ermittelt.
+     */
+    public void rundenbeginn() {
+        Random r = new Random();
+        dealer = 1 + r.nextInt(4);
     }
 }
