@@ -1,5 +1,6 @@
 package itp.project.mulatschak;
 
+import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +33,8 @@ public class Popup_atout extends AppCompatActivity {
         mit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //Zu Kartentausch weiterleiten
+                startActivity(new Intent(Popup_atout.this, Popup_kartentausch.class));
                 //Popup schließen
                 finish();
             }
@@ -42,7 +44,8 @@ public class Popup_atout extends AppCompatActivity {
         aus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //Neues SPiel (fängt mit stichansage an)
+                startActivity(new Intent(Popup_atout.this, PopupStichansage.class));
                 //Popup schließen
                 finish();
             }

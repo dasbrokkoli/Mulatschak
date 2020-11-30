@@ -1,5 +1,6 @@
 package itp.project.mulatschak;
 
+import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 herz.setBackgroundColor(R.color.colorPrimary);
                 selected = "herz";
+                Playground.Atout = selected;
             }
         });
 
@@ -47,6 +49,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 blatt.setBackgroundColor(R.color.colorPrimary);
                 selected = "blatt";
+                Playground.Atout = selected;
             }
         });
 
@@ -59,6 +62,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 schelle.setBackgroundColor(R.color.colorPrimary);
                 selected = "schelle";
+                Playground.Atout = selected;
             }
         });
 
@@ -71,6 +75,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 eiche.setBackgroundColor(R.color.colorPrimary);
                 selected = "eiche";
+                Playground.Atout = selected;
             }
         });
 
@@ -80,9 +85,7 @@ public class Popup_selectAtout extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!selected.equals("")){
-                    //Atout Übergeben
-
-
+                    startActivity(new Intent(Popup_selectAtout.this, Popup_kartentausch.class));
                     //Popup schließen
                     finish();
                 }

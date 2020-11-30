@@ -28,18 +28,21 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class Playground extends AppCompatActivity {
 
+    public static  String Atout= "empty";
+
     //LogPopup
     Button showLogBtn;
     ImageButton closeLogView;
     PopupWindow logWindow;
     ConstraintLayout constraintLayout;
+    ImageView atout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
 
-        ImageView atout = findViewById(R.id.atout);
+        startActivity(new Intent(Playground.this, PopupStichansage.class));
 
         //Settings Button
         View settings = findViewById(R.id.settings);
@@ -56,6 +59,8 @@ public class Playground extends AppCompatActivity {
                 startActivity(new Intent(Playground.this, TutorialActivity.class));
             }
         });
+        atout = findViewById(R.id.atout);
+        showAtout();
 
         constraintLayout = (ConstraintLayout) findViewById(R.id.playgroundConstraintLayout);
         showLogBtn = findViewById(R.id.logButton);
@@ -78,6 +83,22 @@ public class Playground extends AppCompatActivity {
             }
         });
     }
+
+    private void showAtout(){
+        switch(Atout){
+            case "herz": atout.setImageResource(R.drawable.herz);
+                break;
+            case "blatt": atout.setImageResource(R.drawable.blatt);
+                break;
+            case "eichel": atout.setImageResource(R.drawable.eiche);
+                break;
+            case "schelle": atout.setImageResource(R.drawable.schelle);
+                break;
+            case "empty": atout.setImageResource(R.drawable.empty);
+                break;
+        }
+    }
+
 
     public static Colors getAdout() {
         return null;
