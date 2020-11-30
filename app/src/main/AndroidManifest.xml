@@ -50,6 +50,10 @@
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
+                android:name=".PopupSaveGame"
+                android:screenOrientation="landscape">
+        </activity>
+        <activity
                 android:name=".PopupDifficulty"
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">

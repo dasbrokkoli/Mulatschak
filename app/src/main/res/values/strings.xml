@@ -34,4 +34,8 @@
     <string name="weliDraw">Withdraw Weli:</string>
     <string name="withdraw">withdraw</string>
     <string name="okay">OK</string>
+    <string name="save">Save Game</string>
+    <string name="game_name">Name:</string>
+    <string name="del">Delete</string>
+    <string name="save2">Save</string>
 </resources>
