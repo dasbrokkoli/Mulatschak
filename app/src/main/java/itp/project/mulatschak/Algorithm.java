@@ -5,13 +5,51 @@ import java.util.Random;
 
 public class Algorithm {
 
-    private List<Card> cards;
+    private final List<Card> cards;
     private List<Card> holdingCards;
     private int winChance;
 
     public Algorithm(List<Card> cards, List<Card> holdingCards){
         this.cards = cards;
         this.holdingCards = holdingCards;
+    }
+
+    public Card getResponseCard(Card inputCard){
+        this.setValues();
+        this.setHoldingValues();
+        this.setWinChance();
+
+        boolean winMove = new Random().nextInt(101) < winChance;
+        if (!winMove){
+            return holdingCards.get(new Random().nextInt(holdingCards.size()));
+        }
+        Card lowestCard = lowestCardValue(inputCard.getTempValue());
+        if (lowestCard != null){
+            return lowestCard;
+        }else{
+            return lowestCardValue();
+        }
+    }
+
+    private Card lowestCardValue(){
+        return lowestCardValue(-1);
+    }
+
+    private Card lowestCardValue(int moreThan){
+        Card lowestValue = null;
+        for (Card card: holdingCards){
+            if (lowestValue == null) lowestValue = card;
+            if (card.getTempValue()<lowestValue.getTempValue()){
+                if(card.getTempValue()>moreThan){
+                    lowestValue = card;
+                }
+            }
+        }
+        assert lowestValue != null;
+        if(lowestValue.getTempValue() < moreThan){
+            return null;
+        }
+        return lowestValue;
     }
 
     private void setValues(){
@@ -51,36 +89,7 @@ public class Algorithm {
         }
     }
 
-    public Card getResponseCard(Card inputCard){
-        this.setValues();
-        this.setHoldingValues();
-        this.setWinChance();
-        boolean winMove = new Random().nextInt(101) < winChance;
-        if (!winMove){
-            return holdingCards.get(new Random().nextInt(holdingCards.size()));
-        }
-        Card lowestCard = lowestCardValue(inputCard.getTempValue());
-        if (lowestCard != null){
-            return lowestCard;
-        }else{
-            return lowestCardValue();
-        }
-    }
-
-    private Card lowestCardValue(){
-        return lowestCardValue(-1);
-    }
-
-    private Card lowestCardValue(int moreThan){
-        Card lowestValue = null;
-        for (Card card: holdingCards){
-            if (lowestValue == null) lowestValue = card;
-            if (card.getTempValue()<lowestValue.getTempValue()){
-                if(card.getTempValue()>moreThan){
-                    lowestValue = card;
-                }
-            }
-        }
-        return lowestValue;
+    public void setHoldingCards(List<Card> holdingCards) {
+        this.holdingCards = holdingCards;
     }
 }

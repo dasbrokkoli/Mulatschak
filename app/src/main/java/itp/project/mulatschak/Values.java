@@ -10,5 +10,4 @@ public class Values {
     public static final int W9 = 2;
     public static final int W8 = 1;
     public static final int W7 = 0;
-
 }
