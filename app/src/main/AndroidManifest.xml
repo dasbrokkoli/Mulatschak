@@ -12,8 +12,8 @@
             android:theme="@style/AppTheme"
             tools:ignore="AllowBackup">
         <activity android:name=".PopupTutorialVideo"
-        android:screenOrientation="landscape"
-        android:theme="@style/AppTheme.Popup">
+                  android:screenOrientation="landscape"
+                  android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name=".PopupDesign"
@@ -30,7 +30,6 @@
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
-            android:theme="@style/AppTheme">
         <activity android:name=".Popup_kartentausch"
                   android:screenOrientation="landscape"
                   android:theme="@style/AppTheme.Popup">
@@ -65,10 +64,10 @@
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
-        <activity
-                android:name=".LogActivity"
-                android:screenOrientation="landscape">
-        </activity>
+        <!-- <activity
+                 android:name=".LogActivity"
+                 android:screenOrientation="landscape">
+         </activity>-->
         <activity
                 android:name=".TutorialActivity"
                 android:parentActivityName=".MainActivity"
