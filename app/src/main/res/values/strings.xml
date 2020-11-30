@@ -18,4 +18,17 @@
     <string name="design">Design</string>
     <string name="choose">Choose</string>
     <string name="video">Video</string>
+    <string name="hstich">Höchster Stich</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="skip">Skip</string>
+    <string name="muli">Muli</string>
+    <string name="stichansage">Stichansage</string>
+    <string name="atout">Atout</string>
+    <string name="mitgehen">Mitgehen</string>
+    <string name="aussteigen">Aussteigen</string>
+    <string name="selectAtout">Atout wählen</string>
+    <string name="change">Kartentausch</string>
 </resources>
