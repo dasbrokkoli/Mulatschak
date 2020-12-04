@@ -109,7 +109,7 @@ public class PopupStichansage extends AppCompatActivity {
             //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
             startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
         } else{
-            startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
+            startActivity(new Intent(PopupStichansage.this, Popup_atout.class));
         }
         finish();
     }

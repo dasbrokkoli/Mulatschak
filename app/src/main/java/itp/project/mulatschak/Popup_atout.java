@@ -11,6 +11,7 @@ import android.os.Bundle;
 public class Popup_atout extends AppCompatActivity {
     ImageView atout;
     Button mit, aus;
+    boolean alreadyLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +28,11 @@ public class Popup_atout extends AppCompatActivity {
 
         //Atout anzeigen
         atout = findViewById(R.id.at);
-        atout.setImageResource(R.drawable.blatt);//Blatt wird angezeigt
+        selectAtout();//Auslesen
+        showAtout();//Anzeigen
 
+
+        //Button für mitgehen
         mit = findViewById(R.id.mit);
         mit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,15 +44,52 @@ public class Popup_atout extends AppCompatActivity {
             }
         });
 
+        //Button für aussteigen - eine Neue runde wird angesagt
         aus = findViewById(R.id.aus);
         aus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Neues SPiel (fängt mit stichansage an)
+                //Neues Spiel (fängt mit stichansage an)
                 startActivity(new Intent(Popup_atout.this, PopupStichansage.class));
                 //Popup schließen
                 finish();
             }
         });
+
+        //Prüfen ob in der vorigen Runde ausgestigene ist
+        alreadyLeft = false;
+        //Der Benutzer kann nicht aussteigen wenn er in der Runde davor ausgestiegen ist
+        if(alreadyLeft){
+            aus.setClickable(false);//Button kann nicht gedrückt werden
+            aus.setBackgroundColor(R.color.grey);//Button ist heller um zu zeigen, dass er nichz gedrückt werden kann
+        }
+    }
+
+    /**
+     * Das Atout wird in dem dafür vorgesehenen Feld angezeigt.
+     * Dafür wird das gespeicherte Atout der Klasse Playground verwendet.
+     */
+    private void showAtout(){
+            switch(Playground.Atout){
+                case HERZ: atout.setImageResource(R.drawable.herz);
+                    break;
+                case BLATT: atout.setImageResource(R.drawable.blatt);
+                    break;
+                case EICHEL: atout.setImageResource(R.drawable.eiche);
+                    break;
+                case SCHELLE: atout.setImageResource(R.drawable.schelle);
+                    break;
+                default: atout.setImageResource(R.drawable.empty);
+            }
+    }
+
+    /**
+     * Das Atout wird ausgelesen und im Attribut in der Klasse Playground gespeichert gespeichert
+     */
+    public static void selectAtout(){
+        //Auslesen aus dem Algtithmus
+
+        //In Atout Attribut speichern
+        Playground.Atout = Colors.HERZ;
     }
 }

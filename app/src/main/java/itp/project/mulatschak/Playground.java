@@ -27,8 +27,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class Playground extends AppCompatActivity {
-
-    public static  String Atout= "empty";
+    //Atout
+    public static  Colors Atout = null;
 
     //LogPopup
     Button showLogBtn;
@@ -59,8 +59,9 @@ public class Playground extends AppCompatActivity {
                 startActivity(new Intent(Playground.this, TutorialActivity.class));
             }
         });
+
+        //ImageView für Atout anzeigen
         atout = findViewById(R.id.atout);
-        showAtout();
 
         constraintLayout = (ConstraintLayout) findViewById(R.id.playgroundConstraintLayout);
         showLogBtn = findViewById(R.id.logButton);
@@ -84,29 +85,41 @@ public class Playground extends AppCompatActivity {
         });
     }
 
+    /**
+     * Im dafür vorgesehenen Feld wird das geählte Atout angezeigt.
+     * Das Atout ist in der Konstante gespeichert welches angezeigt werden soll.
+     */
     private void showAtout(){
-        switch(Atout){
-            case "herz": atout.setImageResource(R.drawable.herz);
-                break;
-            case "blatt": atout.setImageResource(R.drawable.blatt);
-                break;
-            case "eichel": atout.setImageResource(R.drawable.eiche);
-                break;
-            case "schelle": atout.setImageResource(R.drawable.schelle);
-                break;
-            case "empty": atout.setImageResource(R.drawable.empty);
-                break;
+        if(Atout == null){
+            atout.setImageResource(R.drawable.empty);
+        }else{
+            switch(Atout){
+                case HERZ: atout.setImageResource(R.drawable.herz);
+                    break;
+                case BLATT: atout.setImageResource(R.drawable.blatt);
+                    break;
+                case EICHEL: atout.setImageResource(R.drawable.eiche);
+                    break;
+                case SCHELLE: atout.setImageResource(R.drawable.schelle);
+                    break;
+                default: atout.setImageResource(R.drawable.empty);
+            }
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //Karten werden angezeigt
         showAtout();
     }
 
+    /**
+     * Gibt das Gespeicherte Atout als Color Object zurück;
+     * @return - Atout
+     */
     public static Colors getAdout() {
-        return null;
+        return Atout;
     }
 
     public static Difficulty getDifficulty() {

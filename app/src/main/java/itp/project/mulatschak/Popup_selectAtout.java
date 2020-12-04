@@ -36,7 +36,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 herz.setBackgroundColor(R.color.colorPrimary);
                 selected = "herz";
-                Playground.Atout = selected;
+                Playground.Atout = Colors.HERZ;
             }
         });
 
@@ -49,7 +49,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 blatt.setBackgroundColor(R.color.colorPrimary);
                 selected = "blatt";
-                Playground.Atout = selected;
+                Playground.Atout = Colors.BLATT;
             }
         });
 
@@ -62,7 +62,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 schelle.setBackgroundColor(R.color.colorPrimary);
                 selected = "schelle";
-                Playground.Atout = selected;
+                Playground.Atout = Colors.SCHELLE;
             }
         });
 
@@ -75,7 +75,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 eiche.setBackgroundColor(R.color.colorPrimary);
                 selected = "eiche";
-                Playground.Atout = selected;
+                Playground.Atout = Colors.EICHEL;
             }
         });
 
