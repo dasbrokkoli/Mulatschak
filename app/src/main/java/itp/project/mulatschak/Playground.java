@@ -26,16 +26,23 @@ import android.widget.PopupWindow;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.util.List;
+
 public class Playground extends AppCompatActivity {
     //Atout
     public static  Colors Atout = null;
+    ImageView atout;
 
     //LogPopup
     Button showLogBtn;
     ImageButton closeLogView;
     PopupWindow logWindow;
     ConstraintLayout constraintLayout;
-    ImageView atout;
+
+    //Cards
+    ImageView card1, card2, card3,card4,card5;
+    //Liste für die Karten
+    static List<Card> cards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +90,24 @@ public class Playground extends AppCompatActivity {
                 });
             }
         });
+
+        //Karten aus dem Algorithmus
+
+
+        //Cards
+        card1 = findViewById(R.id.card1);
+//        card1.setImageResource(cards.get(0).getPicture()); //Karte über Liste anzeigen
+        //Karte ausspielen
+//        card1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                playCard(cards.get(0));
+//            }
+//        });
+        card2 = findViewById(R.id.card2);
+        card3 = findViewById(R.id.card);
+        card4 = findViewById(R.id.card3);
+        card5 = findViewById(R.id.card4);
     }
 
     /**
@@ -90,9 +115,11 @@ public class Playground extends AppCompatActivity {
      * Das Atout ist in der Konstante gespeichert welches angezeigt werden soll.
      */
     private void showAtout(){
+        //Wenn noch kein Atout gespeichert ist wird ein leeres Feld angezeigt
         if(Atout == null){
             atout.setImageResource(R.drawable.empty);
         }else{
+            //Das gespeicherte Atout wird angezeigt
             switch(Atout){
                 case HERZ: atout.setImageResource(R.drawable.herz);
                     break;
@@ -110,7 +137,7 @@ public class Playground extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //Karten werden angezeigt
+        //Das Atout wird angezeigt
         showAtout();
     }
 
@@ -124,6 +151,22 @@ public class Playground extends AppCompatActivity {
 
     public static Difficulty getDifficulty() {
         return null;
+    }
+
+    /**
+     * Eine Karte wird ausgespielt. Diese wird im Parameter übergeben.
+     */
+    public void playCard(Card card){
+        //Methode im Algotithmus aufrufen
+
+    }
+
+    /**
+     * Die Karten des Spielers die angezeigt werden sollen werden alls Liste übergeben
+     * @param c -Karten
+     */
+    public static void setCards(List<Card> c){
+        cards = c;
     }
 
 }
