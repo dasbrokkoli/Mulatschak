@@ -16,6 +16,12 @@ public class Card{
         this.value = value;
     }
 
+    public Card(Colors color, int value){
+        this.picture = null;
+        this.color = color;
+        this.value = value;
+    }
+
     public Drawable getPicture(){
         return picture;
     }

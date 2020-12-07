@@ -4,5 +4,6 @@ public enum Colors {
     HERZ,
     SCHELLE,
     BLATT,
-    EICHEL;
+    EICHEL,
+    WELI;
 }
