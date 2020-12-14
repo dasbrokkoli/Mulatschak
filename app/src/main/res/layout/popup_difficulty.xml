@@ -8,7 +8,7 @@
         android:gravity="center"
         android:background="#fff"
         android:padding="10px"
-        tools:context=".PopupDifficulty">
+        tools:context=".PopupDifficulty" android:id="@+id/diffView">
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

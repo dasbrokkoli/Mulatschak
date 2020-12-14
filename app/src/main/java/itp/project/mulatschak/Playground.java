@@ -1,7 +1,9 @@
 package itp.project.mulatschak;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import android.content.Context;
 import android.view.Gravity;
@@ -18,6 +20,7 @@ import itp.project.Enums.Difficulty;
 
 import java.util.List;
 
+
 public class Playground extends AppCompatActivity {
     //Atout
     public static Colors Atout = null;
@@ -33,6 +36,8 @@ public class Playground extends AppCompatActivity {
     ImageView card1, card2, card3,card4,card5;
     //Liste für die Karten
     static List<Card> cards;
+
+    //View diffView = findViewById(R.layout.popup_difficulty);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,9 @@ public class Playground extends AppCompatActivity {
                 startActivity(new Intent(Playground.this, TutorialActivity.class));
             }
         });
+
+        //Fuer die Schwierigkeit
+        //diffView = findViewById(R.layout.popup_difficulty);
 
         //ImageView für Atout anzeigen
         atout = findViewById(R.id.atout);
@@ -137,10 +145,6 @@ public class Playground extends AppCompatActivity {
      */
     public static Colors getAdout() {
         return Atout;
-    }
-
-    public static Difficulty getDifficulty() {
-        return null;
     }
 
     /**

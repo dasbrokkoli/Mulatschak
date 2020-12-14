@@ -65,7 +65,7 @@ public class PopupName extends AppCompatActivity {
 
         for(int i = 0; i < linlay.getChildCount(); i++) {
             ed = (EditText) linlay.getChildAt(i);;
-            System.out.println("ARGH" + findViewById(R.id.name+i));
+            //System.out.println("ARGH" + findViewById(R.id.name+i));
             tmp = ed.toString();
             names.add(tmp);
         }

@@ -1,6 +1,8 @@
 package itp.project.mulatschak;
 
+import android.view.View;
 import itp.project.Enums.Colors;
+import itp.project.Enums.Difficulty;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
 
@@ -9,6 +11,8 @@ import android.graphics.Color;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+
+import static itp.project.Enums.Difficulty.EASY;
 
 public class Algorithm {
 
@@ -103,8 +107,15 @@ public class Algorithm {
         }
     }
 
-    private static void setWinChance() {
-        switch (Objects.requireNonNull(Playground.getDifficulty())) {
+    /**
+     * Setzt die Change zu gewinnen, bei jeder Schwierigkeit anders.
+     * Dabei wird die Gewinnchance für die KIs festgelegt (NICHT fuer Benutzer)
+     */
+    private void setWinChance() {
+        PopupDifficulty pop = new PopupDifficulty();
+        View diffView = pop.findViewById(R.layout.popup_difficulty);
+        //PopupDifficulty pop = this.findViewById(R.layout.popup_difficulty);
+        switch ((pop.getDifficulty(diffView))) {
             case EASY:
                 winChance = 25;
                 break;
@@ -117,6 +128,8 @@ public class Algorithm {
             case UNBEATABLE:
                 winChance = 100;
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + Objects.requireNonNull(pop.getDifficulty(diffView)));
         }
     }
 
