@@ -18,7 +18,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private final List<Card> cards = new ArrayList<>();
-    private Algorithm algorithm = new Algorithm(cards,null);
+    private Algorithm algorithm0 = new Algorithm(cards,null, 1);
 
     //fuer PopUp - Schwierigkeit
     Button showPopupBtn;
