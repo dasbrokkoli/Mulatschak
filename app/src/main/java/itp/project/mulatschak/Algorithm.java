@@ -1,6 +1,11 @@
 package itp.project.mulatschak;
 
+import itp.project.Enums.Colors;
+import itp.project.Exceptions.TwoSameHighestTricksException;
+import itp.project.Exceptions.WhatTheFuckHowException;
+
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class Algorithm {
@@ -9,7 +14,7 @@ public class Algorithm {
     private static int[] tricks = new int[4];
     private final List<Card> cards;
     private List<Card> holdingCards;
-    private int winChance;
+    private static int winChance;
     private int player;
 
     public Algorithm(List<Card> cards, List<Card> holdingCards, int player) {
@@ -40,7 +45,7 @@ public class Algorithm {
     public Card getResponseCard(Card inputCard) {
         this.setValues();
         this.setHoldingValues();
-        this.setWinChance();
+        setWinChance();
 
         boolean winMove = new Random().nextInt(101) < winChance;
         if (!winMove) {
@@ -95,8 +100,8 @@ public class Algorithm {
         }
     }
 
-    private void setWinChance() {
-        switch (Playground.getDifficulty()) {
+    private static void setWinChance() {
+        switch (Objects.requireNonNull(Playground.getDifficulty())) {
             case EASY:
                 winChance = 25;
                 break;
@@ -131,7 +136,7 @@ public class Algorithm {
      *
      * @return ob der Spieler den Weli ziehen darf
      */
-    public boolean WeliZiehen() {
+    public static boolean WeliZiehen() {
         if (dealer < 4) {
             dealer += 1;
         } else {
@@ -158,7 +163,7 @@ public class Algorithm {
      * Zu Rundenbeginn wird die Zufallszahl für den aktuellen Dealer
      * (der, der den Weli abheben darf) ermittelt.
      */
-    public void rundenbeginn() {
+    public static void rundenbeginn() {
         Random r = new Random();
         dealer = 1 + r.nextInt(4);
     }
@@ -179,33 +184,70 @@ public class Algorithm {
      * @param playersCardsAtout Spielerhand des Spielers mit gewonnener Stichansage
      * @return Atoutfarbe
      */
-    private Colors getAtoutFromPlayers(List<Card> playersCardsAtout) {
+    private static Colors getAtoutFromPlayers(List<Card> playersCardsAtout) throws WhatTheFuckHowException {
         int anzahlHerz = 0;
         int anzahlSchelle = 0;
         int anzahlBlatt = 0;
         int anzahlEichel = 0;
+        final int HERZ = 0;
+        final int SCHELLE = 1;
+        final int BLATT = 2;
+        final int EICHEL = 3;
+        int[] high_cards = new int[4];
         Colors atout = null;
         for (Card cards : playersCardsAtout) {
             switch (cards.getColor()) {
                 case HERZ:
                     anzahlHerz += cards.getValue();
+                    if(cards.getValue() > 4){
+                        high_cards[HERZ]++;
+                    }
                     break;
                 case SCHELLE:
                     anzahlSchelle += cards.getValue();
+                    if(cards.getValue() > 4){
+                        high_cards[SCHELLE]++;
+                    }
                     break;
                 case BLATT:
                     anzahlBlatt += cards.getValue();
+                    if(cards.getValue() > 4){
+                        high_cards[BLATT]++;
+                    }
                     break;
                 case EICHEL:
                     anzahlEichel += cards.getValue();
+                    if(cards.getValue() > 4){
+                        high_cards[EICHEL]++;
+                    }
                     break;
             }
         }
         int highestValue = Math.max(anzahlHerz, Math.max(anzahlSchelle, Math.max(anzahlBlatt, anzahlEichel)));
-        if (highestValue == anzahlHerz) atout = Colors.HERZ;
-        if (highestValue == anzahlSchelle) atout = Colors.SCHELLE;
-        if (highestValue == anzahlBlatt) atout = Colors.BLATT;
-        if (highestValue == anzahlEichel) atout = Colors.EICHEL;
-        return atout;
+        if (highestValue == anzahlHerz) {
+            if (anzahlHerz == anzahlSchelle) {
+                return high_cards[HERZ] > high_cards[SCHELLE] ? Colors.HERZ : Colors.SCHELLE;
+            } else if (anzahlHerz == anzahlBlatt) {
+                return high_cards[HERZ] > high_cards[BLATT] ? Colors.HERZ : Colors.BLATT;
+            } else if (anzahlHerz == anzahlEichel) {
+                return high_cards[HERZ] > high_cards[EICHEL] ? Colors.HERZ : Colors.EICHEL;
+            }
+        }
+        if (highestValue == anzahlSchelle) {
+            if (anzahlSchelle == anzahlBlatt) {
+                return high_cards[SCHELLE] > high_cards[BLATT] ? Colors.SCHELLE : Colors.BLATT;
+            } else if (anzahlSchelle == anzahlEichel) {
+                return high_cards[SCHELLE] > high_cards[EICHEL] ? Colors.SCHELLE : Colors.EICHEL;
+            }
+        }
+        if (highestValue == anzahlBlatt) {
+            if (anzahlBlatt == anzahlEichel){
+                return high_cards[BLATT] > high_cards[EICHEL] ? Colors.BLATT : Colors.EICHEL;
+            }
+        }
+        if (highestValue == anzahlEichel) {
+            return Colors.EICHEL;
+        }
+        throw new WhatTheFuckHowException();
     }
 }

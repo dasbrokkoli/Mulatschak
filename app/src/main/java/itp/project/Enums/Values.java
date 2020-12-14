@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Enums;
 
 public class Values {
     public static final int DAUS = 8;

@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Exceptions;
 
 public class TwoSameHighestTricksException extends Throwable {
 }

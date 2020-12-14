@@ -1,8 +1,7 @@
 package itp.project.mulatschak;
 
 import android.graphics.drawable.Drawable;
-
-import java.util.Objects;
+import itp.project.Enums.Colors;
 
 public class Card{
     private final Drawable picture;

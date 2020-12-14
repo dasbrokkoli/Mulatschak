@@ -1,36 +1,26 @@
 package itp.project.mulatschak;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.view.View;
 import android.widget.*;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Rect;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.PopupWindow;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import itp.project.Enums.Colors;
+import itp.project.Enums.Difficulty;
 
 import java.util.List;
 
 public class Playground extends AppCompatActivity {
     //Atout
-    public static  Colors Atout = null;
+    public static Colors Atout = null;
     ImageView atout;
 
     //LogPopup

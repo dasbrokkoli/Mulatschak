@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Enums;
 
 public enum Difficulty {
     EASY,

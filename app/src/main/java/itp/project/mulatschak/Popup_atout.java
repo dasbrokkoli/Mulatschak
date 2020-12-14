@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Enums.Colors;
 
 public class Popup_atout extends AppCompatActivity {
     ImageView atout;
