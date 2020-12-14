@@ -19,8 +19,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final List<Card> cards = new ArrayList<>();
-    private Algorithm algorithm0 = new Algorithm(cards,null, 1);
+    private static final List<Card> cards = new ArrayList<>();
 
     //fuer PopUp - Schwierigkeit
     Button showPopupBtn;
@@ -127,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         cards.add(new Card(getResources().getDrawable(R.drawable.card_standard_weli,null),Colors.WELI,Values.WELI));
     }
 
-    public List<Card> getCards(){
+    public static List<Card> getCards(){
         return cards;
     }
 }

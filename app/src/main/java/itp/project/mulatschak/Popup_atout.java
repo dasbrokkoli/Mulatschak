@@ -12,7 +12,8 @@ import itp.project.Enums.Colors;
 public class Popup_atout extends AppCompatActivity {
     ImageView atout;
     Button mit, aus;
-    boolean alreadyLeft;
+    static boolean alreadyLeft;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +89,8 @@ public class Popup_atout extends AppCompatActivity {
      * Das Atout wird ausgelesen und im Attribut in der Klasse Playground gespeichert gespeichert
      */
     public static void selectAtout(){
-        //Auslesen aus dem Algtithmus
-
-        //In Atout Attribut speichern
+        //Atout aus dem Algorithmus Übernehmen
+        Playground.Atout = Algorithm.atout;
         Playground.Atout = Colors.HERZ;
     }
 }

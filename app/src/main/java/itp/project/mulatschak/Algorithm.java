@@ -1,11 +1,12 @@
 package itp.project.mulatschak;
 
 import itp.project.Enums.Colors;
+import itp.project.Enums.Values;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
 
-import android.graphics.Color;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -20,9 +21,14 @@ public class Algorithm {
     private int player;
     public static Colors atout;
 
-    public Algorithm(List<Card> cards, List<Card> holdingCards, int player) {
+    public Algorithm(List<Card> cards, int player) {
         this.cards = cards;
-        this.holdingCards = holdingCards;
+        this.holdingCards = new ArrayList<>();
+        this.holdingCards.add(cards.get(0));
+        this.holdingCards.add(cards.get(1));
+        this.holdingCards.add(cards.get(2));
+        this.holdingCards.add(cards.get(3));
+        this.holdingCards.add(cards.get(4));
         this.player = player;
     }
 
@@ -131,6 +137,10 @@ public class Algorithm {
 
     public void setHoldingCards(List<Card> holdingCards) {
         this.holdingCards = holdingCards;
+    }
+
+    public List<Card> getHoldingCards(){
+        return holdingCards;
     }
 
     /**

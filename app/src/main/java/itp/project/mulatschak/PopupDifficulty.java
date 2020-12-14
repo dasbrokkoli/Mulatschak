@@ -59,28 +59,28 @@ public class PopupDifficulty extends AppCompatActivity {
      * @param view
      * @return Difficulty
      */
-    public Difficulty getDifficulty(View view){
-        boolean checked = ((RadioButton) view).isChecked();
-        Difficulty d = null;
-        switch(view.getId()) {
-            case R.id.easy:
-                if(checked)
-                    d = Difficulty.EASY;
-                break;
-            case R.id.medium:
-                if(checked)
-                    d = Difficulty.MEDIUM;
-                break;
-            case R.id.hard:
-                if(checked)
-                    d = Difficulty.HARD;
-                break;
-            case R.id.unbeatable:
-                if(checked)
-                    d = Difficulty.UNBEATABLE;
-                break;
-        }
-
-        return d;
-    }
+//    public Difficulty getDifficulty(View view){
+//        boolean checked = ((RadioButton) view).isChecked();
+//        Difficulty d = null;
+//        switch(view.getId()) {
+//            case R.id.easy:
+//                if(checked)
+//                    d = Difficulty.EASY;
+//                break;
+//            case R.id.medium:
+//                if(checked)
+//                    d = Difficulty.MEDIUM;
+//                break;
+//            case R.id.hard:
+//                if(checked)
+//                    d = Difficulty.HARD;
+//                break;
+//            case R.id.unbeatable:
+//                if(checked)
+//                    d = Difficulty.UNBEATABLE;
+//                break;
+//        }
+//
+//        return d;
+//    }
 }

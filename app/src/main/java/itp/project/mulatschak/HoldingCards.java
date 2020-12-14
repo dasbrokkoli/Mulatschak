@@ -1,5 +1,7 @@
 package itp.project.mulatschak;
 
+import itp.project.Enums.Colors;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

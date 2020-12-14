@@ -32,12 +32,18 @@ public class Playground extends AppCompatActivity {
     //Cards
     ImageView card1, card2, card3,card4,card5;
     //Liste für die Karten
-    static List<Card> cards;
+
+    //Algorithmen für Spieler
+    Algorithm player1;
+    Algorithm player2;
+    Algorithm player3;
+    Algorithm player4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
+        player1 = new Algorithm(MainActivity.getCards(), 1);
 
         startActivity(new Intent(Playground.this, PopupStichansage.class));
 
@@ -86,6 +92,7 @@ public class Playground extends AppCompatActivity {
 
         //Cards
         card1 = findViewById(R.id.card1);
+        card1.setImageDrawable(player1.getHoldingCards().get(0).getPicture());
 //        card1.setImageResource(cards.get(0).getPicture()); //Karte über Liste anzeigen
         //Karte ausspielen
 //        card1.setOnClickListener(new View.OnClickListener() {
@@ -94,10 +101,14 @@ public class Playground extends AppCompatActivity {
 //                playCard(cards.get(0));
 //            }
 //        });
-        card2 = findViewById(R.id.card2);
-        card3 = findViewById(R.id.card);
+        card2 = findViewById(R.id.card);
+        card2.setImageDrawable(player1.getHoldingCards().get(1).getPicture());
+        card3 = findViewById(R.id.card2);
+        card3.setImageDrawable(player1.getHoldingCards().get(2).getPicture());
         card4 = findViewById(R.id.card3);
+        card4.setImageDrawable(player1.getHoldingCards().get(3).getPicture());
         card5 = findViewById(R.id.card4);
+        card5.setImageDrawable(player1.getHoldingCards().get(4).getPicture());
     }
 
     /**
@@ -155,8 +166,8 @@ public class Playground extends AppCompatActivity {
      * Die Karten des Spielers die angezeigt werden sollen werden alls Liste übergeben
      * @param c -Karten
      */
-    public static void setCards(List<Card> c){
-        cards = c;
-    }
+//    public static void setCards(List<Card> c){
+//        cards = c;
+//    }
 
 }
