@@ -13,12 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * PopUp bei welchem man die Spielernamen eingeben kann
+ * PopUp bei welchem man die Spielernamen eingeben kann.
  */
 public class PopupName extends AppCompatActivity {
 
     Button play;
 
+    /**
+     * Estellt ein Window.
+     * Leitet bei Button Click auf die Spielfläche weiter.
+     * Dabei ist es egal, ob Namen angegeben wurden.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +51,11 @@ public class PopupName extends AppCompatActivity {
         });
     }
 
+    /**
+     * Liefert eine Array-List mit den Spielernamen zurueck.
+     * @param v
+     * @return names
+     */
     public List<String> getNames(View v) {
         List<String> names = new ArrayList();
         String tmp;

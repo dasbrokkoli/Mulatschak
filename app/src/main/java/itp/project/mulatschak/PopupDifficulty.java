@@ -13,10 +13,16 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 /**
- * PopUp bei welchem man die Schwierigkeit waehlen kann
+ * PopUp bei welchem man die Spiel-Schwierigkeit waehlen kann.
  */
 public class PopupDifficulty extends AppCompatActivity {
 
+    /**
+     * Ersellt ein Window.
+     * Leitet bei Button Click auf "next" zum PopUpName weiter.
+     * Leitet aber nur weiter, wenn ein RadiButton ausgewaeht wurde, ansosnten passiert nichts.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +40,7 @@ public class PopupDifficulty extends AppCompatActivity {
         Button showNamePopup = (Button) findViewById(R.id.showNamePopup);
         showNamePopup.setOnClickListener(new View.OnClickListener() {
             @Override
+            //Klick auf den "next"-Button
             public void onClick(View view) {
                 //Leitet nur weiter, wenn was ausgewaehlt wurde
                 RadioGroup group = findViewById(R.id.radioGroup2);
@@ -46,27 +53,34 @@ public class PopupDifficulty extends AppCompatActivity {
 
     }
 
-    /**
-     * Macht bei jedem RadioButton was anderes.
-     * Was gemacht werden soll muss noch definiert werden.
-     * @param view
-     */
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
 
+    /**
+     * Liefert die Schwierigkeit zurueck, die ausgewaehlt wurde.
+     * @param view
+     * @return Difficulty
+     */
+    public Difficulty getDifficulty(View view){
+        boolean checked = ((RadioButton) view).isChecked();
+        Difficulty d = null;
         switch(view.getId()) {
             case R.id.easy:
                 if(checked)
-                    //easy way
-                    break;
+                    d = Difficulty.EASY;
+                break;
             case R.id.medium:
                 if(checked)
-                    //medium way
-                    break;
+                    d = Difficulty.MEDIUM;
+                break;
             case R.id.hard:
                 if(checked)
-                    //hard way
-                    break;
+                    d = Difficulty.HARD;
+                break;
+            case R.id.unbeatable:
+                if(checked)
+                    d = Difficulty.UNBEATABLE;
+                break;
         }
+
+        return d;
     }
 }
