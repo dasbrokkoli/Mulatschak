@@ -12,7 +12,6 @@ import itp.project.Enums.Colors;
 public class Popup_atout extends AppCompatActivity {
     ImageView atout;
     Button mit, aus;
-    static boolean alreadyLeft;
 
 
     @Override
@@ -39,6 +38,7 @@ public class Popup_atout extends AppCompatActivity {
         mit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Playground.alreadyLeft = false;
                 //Zu Kartentausch weiterleiten
                 startActivity(new Intent(Popup_atout.this, Popup_kartentausch.class));
                 //Popup schließen
@@ -52,16 +52,16 @@ public class Popup_atout extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Neues Spiel (fängt mit stichansage an)
+                Playground.alreadyLeft = true;
                 startActivity(new Intent(Popup_atout.this, PopupStichansage.class));
                 //Popup schließen
                 finish();
             }
         });
 
-        //Prüfen ob in der vorigen Runde ausgestigene ist
-        alreadyLeft = false;
+
         //Der Benutzer kann nicht aussteigen wenn er in der Runde davor ausgestiegen ist
-        if(alreadyLeft){
+        if(Playground.alreadyLeft){
             aus.setClickable(false);//Button kann nicht gedrückt werden
             aus.setBackgroundColor(R.color.grey);//Button ist heller um zu zeigen, dass er nichz gedrückt werden kann
         }

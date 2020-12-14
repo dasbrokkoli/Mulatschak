@@ -19,6 +19,8 @@ import itp.project.Enums.Difficulty;
 import java.util.List;
 
 public class Playground extends AppCompatActivity {
+    public static boolean alreadyLeft;
+
     //Atout
     public static Colors Atout = null;
     ImageView atout;
@@ -43,6 +45,8 @@ public class Playground extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
+        alreadyLeft = false;
+        //Spieler
         player1 = new Algorithm(MainActivity.getCards(), 1);
 
         startActivity(new Intent(Playground.this, PopupStichansage.class));
