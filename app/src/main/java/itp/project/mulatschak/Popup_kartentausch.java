@@ -1,5 +1,6 @@
 package itp.project.mulatschak;
 
+import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,6 +16,7 @@ public class Popup_kartentausch extends AppCompatActivity {
     ImageView card1, card2, card3, card4, card5;
     ImageButton change, delete;
     List<Integer> cards;
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class Popup_kartentausch extends AppCompatActivity {
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                startActivity(new Intent(Popup_kartentausch.this, Playground.class));
                 finish();
             }
         });
@@ -71,4 +74,6 @@ public class Popup_kartentausch extends AppCompatActivity {
             }
         });
     }
+
+
 }
