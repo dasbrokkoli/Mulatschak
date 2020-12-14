@@ -36,10 +36,10 @@ public class Playground extends AppCompatActivity {
     //Liste für die Karten
 
     //Algorithmen für Spieler
-    Algorithm player1;
-    Algorithm player2;
-    Algorithm player3;
-    Algorithm player4;
+    static Algorithm player1;
+    static Algorithm player2;
+    static Algorithm player3;
+    static Algorithm player4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class Playground extends AppCompatActivity {
         setContentView(R.layout.activity_playground);
         alreadyLeft = false;
         //Spieler
-        player1 = new Algorithm(MainActivity.getCards(), 1);
+        austeilen();
 
         startActivity(new Intent(Playground.this, PopupStichansage.class));
 
@@ -96,7 +96,6 @@ public class Playground extends AppCompatActivity {
 
         //Cards
         card1 = findViewById(R.id.card1);
-        card1.setImageDrawable(player1.getHoldingCards().get(0).getPicture());
 //        card1.setImageResource(cards.get(0).getPicture()); //Karte über Liste anzeigen
         //Karte ausspielen
 //        card1.setOnClickListener(new View.OnClickListener() {
@@ -106,13 +105,9 @@ public class Playground extends AppCompatActivity {
 //            }
 //        });
         card2 = findViewById(R.id.card);
-        card2.setImageDrawable(player1.getHoldingCards().get(1).getPicture());
         card3 = findViewById(R.id.card2);
-        card3.setImageDrawable(player1.getHoldingCards().get(2).getPicture());
         card4 = findViewById(R.id.card3);
-        card4.setImageDrawable(player1.getHoldingCards().get(3).getPicture());
         card5 = findViewById(R.id.card4);
-        card5.setImageDrawable(player1.getHoldingCards().get(4).getPicture());
     }
 
     /**
@@ -144,6 +139,7 @@ public class Playground extends AppCompatActivity {
         super.onResume();
         //Das Atout wird angezeigt
         showAtout();
+        anzeigen();
     }
 
     /**
@@ -167,11 +163,25 @@ public class Playground extends AppCompatActivity {
     }
 
     /**
-     * Die Karten des Spielers die angezeigt werden sollen werden alls Liste übergeben
-     * @param c -Karten
+     * Neue runde die Karten werden neu ausgeteilt.
+     * Jeder Spieler bekommt einen neuen Algorithmus
      */
-//    public static void setCards(List<Card> c){
-//        cards = c;
-//    }
+    public static void austeilen(){
+        player1 = new Algorithm(MainActivity.getCards(), 1);
+        player2 = new Algorithm(MainActivity.getCards(), 2);
+        player3 = new Algorithm(MainActivity.getCards(), 3);
+        player4 = new Algorithm(MainActivity.getCards(), 4);
+    }
+
+    public void anzeigen(){
+        card2.setImageDrawable(player1.getHoldingCards().get(1).getPicture());
+        card3.setImageDrawable(player1.getHoldingCards().get(2).getPicture());
+        card4.setImageDrawable(player1.getHoldingCards().get(3).getPicture());
+        card5.setImageDrawable(player1.getHoldingCards().get(4).getPicture());
+        card1.setImageDrawable(player1.getHoldingCards().get(0).getPicture());
+    }
+
+
+
 
 }
