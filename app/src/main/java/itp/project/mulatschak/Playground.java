@@ -36,10 +36,7 @@ public class Playground extends AppCompatActivity {
     //Liste für die Karten
 
     //Algorithmen für Spieler
-    static Algorithm player1;
-    static Algorithm player2;
-    static Algorithm player3;
-    static Algorithm player4;
+    static Algorithm player1,player3, player2, player4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +176,10 @@ public class Playground extends AppCompatActivity {
         card4.setImageDrawable(player1.getHoldingCards().get(3).getPicture());
         card5.setImageDrawable(player1.getHoldingCards().get(4).getPicture());
         card1.setImageDrawable(player1.getHoldingCards().get(0).getPicture());
+    }
+
+    public static Algorithm getPlayer1(){
+        return player1;
     }
 
 
