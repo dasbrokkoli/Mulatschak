@@ -1,5 +1,7 @@
 package itp.project.mulatschak;
 
+import android.graphics.Color;
+
 import java.util.List;
 import java.util.Random;
 
@@ -11,6 +13,7 @@ public class Algorithm {
     private List<Card> holdingCards;
     private int winChance;
     private int player;
+    public static Color atout;
 
     public Algorithm(List<Card> cards, List<Card> holdingCards, int player) {
         this.cards = cards;
