@@ -4,6 +4,8 @@ import itp.project.Enums.Colors;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
 
+import android.graphics.Color;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -16,6 +18,7 @@ public class Algorithm {
     private List<Card> holdingCards;
     private static int winChance;
     private int player;
+    public static Colors atout;
 
     public Algorithm(List<Card> cards, List<Card> holdingCards, int player) {
         this.cards = cards;
