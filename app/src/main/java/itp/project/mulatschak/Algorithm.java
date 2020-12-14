@@ -48,7 +48,7 @@ public class Algorithm {
     public Card getResponseCard(Card inputCard) {
         this.setValues();
         this.setHoldingValues();
-        setWinChance();
+        this.setWinChance();
 
         boolean winMove = new Random().nextInt(101) < winChance;
         if (!winMove) {
@@ -103,7 +103,7 @@ public class Algorithm {
         }
     }
 
-    private static void setWinChance() {
+    private void setWinChance() {
         switch (Objects.requireNonNull(Playground.getDifficulty())) {
             case EASY:
                 winChance = 25;
