@@ -13,7 +13,7 @@ import android.os.Bundle;
 
 public class Popup_kartentausch extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
 
-    ImageView card1, card2, card3, card4, card5, delete, move;
+    ImageView card1, card2, card3, card4, card5, delete, move, eyeBtn;
     ImageButton change;
     int count;
 
@@ -27,10 +27,29 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
         //Popup größe
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int witdh = dm.widthPixels;
-        int height = dm.heightPixels;
+        final int width = dm.widthPixels;
+        final int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(witdh*.8), (int)(height*.8));//80% der höhe und Breite des Bildschirms
+        getWindow().setLayout((int)(width*.8), (int)(height*.8));//80% der höhe und Breite des Bildschirms
+
+        eyeBtn = findViewById(R.id.eyeBtn);
+        eyeBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.performClick();
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        getWindow().setLayout(0,0);
+                        System.out.println("Down");
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        getWindow().setLayout((int)(width*.8),(int)(height*.8));
+                        System.out.println("Up");
+                        return true;
+                }
+                return false;
+            }
+        });
 
 
         //Karten des SPielers anzeigen
