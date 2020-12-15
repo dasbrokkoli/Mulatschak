@@ -1,11 +1,10 @@
 package itp.project.mulatschak;
 
+import android.content.ClipData;
 import android.content.Intent;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 import android.content.Context;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
@@ -18,7 +17,7 @@ import itp.project.Enums.Difficulty;
 
 import java.util.List;
 
-public class Playground extends AppCompatActivity {
+public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
     public static boolean alreadyLeft;
 
     //Atout
@@ -32,7 +31,7 @@ public class Playground extends AppCompatActivity {
     ConstraintLayout constraintLayout;
 
     //Cards
-    ImageView card1, card2, card3,card4,card5;
+    ImageView card1, card2, card3,card4,card5, destination, move;
     //Liste für die Karten
 
     //Algorithmen für Spieler
@@ -93,18 +92,18 @@ public class Playground extends AppCompatActivity {
 
         //Cards
         card1 = findViewById(R.id.card1);
-//        card1.setImageResource(cards.get(0).getPicture()); //Karte über Liste anzeigen
-        //Karte ausspielen
-//        card1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                playCard(cards.get(0));
-//            }
-//        });
+        card1.setOnTouchListener(this);
         card2 = findViewById(R.id.card);
+        card2.setOnTouchListener(this);
         card3 = findViewById(R.id.card2);
+        card3.setOnTouchListener(this);
         card4 = findViewById(R.id.card3);
+        card4.setOnTouchListener(this);
         card5 = findViewById(R.id.card4);
+        card5.setOnTouchListener(this);
+
+        destination = findViewById(R.id.imageView);
+        destination.setOnDragListener(this);
     }
 
     /**
@@ -170,6 +169,9 @@ public class Playground extends AppCompatActivity {
         player4 = new Algorithm(MainActivity.getCards(), 4);
     }
 
+    /**
+     * Die Karten des Spielers anzeigen.
+     */
     public void anzeigen(){
         card2.setImageDrawable(player1.getHoldingCards().get(1).getPicture());
         card3.setImageDrawable(player1.getHoldingCards().get(2).getPicture());
@@ -178,11 +180,51 @@ public class Playground extends AppCompatActivity {
         card1.setImageDrawable(player1.getHoldingCards().get(0).getPicture());
     }
 
+    /**
+     * Spieler 1 zurückgeben
+     * @return - Player1
+     */
     public static Algorithm getPlayer1(){
         return player1;
     }
 
 
+
+
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        move = (ImageView) v;
+        View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+                v);
+        ClipData data = ClipData.newPlainText("", "");
+        v.startDrag(data, shadowBuilder, v, 0);
+        return false;
+    }
+
+    @Override
+    public boolean onDrag(View v, DragEvent event) {
+        switch (event.getAction()) {
+            case DragEvent.ACTION_DRAG_STARTED:
+                break;
+            case DragEvent.ACTION_DRAG_ENTERED:
+                break;
+            case DragEvent.ACTION_DRAG_EXITED:
+                break;
+            case DragEvent.ACTION_DROP:
+                break;
+            case DragEvent.ACTION_DRAG_ENDED:
+                //Karte in das Feld gezogen
+                if (event.getResult()) {
+                    destination.setImageDrawable(move.getDrawable());
+                    move.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(),"Geschafft", Toast.LENGTH_SHORT).show();
+                }
+            default:
+                break;
+        }
+        return true;
+    }
 
 
 }
