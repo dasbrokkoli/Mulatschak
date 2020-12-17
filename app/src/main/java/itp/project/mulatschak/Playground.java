@@ -15,8 +15,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import itp.project.Enums.Colors;
 import itp.project.Enums.Difficulty;
 
-import java.util.List;
-
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
     public static boolean alreadyLeft;
 
@@ -32,6 +30,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     //Cards
     ImageView card1, card2, card3,card4,card5, destination, move;
+    //Gemachte Stiche
+    private static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
     //Liste für die Karten
 
     //Algorithmen für Spieler
@@ -104,6 +104,13 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
         destination = findViewById(R.id.imageView);
         destination.setOnDragListener(this);
+
+        //Stiche gemacht
+        stitches_pl1 = findViewById(R.id.player_stitches);
+        stitches_pl2 = findViewById(R.id.pl1_stitches);
+        stitches_pl3 = findViewById(R.id.pl2_stitches);
+        stitches_pl4 = findViewById(R.id.pl3_stitches);
+
     }
 
     /**
@@ -227,4 +234,23 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
 
+    /**
+     * Die gemachten Stiche sollen im Playground angezeigt werden.
+     * Dazu wird bei dem Spieler der gestochen hat die neue Stichanzahl angezeigt.
+     * @param player - Spieler der den Zug gewonnen hat
+     * @param count - neue Stichanzahl des Spielers
+     */
+    public static void stitchesMade(int player, int count){
+        switch(player){
+            case 1: stitches_pl1.setText(""+count);
+                break;
+            case 2: stitches_pl2.setText(count);
+                break;
+            case 3: stitches_pl3.setText(count);
+                break;
+            case 4: stitches_pl4.setText(count);
+                break;
+        }
+
+    }
 }
