@@ -253,4 +253,8 @@ public class Algorithm {
         }
         throw new WhatTheFuckHowException();
     }
+
+    public void changeCards(List <Card> oldCards) {
+
+    }
 }
