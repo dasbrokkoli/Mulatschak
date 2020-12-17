@@ -85,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+        //HoldingCards
+        HoldingCards.setAllCards(this.cards);
+        HoldingCards.setWeliStatus(false);
     }
 
     private void initCards() {

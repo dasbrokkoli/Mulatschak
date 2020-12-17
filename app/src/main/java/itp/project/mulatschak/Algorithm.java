@@ -18,11 +18,17 @@ public class Algorithm {
     private List<Card> holdingCards;
     private static int winChance;
     private int player;
+    //Attribut für die Kartenzuweisung
+    private HoldingCards playerCards;
     public static Colors atout;
 
     public Algorithm(List<Card> cards, List<Card> holdingCards, int player) {
         this.cards = cards;
         this.holdingCards = holdingCards;
+        this.playerCards = new HoldingCards();
+        this.playerCards.initPlayer(5);
+
+
         this.player = player;
     }
 

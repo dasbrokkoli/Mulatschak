@@ -14,15 +14,24 @@ import java.util.Random;
  */
 public class HoldingCards {
     public static List<Card> allCards;
+    public static boolean weliOccured;
 
     private List<Card> player;
 
     /**
-     *
+     * Weißt allCards die Karten zu
+     * Wird nur beim Start einer neuen Runde aufgerufen
      * @param all
      */
     public static void setAllCards(List<Card> all) {
         HoldingCards.allCards = all;
+    }
+
+    /**
+     * Verändert den Weli Status
+     */
+    public static void setWeliStatus(boolean status) {
+        HoldingCards.weliOccured = status;
     }
 
     /**
