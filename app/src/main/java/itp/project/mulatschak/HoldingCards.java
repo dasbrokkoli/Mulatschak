@@ -34,6 +34,10 @@ public class HoldingCards {
         HoldingCards.weliOccured = status;
     }
 
+    public boolean getWeliStatus() {
+        return HoldingCards.weliOccured;
+    }
+
     /**
      * löscht eine Card aus der globalen Liste
      * @param i
@@ -63,6 +67,10 @@ public class HoldingCards {
             //neue Card wird erstellt
             card = HoldingCards.allCards.get(zz);
 
+            if(card.getColor() == Colors.WELI) {
+                setWeliStatus(true);
+            }
+
             //Card wird entfernt
             deleteCards(zz);
 
@@ -74,11 +82,13 @@ public class HoldingCards {
     /**
      * Methode für den Kartentausch
      * löscht alle getauschten Karten und weist dem Spieler neue Karten zu
+     *
+     * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
      */
     public void changeCard(List<Card> oldCards, int anzNew) {
         //Card wird entfernt
         for(Card card: oldCards) {
-
+            deleteHoldingCard(card);
         }
 
         //und neue werden hinzugefügt

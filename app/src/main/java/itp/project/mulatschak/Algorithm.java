@@ -25,9 +25,9 @@ public class Algorithm {
     public Algorithm(List<Card> cards, List<Card> holdingCards, int player) {
         this.cards = cards;
         this.holdingCards = holdingCards;
+
         this.playerCards = new HoldingCards();
         this.playerCards.initPlayer(5);
-
 
         this.player = player;
     }
@@ -260,7 +260,11 @@ public class Algorithm {
         throw new WhatTheFuckHowException();
     }
 
-    public void changeCards(List <Card> oldCards) {
-
+    /**
+     * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
+     *
+     */
+    public void changeCards(List <Card> oldCards, int anzNew) {
+        this.playerCards.changeCard(oldCards, anzNew);
     }
 }
