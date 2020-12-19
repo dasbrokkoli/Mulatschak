@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import itp.project.Enums.Difficulty;
 
 /**
  * PopUp bei welchem man die Spiel-Schwierigkeit waehlen kann.

@@ -267,4 +267,15 @@ public class Algorithm {
     public void changeCards(List <Card> oldCards, int anzNew) {
         this.playerCards.changeCard(oldCards, anzNew);
     }
+
+    /**
+     * ZUM TESTEN - kann später evtl entfernt werden:
+     * Gibt alle gehaltenen Karten zurück
+     */
+
+    public List<Card> getPlayerCards() {
+        return this.playerCards.getCards();
+    }
+
+
 }

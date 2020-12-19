@@ -114,4 +114,26 @@ public class HoldingCards {
         this.player.add(card);
         deleteCards(index);
     }
+
+    public int[] getValue() {
+        int[] arr = new int[this.player.size()];
+        for(int i = 0; i < arr.length; i++) {
+            arr[i] = this.player.get(i).getValue();
+        }
+
+        return arr;
+    }
+
+    public Colors[] getColors() {
+        Colors[] arr = new Colors[this.player.size()];
+        for(int i = 0; i < arr.length; i++) {
+            arr[i] = this.player.get(i).getColor();
+        }
+
+        return arr;
+    }
+
+    public List<Card> getCards() {
+        return this.player;
+    }
 }
