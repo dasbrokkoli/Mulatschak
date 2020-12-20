@@ -8,9 +8,7 @@ import itp.project.Exceptions.WhatTheFuckHowException;
 
 import android.graphics.Color;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static itp.project.Enums.Difficulty.EASY;
 
@@ -23,11 +21,15 @@ public class Algorithm {
     private static int winChance;
     private int player;
     public static Colors atout;
+    private static boolean doubleRound; //ob doppelte Runde (wenn Herz atout)
+    private static boolean droppedOut; //ob der Spieler ausgestiegen ist oder nicht
+    private static List<Integer> points = new ArrayList<>(); //fuer die Punktestaende der Spieler
 
     public Algorithm(List<Card> cards, List<Card> holdingCards, int player) {
         this.cards = cards;
         this.holdingCards = holdingCards;
         this.player = player;
+        points.add(player - 1,20);
     }
 
     public static int getHighestTrickIndex() {
@@ -178,10 +180,13 @@ public class Algorithm {
     /**
      * Zu Rundenbeginn wird die Zufallszahl für den aktuellen Dealer
      * (der, der den Weli abheben darf) ermittelt.
+     * Außerdem wird doubleRound standardmaessig auf false gesetzt.
+     * Zusaetzlich werdem jedem Spieler 20 Punkte zugeschrieben.
      */
     public static void rundenbeginn() {
         Random r = new Random();
         dealer = 1 + r.nextInt(4);
+        doubleRound = false;
     }
 
     public int getTrick() {
@@ -266,4 +271,37 @@ public class Algorithm {
         }
         throw new WhatTheFuckHowException();
     }
+
+    /**
+     * Berechnet die Punkte nach jeder fertigen Runde:
+     *
+     * @param algo
+     * @return scores -> Eine ArrayList mit all den Punkteständen
+     */
+    public static List<Integer> scoring(Algorithm... algo) {
+        int newPoints;
+        for(int i=0;i<algo.length;i++) {
+            newPoints = points.get(i); //Die Punktestaende von davor aufrufen und abspeichern
+            algo[i].getTrick();     //Die Stiche holen
+
+            //Sieger ermitteln
+
+            //Stiche vergleichen (angesagt vs gemacht)
+
+            if(droppedOut == true) {
+                newPoints = newPoints+1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
+            }
+            if(doubleRound == true) {
+                newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
+            }
+            points.set(i,newPoints);
+        }
+        return points;
+
+        //Methode die erkennt ob Spieler ausgestiegen sind
+        //Wer wieviele Stiche und mit angesagten Vergleichen
+        // Zählt Runde doppelt?
+    }
+
+
 }
