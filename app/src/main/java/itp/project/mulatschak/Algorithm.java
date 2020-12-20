@@ -1,10 +1,9 @@
 package itp.project.mulatschak;
 
 import itp.project.Enums.Colors;
+import itp.project.Enums.Values;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
-
-import android.graphics.Color;
 
 import java.util.List;
 import java.util.Objects;
@@ -134,8 +133,7 @@ public class Algorithm {
     }
 
     /**
-     * Es wird geprüft ob der Benutzer den Weli ziehen darf.
-     * Dazu wird das Int-Attribut dealer verwendet.
+     * Es wird geprüft ob der Benutzer den Weli ziehen darf. Dazu wird das Int-Attribut dealer verwendet.
      *
      * @return ob der Spieler den Weli ziehen darf
      */
@@ -163,8 +161,7 @@ public class Algorithm {
     }
 
     /**
-     * Zu Rundenbeginn wird die Zufallszahl für den aktuellen Dealer
-     * (der, der den Weli abheben darf) ermittelt.
+     * Zu Rundenbeginn wird die Zufallszahl für den aktuellen Dealer (der, der den Weli abheben darf) ermittelt.
      */
     public static void rundenbeginn() {
         Random r = new Random();
@@ -202,25 +199,25 @@ public class Algorithm {
             switch (cards.getColor()) {
                 case HERZ:
                     anzahlHerz += cards.getValue();
-                    if(cards.getValue() > 4){
+                    if (cards.getValue() > 4) {
                         high_cards[HERZ]++;
                     }
                     break;
                 case SCHELLE:
                     anzahlSchelle += cards.getValue();
-                    if(cards.getValue() > 4){
+                    if (cards.getValue() > 4) {
                         high_cards[SCHELLE]++;
                     }
                     break;
                 case BLATT:
                     anzahlBlatt += cards.getValue();
-                    if(cards.getValue() > 4){
+                    if (cards.getValue() > 4) {
                         high_cards[BLATT]++;
                     }
                     break;
                 case EICHEL:
                     anzahlEichel += cards.getValue();
-                    if(cards.getValue() > 4){
+                    if (cards.getValue() > 4) {
                         high_cards[EICHEL]++;
                     }
                     break;
@@ -244,7 +241,7 @@ public class Algorithm {
             }
         }
         if (highestValue == anzahlBlatt) {
-            if (anzahlBlatt == anzahlEichel){
+            if (anzahlBlatt == anzahlEichel) {
                 return high_cards[BLATT] > high_cards[EICHEL] ? Colors.BLATT : Colors.EICHEL;
             }
         }
@@ -252,5 +249,27 @@ public class Algorithm {
             return Colors.EICHEL;
         }
         throw new WhatTheFuckHowException();
+    }
+
+    /**
+     * Gibt die Gesamtstichansage basierend der Spielkarten eines Spielers zurück.
+     * Die Stiche beziehen sich dabei auf:
+     * - Weli
+     * - Daus (Atoutfarbe), Daus
+     * - König (Atoutfarbe)
+     * @param handcards Handkarten des Spielers
+     * @return Gesamtstichansage
+     */
+    public int getStiche(List<Card> handcards) {
+        int stiche = 0;
+        for (Card card : handcards) {
+            if (card.getColor() == Colors.WELI) stiche++;
+            if (card.getColor() == atout) {
+                if (card.getValue() == Values.DAUS || card.getValue() == Values.KOENIG) stiche++;
+            } else {
+                if (card.getValue() == Values.DAUS) stiche++;
+            }
+        }
+        return stiche;
     }
 }

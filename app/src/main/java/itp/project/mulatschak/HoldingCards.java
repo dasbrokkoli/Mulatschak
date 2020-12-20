@@ -3,6 +3,7 @@ package itp.project.mulatschak;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import itp.project.Enums.Colors;
 
 /**
  * Initialisiert die Karten für alle vier Spiel beim Aufruf.
