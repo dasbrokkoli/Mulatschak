@@ -32,7 +32,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     //Cards
     ImageView card1, card2, card3,card4,card5, destination, move;
     //Gemachte Stiche
-    private static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
+    //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
+    public static TextView[] stitches;
     //Liste für die Karten
 
     //Algorithmen für Spieler
@@ -112,10 +113,15 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         destination.setOnDragListener(this);
 
         //Stiche gemacht
-        stitches_pl1 = findViewById(R.id.player_stitches);
-        stitches_pl2 = findViewById(R.id.pl1_stitches);
-        stitches_pl3 = findViewById(R.id.pl2_stitches);
-        stitches_pl4 = findViewById(R.id.pl3_stitches);
+        //stitches_pl1 = findViewById(R.id.player_stitches);
+        //stitches_pl2 = findViewById(R.id.pl1_stitches);
+        //stitches_pl3 = findViewById(R.id.pl2_stitches);
+        //stitches_pl4 = findViewById(R.id.pl3_stitches);
+
+        stitches[0] = findViewById(R.id.player_stitches);
+        stitches[1] = findViewById(R.id.pl1_stitches);
+        stitches[2] = findViewById(R.id.pl2_announced);
+        stitches[3] = findViewById(R.id.pl3_stitches);
 
     }
 
@@ -242,7 +248,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * @param player - Spieler der den Zug gewonnen hat
      * @param count - neue Stichanzahl des Spielers
      */
-    public static void stitchesMade(int player, int count){
+    /**public static void stitchesMade(int player, int count){
         switch(player){
             case 1: stitches_pl1.setText(""+count);
                 break;
@@ -251,6 +257,19 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             case 3: stitches_pl3.setText(count);
                 break;
             case 4: stitches_pl4.setText(count);
+                break;
+        }
+
+    }**/
+    public static void stitchesMade(int player, int count){
+        switch(player){
+            case 1: stitches[0].setText(""+count);
+                break;
+            case 2: stitches[1].setText(count);
+                break;
+            case 3: stitches[2].setText(count);
+                break;
+            case 4: stitches[4].setText(count);
                 break;
         }
 
