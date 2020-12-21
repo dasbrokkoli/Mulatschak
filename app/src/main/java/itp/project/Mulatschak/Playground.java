@@ -16,6 +16,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import itp.project.Enums.Colors;
 import itp.project.Popups.PopupStichansage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
     public static boolean alreadyLeft;
     
@@ -30,13 +33,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ConstraintLayout constraintLayout;
 
     //Cards
-    ImageView card1, card2, card3,card4,card5, destination, move;
+    ImageView card1, card2, card3,card4,card5, destination;
+            static ImageView move;
     //Gemachte Stiche
     private static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4, pl1_announced,pl2_announced,pl3_announced,pl4_announced;
     //Liste für die Karten
 
     //Algorithmen für Spieler
     static Algorithm player1,player3, player2, player4;
+
+    private static List<Card> inputCards;
 
     //View diffView = findViewById(R.layout.popup_difficulty);
 
@@ -120,6 +126,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         pl2_announced = findViewById(R.id.pl1_announced);
         pl3_announced = findViewById(R.id.pl2_announced);
         pl4_announced = findViewById(R.id.pl3_announced);
+
+        inputCards = new ArrayList<>();
     }
 
     /**
@@ -152,6 +160,9 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         //Das Atout wird angezeigt
         showAtout();
         anzeigen();
+
+        //Das Spiel beginnt
+//        play();
     }
 
     /**
@@ -231,6 +242,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                     destination.setImageDrawable(move.getDrawable());
                     move.setVisibility(View.INVISIBLE);
                     Toast.makeText(getApplicationContext(),"Geschafft", Toast.LENGTH_SHORT).show();
+                    play();
                 }
             default:
                 break;
@@ -275,4 +287,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
     }
 
+    private void play(){
+        inputCards.add(player1.getHoldingCards().get(0));
+        inputCards.add(player2.getResponseCard(inputCards.get(0)));
+        inputCards.add(player3.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
+        inputCards.add(player4.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
+        Card winner = Algorithm.getWinnerFromCards((Card[]) inputCards.toArray());
+        Toast.makeText(getApplicationContext(),""+winner.getColor()+winner.getValue(), Toast.LENGTH_SHORT).show();
+    }
 }
