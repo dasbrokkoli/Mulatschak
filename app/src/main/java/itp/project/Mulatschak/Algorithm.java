@@ -375,12 +375,11 @@ public class Algorithm {
      * - Weli
      * - Daus (Atoutfarbe), Daus
      * - König (Atoutfarbe)
-     * @param handcards Handkarten des Spielers
      * @return Gesamtstichansage
      */
-    public int getStiche(List<Card> handcards) {
+    private int getStiche() {
         int stiche = 0;
-        for (Card card : handcards) {
+        for (Card card : this.playerCards.getCards()) {
             if (card.getColor() == Colors.WELI) stiche++;
             if (card.getColor() == atout) {
                 if (card.getValue() == Values.DAUS || card.getValue() == Values.KOENIG) stiche++;
@@ -389,6 +388,5 @@ public class Algorithm {
             }
         }
         return stiche;
-        //test
     }
 }
