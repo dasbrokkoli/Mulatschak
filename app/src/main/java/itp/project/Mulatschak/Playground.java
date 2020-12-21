@@ -32,7 +32,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     //Cards
     ImageView card1, card2, card3,card4,card5, destination, move;
     //Gemachte Stiche
-    private static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
+    private static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4, pl1_announced,pl2_announced,pl3_announced,pl4_announced;
     //Liste für die Karten
 
     //Algorithmen für Spieler
@@ -116,7 +116,10 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         stitches_pl2 = findViewById(R.id.pl1_stitches);
         stitches_pl3 = findViewById(R.id.pl2_stitches);
         stitches_pl4 = findViewById(R.id.pl3_stitches);
-
+        pl1_announced = findViewById(R.id.player_announced);
+        pl2_announced = findViewById(R.id.pl1_announced);
+        pl3_announced = findViewById(R.id.pl2_announced);
+        pl4_announced = findViewById(R.id.pl3_announced);
     }
 
     /**
@@ -253,7 +256,23 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             case 4: stitches_pl4.setText(count);
                 break;
         }
+    }
 
+    /**
+     * Die angesagten Stiche werden angezeigt
+     * @param player - Spieler der Siche ansagt
+     * @param stiche - angesagte der Stiche
+     */
+    public static void angesagteSticheAnzeigen(Algorithm player, int stiche){
+        if (player1.equals(player)) {
+            pl1_announced.setText(stiche);
+        } else if (player2.equals(player)) {
+            pl2_announced.setText(stiche);
+        } else if (player3.equals(player)) {
+            pl3_announced.setText(stiche);
+        } else if (player4.equals(player)) {
+            pl4_announced.setText(stiche);
+        }
     }
 
 }
