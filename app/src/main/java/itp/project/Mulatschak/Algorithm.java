@@ -389,5 +389,6 @@ public class Algorithm {
             }
         }
         return stiche;
+        //test
     }
 }
