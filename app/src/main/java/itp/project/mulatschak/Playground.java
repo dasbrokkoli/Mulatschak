@@ -1,13 +1,13 @@
 package itp.project.mulatschak;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 import android.content.Context;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
@@ -18,10 +18,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import itp.project.Enums.Colors;
 import itp.project.Enums.Difficulty;
 
-import java.util.List;
-
-
-public class Playground extends AppCompatActivity {
+public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
+    public static boolean alreadyLeft;
+    
     //Atout
     public static Colors Atout = null;
     ImageView atout;
@@ -33,9 +32,13 @@ public class Playground extends AppCompatActivity {
     ConstraintLayout constraintLayout;
 
     //Cards
-    ImageView card1, card2, card3,card4,card5;
+    ImageView card1, card2, card3,card4,card5, destination, move;
+    //Gemachte Stiche
+    private static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
     //Liste für die Karten
-    static List<Card> cards;
+
+    //Algorithmen für Spieler
+    static Algorithm player1,player3, player2, player4;
 
     //View diffView = findViewById(R.layout.popup_difficulty);
 
@@ -43,6 +46,9 @@ public class Playground extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
+        alreadyLeft = false;
+        //Spieler
+        austeilen();
 
         startActivity(new Intent(Playground.this, PopupStichansage.class));
 
@@ -94,18 +100,25 @@ public class Playground extends AppCompatActivity {
 
         //Cards
         card1 = findViewById(R.id.card1);
-//        card1.setImageResource(cards.get(0).getPicture()); //Karte über Liste anzeigen
-        //Karte ausspielen
-//        card1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                playCard(cards.get(0));
-//            }
-//        });
-        card2 = findViewById(R.id.card2);
-        card3 = findViewById(R.id.card);
+        card1.setOnTouchListener(this);
+        card2 = findViewById(R.id.card);
+        card2.setOnTouchListener(this);
+        card3 = findViewById(R.id.card2);
+        card3.setOnTouchListener(this);
         card4 = findViewById(R.id.card3);
+        card4.setOnTouchListener(this);
         card5 = findViewById(R.id.card4);
+        card5.setOnTouchListener(this);
+
+        destination = findViewById(R.id.imageView);
+        destination.setOnDragListener(this);
+
+        //Stiche gemacht
+        stitches_pl1 = findViewById(R.id.player_stitches);
+        stitches_pl2 = findViewById(R.id.pl1_stitches);
+        stitches_pl3 = findViewById(R.id.pl2_stitches);
+        stitches_pl4 = findViewById(R.id.pl3_stitches);
+
     }
 
     /**
@@ -137,6 +150,7 @@ public class Playground extends AppCompatActivity {
         super.onResume();
         //Das Atout wird angezeigt
         showAtout();
+        anzeigen();
     }
 
     /**
@@ -156,12 +170,92 @@ public class Playground extends AppCompatActivity {
     }
 
     /**
-     * Die Karten des Spielers die angezeigt werden sollen werden alls Liste übergeben
-     * @param c -Karten
+     * Neue runde die Karten werden neu ausgeteilt.
+     * Jeder Spieler bekommt einen neuen Algorithmus
      */
-    public static void setCards(List<Card> c){
-        cards = c;
+    public static void austeilen(){
+        player1 = new Algorithm(MainActivity.getCards(), 1);
+        player2 = new Algorithm(MainActivity.getCards(), 2);
+        player3 = new Algorithm(MainActivity.getCards(), 3);
+        player4 = new Algorithm(MainActivity.getCards(), 4);
     }
 
+    /**
+     * Die Karten des Spielers anzeigen.
+     */
+    public void anzeigen(){
+        card2.setImageDrawable(player1.getHoldingCards().get(1).getPicture());
+        card3.setImageDrawable(player1.getHoldingCards().get(2).getPicture());
+        card4.setImageDrawable(player1.getHoldingCards().get(3).getPicture());
+        card5.setImageDrawable(player1.getHoldingCards().get(4).getPicture());
+        card1.setImageDrawable(player1.getHoldingCards().get(0).getPicture());
+    }
+
+    /**
+     * Spieler 1 zurückgeben
+     * @return - Player1
+     */
+    public static Algorithm getPlayer1(){
+        return player1;
+    }
+
+
+
+
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        move = (ImageView) v;
+        View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+                v);
+        ClipData data = ClipData.newPlainText("", "");
+        v.startDrag(data, shadowBuilder, v, 0);
+        return false;
+    }
+
+    @Override
+    public boolean onDrag(View v, DragEvent event) {
+        switch (event.getAction()) {
+            case DragEvent.ACTION_DRAG_STARTED:
+                break;
+            case DragEvent.ACTION_DRAG_ENTERED:
+                break;
+            case DragEvent.ACTION_DRAG_EXITED:
+                break;
+            case DragEvent.ACTION_DROP:
+                break;
+            case DragEvent.ACTION_DRAG_ENDED:
+                //Karte in das Feld gezogen
+                if (event.getResult()) {
+                    destination.setImageDrawable(move.getDrawable());
+                    move.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(),"Geschafft", Toast.LENGTH_SHORT).show();
+                }
+            default:
+                break;
+        }
+        return true;
+    }
+
+
+    /**
+     * Die gemachten Stiche sollen im Playground angezeigt werden.
+     * Dazu wird bei dem Spieler der gestochen hat die neue Stichanzahl angezeigt.
+     * @param player - Spieler der den Zug gewonnen hat
+     * @param count - neue Stichanzahl des Spielers
+     */
+    public static void stitchesMade(int player, int count){
+        switch(player){
+            case 1: stitches_pl1.setText(""+count);
+                break;
+            case 2: stitches_pl2.setText(count);
+                break;
+            case 3: stitches_pl3.setText(count);
+                break;
+            case 4: stitches_pl4.setText(count);
+                break;
+        }
+
+    }
 
 }

@@ -8,6 +8,11 @@
         tools:context=".Popup_selectAtout"
         android:screenOrientation="landscape">
 
+    <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp" app:srcCompat="@drawable/eye" android:id="@+id/eyeBtn"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" android:layout_marginTop="16dp"/>
     <TextView
             android:text="@string/selectAtout"
             android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package itp.project.mulatschak;
 
 import android.content.Intent;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,9 +11,9 @@ import android.os.Bundle;
 import itp.project.Enums.Colors;
 
 public class Popup_atout extends AppCompatActivity {
-    ImageView atout;
+    ImageView atout, eyeBtn;
     Button mit, aus;
-    boolean alreadyLeft;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +23,29 @@ public class Popup_atout extends AppCompatActivity {
         //Popup größe
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int witdh = dm.widthPixels;
-        int height = dm.heightPixels;
+        final int width = dm.widthPixels;
+        final int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(witdh*.8), (int)(height*.8));//80% der höhe und Breite des Bildschirms
+        getWindow().setLayout((int)(width*.8), (int)(height*.8));//80% der höhe und Breite des Bildschirms
+
+        eyeBtn = findViewById(R.id.eyeBtn);
+        eyeBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.performClick();
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        getWindow().setLayout(0,0);
+                        System.out.println("Down");
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        getWindow().setLayout((int)(width*.8),(int)(height*.8));
+                        System.out.println("Up");
+                        return true;
+                }
+                return false;
+            }
+        });
 
         //Atout anzeigen
         atout = findViewById(R.id.at);
@@ -38,6 +58,7 @@ public class Popup_atout extends AppCompatActivity {
         mit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Playground.alreadyLeft = false;
                 //Zu Kartentausch weiterleiten
                 startActivity(new Intent(Popup_atout.this, Popup_kartentausch.class));
                 //Popup schließen
@@ -51,16 +72,16 @@ public class Popup_atout extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Neues Spiel (fängt mit stichansage an)
+                Playground.alreadyLeft = true;
                 startActivity(new Intent(Popup_atout.this, PopupStichansage.class));
                 //Popup schließen
                 finish();
             }
         });
 
-        //Prüfen ob in der vorigen Runde ausgestigene ist
-        alreadyLeft = false;
+
         //Der Benutzer kann nicht aussteigen wenn er in der Runde davor ausgestiegen ist
-        if(alreadyLeft){
+        if(Playground.alreadyLeft){
             aus.setClickable(false);//Button kann nicht gedrückt werden
             aus.setBackgroundColor(R.color.grey);//Button ist heller um zu zeigen, dass er nichz gedrückt werden kann
         }
@@ -88,9 +109,8 @@ public class Popup_atout extends AppCompatActivity {
      * Das Atout wird ausgelesen und im Attribut in der Klasse Playground gespeichert gespeichert
      */
     public static void selectAtout(){
-        //Auslesen aus dem Algtithmus
-
-        //In Atout Attribut speichern
+        //Atout aus dem Algorithmus Übernehmen
+        Playground.Atout = Algorithm.atout;
         Playground.Atout = Colors.HERZ;
     }
 }

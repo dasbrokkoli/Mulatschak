@@ -2,6 +2,7 @@ package itp.project.mulatschak;
 
 import android.content.Intent;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +11,7 @@ import itp.project.Enums.Colors;
 
 public class Popup_selectAtout extends AppCompatActivity {
 
-    ImageView schelle, blatt, eiche, herz, ok;
+    ImageView schelle, blatt, eiche, herz, ok, eyeBtn;
     String selected;
 
     @Override
@@ -23,11 +24,29 @@ public class Popup_selectAtout extends AppCompatActivity {
         //Popup größe
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int witdh = dm.widthPixels;
-        int height = dm.heightPixels;
+        final int width = dm.widthPixels;
+        final int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(witdh*.8), (int)(height*.8));//80% der höhe und Breite des Bildschirms
+        getWindow().setLayout((int)(width*.8), (int)(height*.8));//80% der höhe und Breite des Bildschirms
 
+        eyeBtn = findViewById(R.id.eyeBtn);
+        eyeBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.performClick();
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        getWindow().setLayout(0,0);
+                        System.out.println("Down");
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        getWindow().setLayout((int)(width*.8),(int)(height*.8));
+                        System.out.println("Up");
+                        return true;
+                }
+                return false;
+            }
+        });
         //Herz
         herz = findViewById(R.id.herz);
         herz.setOnClickListener(new View.OnClickListener() {

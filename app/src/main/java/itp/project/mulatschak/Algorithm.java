@@ -3,10 +3,10 @@ package itp.project.mulatschak;
 import android.view.View;
 import itp.project.Enums.Colors;
 import itp.project.Enums.Difficulty;
+import itp.project.Enums.Values;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
 
-import android.graphics.Color;
 
 import java.util.*;
 
@@ -35,6 +35,13 @@ public class Algorithm {
         this.playerCards = new HoldingCards();
         this.playerCards.initPlayer(5);
 
+        this.cards = cards;
+        this.holdingCards = new ArrayList<>();
+        this.holdingCards.add(cards.get(0));
+        this.holdingCards.add(cards.get(1));
+        this.holdingCards.add(cards.get(2));
+        this.holdingCards.add(cards.get(3));
+        this.holdingCards.add(cards.get(4));
         this.player = player;
         points.add(player - 1,20);
     }
@@ -190,6 +197,10 @@ public class Algorithm {
 
     public void setHoldingCards(List<Card> holdingCards) {
         this.holdingCards = holdingCards;
+    }
+
+    public List<Card> getHoldingCards(){
+        return holdingCards;
     }
 
     /**
