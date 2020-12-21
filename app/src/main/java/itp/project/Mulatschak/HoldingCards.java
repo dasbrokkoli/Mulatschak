@@ -85,17 +85,15 @@ public class HoldingCards {
 
     /**
      * Methode für den Kartentausch
-     * löscht alle getauschten Karten und weist dem Spieler neue Karten zu
+     * löscht die übergebene Card un weißt dem Spieler eine neue zu
      *
      * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
      */
-    public void changeCard(List<Card> oldCards, int anzNew) {
+    public void changeCard(Card oldCard, int anzNew) {
         //Card wird entfernt
-        for(Card card: oldCards) {
-            deleteHoldingCard(card);
-        }
+        deleteHoldingCard(oldCard);
 
-        //und neue werden hinzugefügt
+        //und eine neue hinzugefügt
         initPlayer(anzNew);
     }
 
