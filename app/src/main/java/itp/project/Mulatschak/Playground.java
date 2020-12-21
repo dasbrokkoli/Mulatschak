@@ -13,8 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import itp.project.Enums.Colors;
 import itp.project.Popups.PopupStichansage;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
     public static boolean alreadyLeft;
@@ -33,13 +38,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ImageView card1, card2, card3,card4,card5, destination, move;
     //Gemachte Stiche
     //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
-    public static TextView[] stitches;
+    public static TextView[] stitches = new TextView[4];
     //Liste für die Karten
 
     //Algorithmen für Spieler
-    static Algorithm player1,player3, player2, player4;
+    static Algorithm[] players = new Algorithm[4];
 
     //View diffView = findViewById(R.layout.popup_difficulty);
+
+    //TODO Ausgespielte Karten von jedem Spieler in die Map eintragen (playerIndex, Ausgespielte Karte)
+    private final BiMap<Integer,Card> cardsOnFloor = HashBiMap.create();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,21 +186,21 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * Jeder Spieler bekommt einen neuen Algorithmus
      */
     public static void austeilen(){
-        player1 = new Algorithm(MainActivity.getCards(), 1);
-        player2 = new Algorithm(MainActivity.getCards(), 2);
-        player3 = new Algorithm(MainActivity.getCards(), 3);
-        player4 = new Algorithm(MainActivity.getCards(), 4);
+        players[0] = new Algorithm(MainActivity.getCards(), 1);
+        players[1] = new Algorithm(MainActivity.getCards(), 2);
+        players[2] = new Algorithm(MainActivity.getCards(), 3);
+        players[3] = new Algorithm(MainActivity.getCards(), 4);
     }
 
     /**
      * Die Karten des Spielers anzeigen.
      */
     public void anzeigen(){
-        card2.setImageDrawable(player1.getHoldingCards().get(1).getPicture());
-        card3.setImageDrawable(player1.getHoldingCards().get(2).getPicture());
-        card4.setImageDrawable(player1.getHoldingCards().get(3).getPicture());
-        card5.setImageDrawable(player1.getHoldingCards().get(4).getPicture());
-        card1.setImageDrawable(player1.getHoldingCards().get(0).getPicture());
+        card1.setImageDrawable(players[0].getHoldingCards().get(0).getPicture());
+        card2.setImageDrawable(players[0].getHoldingCards().get(1).getPicture());
+        card3.setImageDrawable(players[0].getHoldingCards().get(2).getPicture());
+        card4.setImageDrawable(players[0].getHoldingCards().get(3).getPicture());
+        card5.setImageDrawable(players[0].getHoldingCards().get(4).getPicture());
     }
 
     /**
@@ -200,7 +208,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * @return - Player1
      */
     public static Algorithm getPlayer1(){
-        return player1;
+        return players[0];
     }
 
 
@@ -248,7 +256,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * @param player - Spieler der den Zug gewonnen hat
      * @param count - neue Stichanzahl des Spielers
      */
-    /**public static void stitchesMade(int player, int count){
+    /*public static void stitchesMade(int player, int count){
         switch(player){
             case 1: stitches_pl1.setText(""+count);
                 break;
@@ -260,19 +268,25 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 break;
         }
 
-    }**/
+    }*/
     public static void stitchesMade(int player, int count){
         switch(player){
             case 1: stitches[0].setText(""+count);
                 break;
-            case 2: stitches[1].setText(count);
+            case 2: stitches[1].setText(""+count);
                 break;
-            case 3: stitches[2].setText(count);
+            case 3: stitches[2].setText(""+count);
                 break;
-            case 4: stitches[4].setText(count);
+            case 4: stitches[4].setText(""+count);
                 break;
         }
 
+    }
+
+    public void whichCardWon(){
+        Card winner = Algorithm.getWinnerFromCards((Card[]) cardsOnFloor.values().toArray());
+        int winnerIndex = cardsOnFloor.inverse().get(winner);
+        players[winnerIndex].wonThisCard();
     }
 
 }

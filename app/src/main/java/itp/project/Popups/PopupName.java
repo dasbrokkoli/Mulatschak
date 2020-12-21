@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
@@ -32,14 +33,7 @@ public class PopupName extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_name);
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-
-        getWindow().setLayout((int)(width*.8),(int)(height*.8));
-
+        Listeners.newListener(this);
 
         //Leitet zum Playground weiter
         play = (Button) findViewById(R.id.play);

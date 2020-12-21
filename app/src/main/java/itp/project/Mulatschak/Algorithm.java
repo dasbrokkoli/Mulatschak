@@ -34,6 +34,7 @@ public class Algorithm {
         Algorithm.cards = cards;
 
         this.playerCards = new HoldingCards();
+        HoldingCards.setAllCards(cards);
         this.playerCards.initPlayer(5);
         this.player = player;
         points.add(player - 1,20);
@@ -109,7 +110,7 @@ public class Algorithm {
     }
 
     public void wonThisCard(){
-        madeTricks[player]++;
+        Playground.stitchesMade(this.player,madeTricks[player]++);
     }
 
     private Card lowestCardValue() {
