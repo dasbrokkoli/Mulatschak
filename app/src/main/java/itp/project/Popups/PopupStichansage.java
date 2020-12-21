@@ -24,7 +24,6 @@ public class PopupStichansage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_stichansage);
 
-        Playground.austeilen();
 
         //Popup größe
         DisplayMetrics dm = new DisplayMetrics();

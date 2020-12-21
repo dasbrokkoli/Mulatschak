@@ -76,7 +76,6 @@ public class Popup_atout extends AppCompatActivity {
             public void onClick(View view) {
                 //Neues Spiel (fängt mit stichansage an)
                 Playground.alreadyLeft = true;
-                startActivity(new Intent(Popup_atout.this, PopupStichansage.class));
                 //Popup schließen
                 finish();
             }

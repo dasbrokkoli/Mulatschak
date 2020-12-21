@@ -157,6 +157,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     @Override
     protected void onResume() {
         super.onResume();
+        //Neu austeilen wenn ausgestiegen
+        if(alreadyLeft) {
+            Playground.austeilen();
+            startActivity(new Intent(Playground.this, PopupStichansage.class));
+        }
+
         //Das Atout wird angezeigt
         showAtout();
         anzeigen();
@@ -242,7 +248,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                     destination.setImageDrawable(move.getDrawable());
                     move.setVisibility(View.INVISIBLE);
                     Toast.makeText(getApplicationContext(),"Geschafft", Toast.LENGTH_SHORT).show();
-                    play();
+//                    play();
                 }
             default:
                 break;
@@ -287,12 +293,28 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
     }
 
+    /**
+     * Jeder Spieler spielt eine Karte.
+     * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
+     */
     private void play(){
+        //Karte spieler
         inputCards.add(player1.getHoldingCards().get(0));
         inputCards.add(player2.getResponseCard(inputCards.get(0)));
         inputCards.add(player3.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
         inputCards.add(player4.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
+
+        //Gewinnder ermitteln
         Card winner = Algorithm.getWinnerFromCards((Card[]) inputCards.toArray());
         Toast.makeText(getApplicationContext(),""+winner.getColor()+winner.getValue(), Toast.LENGTH_SHORT).show();
+
+        //Log eintragen
+
+
+
+        //neu austeilen
+        austeilen();
+
+        //Stichansage aufrufen
     }
 }
