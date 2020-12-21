@@ -299,10 +299,10 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      */
     private void play(){
         //Karte spieler
-        inputCards.add(player1.getHoldingCards().get(0));
-        inputCards.add(player2.getResponseCard(inputCards.get(0)));
-        inputCards.add(player3.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
-        inputCards.add(player4.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
+//        inputCards.add(player1.getHoldingCards().get(0));
+//        inputCards.add(player2.getResponseCard(inputCards.get(0)));
+//        inputCards.add(player3.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
+//        inputCards.add(player4.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
 
         //Gewinnder ermitteln
         Card winner = Algorithm.getWinnerFromCards((Card[]) inputCards.toArray());
@@ -316,5 +316,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         austeilen();
 
         //Stichansage aufrufen
+        startActivity(new Intent(Playground.this, PopupStichansage.class));
     }
 }
