@@ -79,7 +79,7 @@ public class Algorithm {
     public Card getResponseCard(Card inputCard) {
         this.setValues();
         this.setHoldingValues();
-        setWinChance();
+        this.setWinChance();
 
         boolean winMove = new Random().nextInt(101) < winChance;
         if (!winMove) {
