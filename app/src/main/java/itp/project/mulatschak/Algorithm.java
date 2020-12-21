@@ -6,24 +6,23 @@ import itp.project.Exceptions.WhatTheFuckHowException;
 
 import android.graphics.Color;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class Algorithm {
 
     private static int dealer;
-    private static int[] tricks = new int[4];
-    private final List<Card> cards;
+    private static final int[] tricks = new int[4];
+    private static List<Card> cards;
     private List<Card> holdingCards;
     private static int winChance;
-    private int player;
+    private final int player;
     //Attribut für die Kartenzuweisung
     private HoldingCards playerCards;
     public static Colors atout;
+    private static final int[] madeTricks = new int[4];
 
     public Algorithm(List<Card> cards, List<Card> holdingCards, int player) {
-        this.cards = cards;
+        Algorithm.cards = cards;
         this.holdingCards = holdingCards;
 
         this.playerCards = new HoldingCards();
@@ -32,6 +31,9 @@ public class Algorithm {
         this.player = player;
     }
 
+    /**
+     * @return the Index of the highest trick in tricks-Array (equals player - 1)
+     */
     public static int getHighestTrickIndex() {
         int largest = Integer.MIN_VALUE;
         int largestIndex = -1;
@@ -51,6 +53,10 @@ public class Algorithm {
         return largestIndex;
     }
 
+    /**
+     * @param inputCard the highest Card currently laying on the floor
+     * @return the best {@link Card} the Computer could play in this move
+     */
     public Card getResponseCard(Card inputCard) {
         this.setValues();
         this.setHoldingValues();
@@ -66,6 +72,36 @@ public class Algorithm {
         } else {
             return lowestCardValue();
         }
+    }
+
+    /**
+     * @param cardsOnFloor all cards currently laying on the floor
+     * @return the highest Card currently laying on the floor (could be used as parameter for {@link Algorithm#getResponseCard}
+     */
+    public static Card getWinnerFromCards(Card... cardsOnFloor){
+        List<Integer> valueList = new ArrayList<>();
+        for(Card floorCard : cardsOnFloor){
+            for (Card card : cards) {
+                if (card.getValue() == floorCard.getValue() && card.getColor() == floorCard.getColor()) {
+                    floorCard.setTempValue(card.getTempValue());
+                }
+            }
+            valueList.add(floorCard.getTempValue());
+        }
+        int maxIndex = Collections.max(valueList);
+        Card maxCard = cardsOnFloor[maxIndex];
+        for(int i = 0; i< cardsOnFloor.length; i++){
+            if(i != maxIndex){
+                if(cardsOnFloor[i].getTempValue() == maxCard.getTempValue()){
+                    return cardsOnFloor[0];
+                }
+            }
+        }
+        return maxCard;
+    }
+
+    public void wonThisCard(){
+        madeTricks[player]++;
     }
 
     private Card lowestCardValue() {
@@ -175,6 +211,7 @@ public class Algorithm {
     public static void rundenbeginn() {
         Random r = new Random();
         dealer = 1 + r.nextInt(4);
+        Arrays.fill(madeTricks, 0);
     }
 
     public int getTrick() {
