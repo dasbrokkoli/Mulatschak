@@ -1,12 +1,16 @@
 package itp.project.mulatschak;
 
+import android.view.View;
 import itp.project.Enums.Colors;
+import itp.project.Enums.Difficulty;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
 
 import android.graphics.Color;
 
 import java.util.*;
+
+import static itp.project.Enums.Difficulty.EASY;
 
 public class Algorithm {
 
@@ -20,6 +24,9 @@ public class Algorithm {
     private HoldingCards playerCards;
     public static Colors atout;
     private static final int[] madeTricks = new int[4];
+    private static boolean doubleRound; //ob doppelte Runde (wenn Herz atout)
+    private static boolean droppedOut; //ob der Spieler ausgestiegen ist oder nicht
+    private static List<Integer> points = new ArrayList<>(); //fuer die Punktestaende der Spieler
 
     public Algorithm(List<Card> cards, List<Card> holdingCards, int player) {
         Algorithm.cards = cards;
@@ -29,6 +36,7 @@ public class Algorithm {
         this.playerCards.initPlayer(5);
 
         this.player = player;
+        points.add(player - 1,20);
     }
 
     /**
@@ -145,8 +153,15 @@ public class Algorithm {
         }
     }
 
-    private static void setWinChance() {
-        switch (Objects.requireNonNull(Playground.getDifficulty())) {
+    /**
+     * Setzt die Change zu gewinnen, bei jeder Schwierigkeit anders.
+     * Dabei wird die Gewinnchance für die KIs festgelegt (NICHT fuer Benutzer)
+     */
+    private void setWinChance() {
+        PopupDifficulty pop = new PopupDifficulty();
+        View diffView = pop.findViewById(R.layout.popup_difficulty);
+        //PopupDifficulty pop = this.findViewById(R.layout.popup_difficulty);
+        switch ((pop.getDifficulty(diffView))) {
             case EASY:
                 winChance = 25;
                 break;
@@ -159,6 +174,8 @@ public class Algorithm {
             case UNBEATABLE:
                 winChance = 100;
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + Objects.requireNonNull(pop.getDifficulty(diffView)));
         }
     }
 
@@ -207,10 +224,13 @@ public class Algorithm {
     /**
      * Zu Rundenbeginn wird die Zufallszahl für den aktuellen Dealer
      * (der, der den Weli abheben darf) ermittelt.
+     * Außerdem wird doubleRound standardmaessig auf false gesetzt.
+     * Zusaetzlich werdem jedem Spieler 20 Punkte zugeschrieben.
      */
     public static void rundenbeginn() {
         Random r = new Random();
         dealer = 1 + r.nextInt(4);
+        doubleRound = false;
         Arrays.fill(madeTricks, 0);
     }
 
@@ -296,6 +316,39 @@ public class Algorithm {
         }
         throw new WhatTheFuckHowException();
     }
+
+    /**
+     * Berechnet die Punkte nach jeder fertigen Runde:
+     *
+     * @param algo
+     * @return scores -> Eine ArrayList mit all den Punkteständen
+     */
+    public static List<Integer> scoring(Algorithm... algo) {
+        int newPoints;
+        for(int i=0;i<algo.length;i++) {
+            newPoints = points.get(i); //Die Punktestaende von davor aufrufen und abspeichern
+            algo[i].getTrick();     //Die Stiche holen
+
+            //Sieger ermitteln
+
+            //Stiche vergleichen (angesagt vs gemacht)
+
+            if(droppedOut == true) {
+                newPoints = newPoints+1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
+            }
+            if(doubleRound == true) {
+                newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
+            }
+            points.set(i,newPoints);
+        }
+        return points;
+
+        //Methode die erkennt ob Spieler ausgestiegen sind
+        //Wer wieviele Stiche und mit angesagten Vergleichen
+        // Zählt Runde doppelt?
+    }
+
+
 
     /**
      * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
