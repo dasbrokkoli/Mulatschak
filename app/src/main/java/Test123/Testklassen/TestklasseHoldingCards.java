@@ -1,14 +1,5 @@
 package Test123.Testklassen;
 
-import itp.project.Enums.Colors;
-import itp.project.Enums.Values;
-import itp.project.mulatschak.Algorithm;
-import itp.project.mulatschak.Card;
-import itp.project.mulatschak.HoldingCards;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * HoldingCards + Teile von Algorithm werden getestet. Die Testklasse simuliert die MainActivity

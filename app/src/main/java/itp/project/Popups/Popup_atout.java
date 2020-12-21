@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Popups;
 
 import android.content.Intent;
 import android.util.DisplayMetrics;
@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import itp.project.Enums.Colors;
+import itp.project.Mulatschak.Algorithm;
+import itp.project.Mulatschak.Playground;
+import itp.project.Mulatschak.R;
 
 public class Popup_atout extends AppCompatActivity {
     ImageView atout, eyeBtn;

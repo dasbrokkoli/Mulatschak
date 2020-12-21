@@ -1,10 +1,11 @@
-package itp.project.mulatschak;
+package itp.project.Mulatschak;
 
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Popups.PopupDesign;
 
 public class DesignPackActivity extends AppCompatActivity {
 

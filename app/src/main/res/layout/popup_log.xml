@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="#555"
         android:padding="10px"
-        tools:context=".PopupLog">
+        tools:context="itp.project.Popups.PopupLog">
 
     <ImageButton
             android:layout_width="34dp"

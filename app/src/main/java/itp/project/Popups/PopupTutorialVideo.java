@@ -1,10 +1,11 @@
-package itp.project.mulatschak;
+package itp.project.Popups;
 
 import android.util.DisplayMetrics;
 import android.widget.MediaController;
 import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Mulatschak.R;
 
 public class PopupTutorialVideo extends AppCompatActivity {
 

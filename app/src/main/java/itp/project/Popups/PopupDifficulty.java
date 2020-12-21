@@ -1,17 +1,13 @@
-package itp.project.mulatschak;
+package itp.project.Popups;
 
-import android.content.Context;
 import android.content.Intent;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
-import android.util.DisplayMetrics;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import itp.project.Enums.Difficulty;
+import itp.project.Mulatschak.R;
 
 /**
  * PopUp bei welchem man die Spiel-Schwierigkeit waehlen kann.
@@ -60,28 +56,28 @@ public class PopupDifficulty extends AppCompatActivity {
      * @param view
      * @return Difficulty
      */
-//    public Difficulty getDifficulty(View view){
-//        boolean checked = ((RadioButton) view).isChecked();
-//        Difficulty d = null;
-//        switch(view.getId()) {
-//            case R.id.easy:
-//                if(checked)
-//                    d = Difficulty.EASY;
-//                break;
-//            case R.id.medium:
-//                if(checked)
-//                    d = Difficulty.MEDIUM;
-//                break;
-//            case R.id.hard:
-//                if(checked)
-//                    d = Difficulty.HARD;
-//                break;
-//            case R.id.unbeatable:
-//                if(checked)
-//                    d = Difficulty.UNBEATABLE;
-//                break;
-//        }
-//
-//        return d;
-//    }
+    public Difficulty getDifficulty(View view){
+        boolean checked = ((RadioButton) view).isChecked();
+        Difficulty d = null;
+        switch(view.getId()) {
+            case R.id.easy:
+                if(checked)
+                    d = Difficulty.EASY;
+                break;
+            case R.id.medium:
+                if(checked)
+                    d = Difficulty.MEDIUM;
+                break;
+            case R.id.hard:
+                if(checked)
+                    d = Difficulty.HARD;
+                break;
+            case R.id.unbeatable:
+                if(checked)
+                    d = Difficulty.UNBEATABLE;
+                break;
+        }
+
+        return d;
+    }
 }

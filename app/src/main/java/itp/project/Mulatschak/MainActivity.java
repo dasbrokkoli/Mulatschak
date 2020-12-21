@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Mulatschak;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import itp.project.Enums.Colors;
 import itp.project.Enums.Values;
+import itp.project.Popups.PopupDifficulty;
+import itp.project.Mulatschak.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Mulatschak;
 
 import android.content.Intent;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Popups.PopupTutorialVideo;
+import itp.project.Mulatschak.R;
 
 public class TutorialActivity extends AppCompatActivity {
 

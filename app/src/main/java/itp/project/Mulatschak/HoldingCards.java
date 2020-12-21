@@ -1,11 +1,10 @@
-package itp.project.mulatschak;
+package itp.project.Mulatschak;
 
 import itp.project.Enums.Colors;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import itp.project.Enums.Colors;
 
 /**
  *
@@ -18,6 +17,10 @@ public class HoldingCards {
     public static boolean weliOccured;
 
     private List<Card> player;
+
+    public HoldingCards() {
+        player = new ArrayList<>();
+    }
 
     /**
      * Weißt allCards die Karten zu
@@ -56,10 +59,10 @@ public class HoldingCards {
         Card card;
 
         //Fünf Karten werden zugewiesen
-        x:while(this.player.size() < cardAnz) {
-            if(HoldingCards.allCards.isEmpty()) {
+        while (this.player.size() < cardAnz) {
+            if (HoldingCards.allCards.isEmpty()) {
                 System.err.println("Alle Karten wurde ausgeteilt"); //Später evtl. entfernen
-                break x;
+                break;
             }
 
             //eine zufällige Karte wird ausgewählt
@@ -68,7 +71,7 @@ public class HoldingCards {
             //neue Card wird erstellt
             card = HoldingCards.allCards.get(zz);
 
-            if(card.getColor() == Colors.WELI) {
+            if (card.getColor() == Colors.WELI) {
                 setWeliStatus(true);
             }
 
@@ -136,5 +139,9 @@ public class HoldingCards {
 
     public List<Card> getCards() {
         return this.player;
+    }
+
+    public void setCards(List<Card> holdingCards) {
+        this.player = holdingCards;
     }
 }

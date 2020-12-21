@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Mulatschak;
 
 import android.graphics.drawable.Drawable;
 import itp.project.Enums.Colors;

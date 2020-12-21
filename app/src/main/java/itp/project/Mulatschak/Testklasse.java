@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Mulatschak;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Popups;
 
 import android.content.Intent;
 import android.util.DisplayMetrics;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Mulatschak.Playground;
+import itp.project.Mulatschak.R;
 
 import java.util.ArrayList;
 import java.util.List;

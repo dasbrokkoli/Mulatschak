@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Popups;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
+import itp.project.Mulatschak.R;
 
 public class PopupWeli extends AppCompatActivity {
 

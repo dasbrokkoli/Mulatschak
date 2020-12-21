@@ -1,10 +1,8 @@
-package itp.project.mulatschak;
+package itp.project.Mulatschak;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.*;
 import android.widget.*;
 import android.content.Context;
@@ -16,7 +14,7 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import itp.project.Enums.Colors;
-import itp.project.Enums.Difficulty;
+import itp.project.Popups.PopupStichansage;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
     public static boolean alreadyLeft;

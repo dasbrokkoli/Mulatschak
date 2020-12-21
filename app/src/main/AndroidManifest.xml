@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="itp.project.mulatschak">
+          package="itp.project.Mulatschak">
 
     <application
             android:allowBackup="true"
@@ -11,12 +11,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="AllowBackup">
-        <activity android:name=".PopupTutorialVideo"
+        <activity android:name="itp.project.Popups.PopupTutorialVideo"
                   android:screenOrientation="landscape"
                   android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name=".PopupDesign"
+                android:name="itp.project.Popups.PopupDesign"
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
@@ -26,45 +26,45 @@
                 android:screenOrientation="landscape">
         </activity>
         <activity
-                android:name=".PopupName"
+                android:name="itp.project.Popups.PopupName"
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
-        <activity android:name=".Popup_kartentausch"
+        <activity android:name="itp.project.Popups.Popup_kartentausch"
                   android:screenOrientation="landscape"
                   android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name=".Popup_selectAtout"
+                android:name="itp.project.Popups.Popup_selectAtout"
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name=".Popup_atout"
+                android:name="itp.project.Popups.Popup_atout"
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name=".PopupStichansage"
+                android:name="itp.project.Popups.PopupStichansage"
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name=".PopupSaveGame"
+                android:name="itp.project.Popups.PopupSaveGame"
                 android:screenOrientation="landscape">
         </activity>
         <activity
-                android:name=".PopupDifficulty"
+                android:name="itp.project.Popups.PopupDifficulty"
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name=".PopupLog"
+                android:name="itp.project.Popups.PopupLog"
                 android:screenOrientation="landscape"
                 android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
-                android:name=".PopupWeli"
+                android:name="itp.project.Popups.PopupWeli"
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>

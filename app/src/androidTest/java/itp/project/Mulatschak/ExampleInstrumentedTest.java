@@ -1,4 +1,4 @@
-package itp.project.mulatschak;
+package itp.project.Mulatschak;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;

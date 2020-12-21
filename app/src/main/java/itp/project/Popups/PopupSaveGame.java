@@ -1,8 +1,9 @@
-package itp.project.mulatschak;
+package itp.project.Popups;
 
 import android.util.DisplayMetrics;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Mulatschak.R;
 
 public class PopupSaveGame extends AppCompatActivity {
 

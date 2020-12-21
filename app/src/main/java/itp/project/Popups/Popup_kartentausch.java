@@ -1,7 +1,6 @@
-package itp.project.mulatschak;
+package itp.project.Popups;
 
 import android.content.ClipData;
-import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -10,6 +9,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Mulatschak.Card;
+import itp.project.Mulatschak.Playground;
+import itp.project.Mulatschak.R;
 
 public class Popup_kartentausch extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
 

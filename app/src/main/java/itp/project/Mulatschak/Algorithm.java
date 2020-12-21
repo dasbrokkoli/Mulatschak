@@ -1,17 +1,16 @@
-package itp.project.mulatschak;
+package itp.project.Mulatschak;
 
 import android.view.View;
 import itp.project.Enums.Colors;
-import itp.project.Enums.Difficulty;
-import itp.project.Enums.Values;
 import itp.project.Enums.Values;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
+import itp.project.Popups.PopupDifficulty;
+import itp.project.Mulatschak.R;
 
 
 import java.util.*;
 
-import static itp.project.Enums.Difficulty.EASY;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -21,7 +20,6 @@ public class Algorithm {
     private static int dealer;
     private static final int[] tricks = new int[4];
     private static List<Card> cards;
-    private List<Card> holdingCards;
     private static int winChance;
     private final int player;
     //Attribut für die Kartenzuweisung
@@ -32,20 +30,11 @@ public class Algorithm {
     private static boolean droppedOut; //ob der Spieler ausgestiegen ist oder nicht
     private static List<Integer> points = new ArrayList<>(); //fuer die Punktestaende der Spieler
 
-    public Algorithm(List<Card> cards, List<Card> holdingCards, int player) {
+    public Algorithm(List<Card> cards, int player) {
         Algorithm.cards = cards;
-        this.holdingCards = holdingCards;
 
         this.playerCards = new HoldingCards();
         this.playerCards.initPlayer(5);
-
-        this.cards = cards;
-        this.holdingCards = new ArrayList<>();
-        this.holdingCards.add(cards.get(0));
-        this.holdingCards.add(cards.get(1));
-        this.holdingCards.add(cards.get(2));
-        this.holdingCards.add(cards.get(3));
-        this.holdingCards.add(cards.get(4));
         this.player = player;
         points.add(player - 1,20);
     }
@@ -83,7 +72,7 @@ public class Algorithm {
 
         boolean winMove = new Random().nextInt(101) < winChance;
         if (!winMove) {
-            return holdingCards.get(new Random().nextInt(holdingCards.size()));
+            return playerCards.getCards().get(new Random().nextInt(playerCards.getCards().size()));
         }
         Card lowestCard = lowestCardValue(inputCard.getTempValue());
         if (lowestCard != null) {
@@ -129,7 +118,7 @@ public class Algorithm {
 
     private Card lowestCardValue(int moreThan) {
         Card lowestValue = null;
-        for (Card card : holdingCards) {
+        for (Card card : playerCards.getCards()) {
             if (lowestValue == null) lowestValue = card;
             if (card.getTempValue() < lowestValue.getTempValue()) {
                 if (card.getTempValue() > moreThan) {
@@ -155,7 +144,7 @@ public class Algorithm {
     }
 
     private void setHoldingValues() {
-        for (Card holdCard : holdingCards) {
+        for (Card holdCard : playerCards.getCards()) {
             for (Card card : cards) {
                 if (card.getValue() == holdCard.getValue() && card.getColor() == holdCard.getColor()) {
                     holdCard.setTempValue(card.getTempValue());
@@ -199,13 +188,9 @@ public class Algorithm {
         return false;
     }
 
-    public void setHoldingCards(List<Card> holdingCards) {
-        this.holdingCards = holdingCards;
-    }
+    public void setHoldingCards(List<Card> holdingCards) { playerCards.setCards(holdingCards); }
 
-    public List<Card> getHoldingCards(){
-        return holdingCards;
-    }
+    public List<Card> getHoldingCards(){ return playerCards.getCards(); }
 
     /**
      * Es wird geprüft ob der Benutzer den Weli ziehen darf. Dazu wird das Int-Attribut dealer verwendet.
