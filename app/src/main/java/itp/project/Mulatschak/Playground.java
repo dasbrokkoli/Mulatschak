@@ -15,12 +15,13 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import itp.project.Enums.Colors;
 import itp.project.Popups.PopupStichansage;
+import itp.project.Popups.Popup_atout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
-    public static boolean alreadyLeft;
+//    public static boolean alreadyLeft;
     
     //Atout
     public static Colors Atout = null;
@@ -50,7 +51,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
-        alreadyLeft = false;
+//        alreadyLeft = false;
         //Spieler
         austeilen();
 
@@ -158,9 +159,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     protected void onResume() {
         super.onResume();
         //Neu austeilen wenn ausgestiegen
-        if(alreadyLeft) {
-            Playground.austeilen();
-            startActivity(new Intent(Playground.this, PopupStichansage.class));
+        if(Popup_atout.alreadyLeft) {
+           neuAusteilen();
         }
 
         //Das Atout wird angezeigt
@@ -196,6 +196,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         player2 = new Algorithm(MainActivity.getCards(), 2);
         player3 = new Algorithm(MainActivity.getCards(), 3);
         player4 = new Algorithm(MainActivity.getCards(), 4);
+    }
+
+    public void neuAusteilen(){
+        austeilen();
+        anzeigen();
+        startActivity(new Intent(Playground.this, PopupStichansage.class));
     }
 
     /**
