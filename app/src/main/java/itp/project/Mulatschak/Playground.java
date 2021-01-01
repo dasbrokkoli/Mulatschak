@@ -14,6 +14,7 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import itp.project.Enums.Colors;
+import itp.project.Popups.PopupLog;
 import itp.project.Popups.PopupStichansage;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
@@ -33,7 +34,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ImageView card1, card2, card3,card4,card5, destination, move;
     //Gemachte Stiche
     //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
-    public static TextView[] stitches;
+    public static TextView[] stitches = new TextView[4];
     //Liste für die Karten
 
     //Algorithmen für Spieler
@@ -74,23 +75,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         atout = findViewById(R.id.atout);
 
         constraintLayout = (ConstraintLayout) findViewById(R.id.playgroundConstraintLayout);
+        //LogPopup
         showLogBtn = findViewById(R.id.logButton);
         showLogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LayoutInflater layoutInflater = (LayoutInflater) Playground.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View logView = layoutInflater.inflate(R.layout.popup_log, null);
-
-                closeLogView = logView.findViewById(R.id.closeLogBtn);
-
-                logWindow = new PopupWindow(logView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-                logWindow.showAtLocation(constraintLayout, Gravity.CENTER,0,0);
-                closeLogView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        logWindow.dismiss();
-                    }
-                });
+                startActivity(new Intent(Playground.this, PopupLog.class));
             }
         });
 

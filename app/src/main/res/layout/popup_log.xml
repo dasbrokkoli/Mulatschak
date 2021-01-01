@@ -14,7 +14,7 @@
             android:layout_height="29dp" app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
             android:id="@+id/closeLogBtn"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" android:onClick="closeLog"/>
     <TextView
             android:text="@string/logHead"
             android:layout_width="wrap_content"
@@ -26,22 +26,6 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:layout_constraintTop_toBottomOf="@+id/logHead"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent">
-        <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView" android:textColor="#FF0000"/>
-        <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView2"/>
-        <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView3"/>
-        <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView4"/>
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/linlayout"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

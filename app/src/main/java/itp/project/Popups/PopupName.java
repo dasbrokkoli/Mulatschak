@@ -1,6 +1,9 @@
 package itp.project.Popups;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -46,8 +49,7 @@ public class PopupName extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<String> l = getNames(view);
-                System.out.println(l.get(0));
+                getNames();
                 startActivity(new Intent(PopupName.this, Playground.class));
             }
         });
@@ -55,22 +57,30 @@ public class PopupName extends AppCompatActivity {
 
     /**
      * Liefert eine Array-List mit den Spielernamen zurueck.
-     * @param v
      * @return names
      */
-    public List<String> getNames(View v) {
+    public List<String> getNames() {
         List<String> names = new ArrayList();
         String tmp;
         EditText ed;
 
         LinearLayout linlay = findViewById(R.id.nameList);
 
+
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("PlayerNames",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.clear();
         for(int i = 0; i < linlay.getChildCount(); i++) {
             ed = (EditText) linlay.getChildAt(i);;
             //System.out.println("ARGH" + findViewById(R.id.name+i));
-            tmp = ed.toString();
+            tmp = ed.getText().toString();
             names.add(tmp);
+            if(!tmp.isEmpty()){
+                editor.putString("PlayerName"+i, tmp);
+            }
         }
+        editor.apply();
+
         return names;
     }
 }

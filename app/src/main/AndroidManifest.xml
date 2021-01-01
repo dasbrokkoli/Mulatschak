@@ -61,7 +61,7 @@
         <activity
                 android:name="itp.project.Popups.PopupLog"
                 android:screenOrientation="landscape"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.Popups.PopupWeli"

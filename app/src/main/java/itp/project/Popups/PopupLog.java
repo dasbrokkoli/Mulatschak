@@ -1,14 +1,102 @@
 package itp.project.Popups;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Space;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.google.android.flexbox.FlexboxItemDecoration;
+import com.google.android.flexbox.FlexboxLayout;
+import com.google.android.flexbox.JustifyContent;
+import itp.project.Mulatschak.Algorithm;
 import itp.project.Mulatschak.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PopupLog extends AppCompatActivity {
+    private LinearLayout outerLayout;
+    private FlexboxLayout nameLayout;
+    private FlexboxLayout pointLayout;
+    private TextView tvNames[] = new TextView[4];
+    private TextView tvPoints[] = new TextView[4];
+    private PopupName popName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_log);
+        outerLayout = findViewById(R.id.linlayout);
+        nameLayout = new FlexboxLayout(outerLayout.getContext());
+        pointLayout = new FlexboxLayout(outerLayout.getContext());
+        outerLayout.addView(nameLayout);
+        outerLayout.addView(pointLayout);
+        popName = new PopupName();
+
+        for(int i = 0; i < tvNames.length; i++){
+            tvNames[i] = new TextView(this);
+            nameLayout.addView(tvNames[i]);
+        }
+
+        for (int i = 0; i < tvPoints.length; i++){
+            tvPoints[i] = new TextView(this);
+            pointLayout.addView(tvPoints[i]);
+        }
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+
+        getWindow().setLayout((int)(width*.8),(int)(height*.8));
+
+        //Methodenaufruf
+        setNames();
+        setScoring();
+
+        nameLayout.setJustifyContent(JustifyContent.SPACE_BETWEEN);
+        pointLayout.setMinimumWidth(nameLayout.getWidth());
+        pointLayout.setJustifyContent(JustifyContent.SPACE_BETWEEN);
+    }
+
+    /**
+     * Setzt die  in die TextView
+     */
+    public void setScoring() {
+        List<Integer> points = Algorithm.getPoints();
+        for(int i = 0; i < points.size(); i++) {
+            tvPoints[i].setText(String.valueOf(points.get(i)));
+        }
+    }
+
+    /**
+     * Setzt die Namen in die TextView
+     */
+    public void setNames() {
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("PlayerNames", Context.MODE_PRIVATE);
+        List<String> names = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            names.add(sp.getString("PlayerName"+i,"Player " + (i+1)));
+        }
+        for(int i = 0; i < names.size(); i++) {
+//            if(names.get(i) == null) { //Wenn keine Namen eingegeben wurden, dann wird eine ID gesetzt
+//                System.out.println("No Value");
+//                names.set(i,String.valueOf(i));
+//            }
+            tvNames[i].setText(names.get(i));
+        }
+    }
+
+    public void closeLog(View view){
+        this.finish();
     }
 }
