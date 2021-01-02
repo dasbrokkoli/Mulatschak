@@ -95,17 +95,17 @@ public class Popup_atout extends AppCompatActivity {
      * Dafür wird das gespeicherte Atout der Klasse Playground verwendet.
      */
     private void showAtout(){
-            switch(Playground.Atout){
-                case HERZ: atout.setImageResource(R.drawable.herz);
-                    break;
-                case BLATT: atout.setImageResource(R.drawable.blatt);
-                    break;
-                case EICHEL: atout.setImageResource(R.drawable.eiche);
-                    break;
-                case SCHELLE: atout.setImageResource(R.drawable.schelle);
-                    break;
-                default: atout.setImageResource(R.drawable.empty);
-            }
+        switch(Playground.Atout){
+            case HERZ: atout.setImageResource(R.drawable.herz);
+                break;
+            case BLATT: atout.setImageResource(R.drawable.blatt);
+                break;
+            case EICHEL: atout.setImageResource(R.drawable.eiche);
+                break;
+            case SCHELLE: atout.setImageResource(R.drawable.schelle);
+                break;
+            default: atout.setImageResource(R.drawable.empty);
+        }
     }
 
     /**
