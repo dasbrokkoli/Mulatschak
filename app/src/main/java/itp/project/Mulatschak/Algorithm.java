@@ -34,6 +34,7 @@ public class Algorithm {
         Algorithm.cards = cards;
 
         this.playerCards = new HoldingCards();
+        HoldingCards.setAllCards(cards);
         this.playerCards.initPlayer(5);
         this.player = player;
         points.add(player - 1,20);
@@ -109,7 +110,7 @@ public class Algorithm {
     }
 
     public void wonThisCard(){
-        madeTricks[player]++;
+        Playground.stitchesMade(this.player,madeTricks[player]++);
     }
 
     private Card lowestCardValue() {
@@ -230,7 +231,6 @@ public class Algorithm {
     public static void rundenbeginn() {
         Random r = new Random();
         dealer = 1 + r.nextInt(4);
-        doubleRound = false;
         Arrays.fill(madeTricks, 0);
     }
 
@@ -325,18 +325,27 @@ public class Algorithm {
      */
     public static List<Integer> scoring(Algorithm... algo) {
         int newPoints;
+        int tempSticheAngesagt = 4;
         for(int i=0;i<algo.length;i++) {
             newPoints = points.get(i); //Die Punktestaende von davor aufrufen und abspeichern
             algo[i].getTrick();     //Die Stiche holen
 
             //Sieger ermitteln
 
+            //Angesagte Stiche
+            int saidStitches = tempSticheAngesagt;
+            //Gemachte stiche
+            CharSequence tmp = (Playground.stitches[i].getText());
+            String tmp2 = tmp.toString();
+            int madeStitches = Integer.parseInt(tmp2);
+
             //Stiche vergleichen (angesagt vs gemacht)
+            //if(saidStitches > )
 
             if(droppedOut == true) {
                 newPoints = newPoints+1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
             }
-            if(doubleRound == true) {
+            if(atout == Colors.HERZ) {
                 newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
             }
             points.set(i,newPoints);
@@ -388,5 +397,6 @@ public class Algorithm {
             }
         }
         return stiche;
+
     }
 }

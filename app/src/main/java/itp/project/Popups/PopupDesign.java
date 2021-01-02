@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.R;
 
 public class PopupDesign extends AppCompatActivity {
@@ -14,13 +15,7 @@ public class PopupDesign extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_design);
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
-
-        getWindow().setLayout((int) (width * .8), (int) (height * 0.8));
+        Listeners.newListener(this);
 
         // Auswählen des Packs
         TextView textView = findViewById(R.id.chosen_pack_name);

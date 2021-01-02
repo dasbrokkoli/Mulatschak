@@ -5,6 +5,7 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.R;
 
 public class PopupTutorialVideo extends AppCompatActivity {
@@ -14,13 +15,7 @@ public class PopupTutorialVideo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_tutorial_video);
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
-
-        getWindow().setLayout((int) (width * .8), (int) (height * 0.8));
+        Listeners.newListener(this);
 
         VideoView videoView = findViewById(R.id.videoView);
         // Video aus Pfad laden

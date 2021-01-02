@@ -7,6 +7,7 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import itp.project.Enums.Difficulty;
+import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.R;
 
 /**
@@ -25,13 +26,7 @@ public class PopupDifficulty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_difficulty);
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-
-        getWindow().setLayout((int)(width*.8),(int)(height*.8));
+        Listeners.newListener(this);
 
         //Weiterleitung zu PopUpName
         Button showNamePopup = (Button) findViewById(R.id.showNamePopup);
