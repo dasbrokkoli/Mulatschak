@@ -15,6 +15,7 @@ import itp.project.Enums.Colors;
 import itp.project.Enums.Values;
 import itp.project.Popups.PopupDifficulty;
 import itp.project.Mulatschak.R;
+import itp.project.Popups.PopupLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //LogPopup
-        constraintLayout = (ConstraintLayout) findViewById(R.id.mainConstraintLayout);
+        showLogBtn = (Button) findViewById(R.id.log);
+        showLogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, PopupLog.class));
+            }
+        });
+
+        /**constraintLayout = (ConstraintLayout) findViewById(R.id.mainConstraintLayout);
         showLogBtn = findViewById(R.id.log);
         showLogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
 
         //HoldingCards
         HoldingCards.setAllCards(this.cards);

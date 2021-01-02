@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import itp.project.Enums.Colors;
+import itp.project.Popups.PopupLog;
 import itp.project.Popups.PopupStichansage;
 
 import java.util.HashMap;
@@ -82,23 +83,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         atout = findViewById(R.id.atout);
 
         constraintLayout = (ConstraintLayout) findViewById(R.id.playgroundConstraintLayout);
+        //LogPopup
         showLogBtn = findViewById(R.id.logButton);
         showLogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LayoutInflater layoutInflater = (LayoutInflater) Playground.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View logView = layoutInflater.inflate(R.layout.popup_log, null);
-
-                closeLogView = logView.findViewById(R.id.closeLogBtn);
-
-                logWindow = new PopupWindow(logView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-                logWindow.showAtLocation(constraintLayout, Gravity.CENTER,0,0);
-                closeLogView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        logWindow.dismiss();
-                    }
-                });
+                startActivity(new Intent(Playground.this, PopupLog.class));
             }
         });
 

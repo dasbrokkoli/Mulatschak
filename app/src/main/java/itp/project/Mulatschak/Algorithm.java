@@ -37,7 +37,11 @@ public class Algorithm {
         HoldingCards.setAllCards(cards);
         this.playerCards.initPlayer(5);
         this.player = player;
-        points.add(player - 1,20);
+        try {
+            points.set(player - 1,21);
+        } catch (IndexOutOfBoundsException e) {
+            points.add(player - 1,21);
+        }
     }
 
     /**
@@ -319,11 +323,11 @@ public class Algorithm {
 
     /**
      * Berechnet die Punkte nach jeder fertigen Runde:
+     * speichert sie in der Attribut Liste points ab
      *
      * @param algo
-     * @return scores -> Eine ArrayList mit all den Punkteständen
      */
-    public static List<Integer> scoring(Algorithm... algo) {
+    public static void scoring(Algorithm... algo) {
         int newPoints;
         int tempSticheAngesagt = 4;
         for(int i=0;i<algo.length;i++) {
@@ -340,21 +344,21 @@ public class Algorithm {
             int madeStitches = Integer.parseInt(tmp2);
 
             //Stiche vergleichen (angesagt vs gemacht)
-            //if(saidStitches > )
-
             if(droppedOut == true) {
                 newPoints = newPoints+1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
+            }else if(saidStitches > madeStitches) {
+                newPoints += 10; //Wenn mehr angesagt wurden als gemacht
+            }else if((saidStitches == 0) && (madeStitches == 0)) {
+                newPoints += 5; //Wenn keine angesagt und keine gemacht wurden
+            }else{
+                newPoints -= madeStitches; //Sonst schreibt man die gemachten Stiche runter
             }
+
             if(atout == Colors.HERZ) {
                 newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
             }
             points.set(i,newPoints);
         }
-        return points;
-
-        //Methode die erkennt ob Spieler ausgestiegen sind
-        //Wer wieviele Stiche und mit angesagten Vergleichen
-        // Zählt Runde doppelt?
     }
 
 
@@ -398,5 +402,9 @@ public class Algorithm {
         }
         return stiche;
 
+    }
+
+    public static List<Integer> getPoints(){
+        return points;
     }
 }

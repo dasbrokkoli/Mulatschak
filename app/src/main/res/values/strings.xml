@@ -7,7 +7,7 @@
     <string name="settings_name">Settings</string>
     <string name="tutorial_name">Tutorial</string>
     <string name="logHead">Last Games:</string>
-    <string name="names">Player Names</string>
+    <string name="names">Player Names (Optional)</string>
     <string name="name1">Player 1 - you </string>
     <string name="name2">Player 2</string>
     <string name="name3">Player 3</string>
