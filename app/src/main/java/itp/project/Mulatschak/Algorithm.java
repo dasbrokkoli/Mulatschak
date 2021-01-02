@@ -6,14 +6,8 @@ import itp.project.Enums.Values;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
 import itp.project.Popups.PopupDifficulty;
-import itp.project.Mulatschak.R;
-
 
 import java.util.*;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 
 public class Algorithm {
 
@@ -29,14 +23,27 @@ public class Algorithm {
     private static boolean doubleRound; //ob doppelte Runde (wenn Herz atout)
     private static boolean droppedOut; //ob der Spieler ausgestiegen ist oder nicht
     private static List<Integer> points = new ArrayList<>(); //fuer die Punktestaende der Spieler
+    private boolean ausgestiegen;
+    private int stiche;
+
+    public boolean isKi() {
+        return ki;
+    }
+
+    public void setKi(boolean ki) {
+        this.ki = ki;
+    }
+
+    private boolean ki;
 
     public Algorithm(List<Card> cards, int player) {
         Algorithm.cards = cards;
-
         this.playerCards = new HoldingCards();
         this.playerCards.initPlayer(5);
         this.player = player;
-        points.add(player - 1,20);
+        points.add(player - 1, 20);
+        setAusgestiegen(false);
+        setKi(true);
     }
 
     /**
@@ -84,11 +91,12 @@ public class Algorithm {
 
     /**
      * @param cardsOnFloor all cards currently laying on the floor
-     * @return the highest Card currently laying on the floor (could be used as parameter for {@link Algorithm#getResponseCard}
+     * @return the highest Card currently laying on the floor (could be used as parameter for {@link
+     * Algorithm#getResponseCard}
      */
-    public static Card getWinnerFromCards(Card... cardsOnFloor){
+    public static Card getWinnerFromCards(Card... cardsOnFloor) {
         List<Integer> valueList = new ArrayList<>();
-        for(Card floorCard : cardsOnFloor){
+        for (Card floorCard : cardsOnFloor) {
             for (Card card : cards) {
                 if (card.getValue() == floorCard.getValue() && card.getColor() == floorCard.getColor()) {
                     floorCard.setTempValue(card.getTempValue());
@@ -98,9 +106,9 @@ public class Algorithm {
         }
         int maxIndex = Collections.max(valueList);
         Card maxCard = cardsOnFloor[maxIndex];
-        for(int i = 0; i< cardsOnFloor.length; i++){
-            if(i != maxIndex){
-                if(cardsOnFloor[i].getTempValue() == maxCard.getTempValue()){
+        for (int i = 0; i < cardsOnFloor.length; i++) {
+            if (i != maxIndex) {
+                if (cardsOnFloor[i].getTempValue() == maxCard.getTempValue()) {
                     return cardsOnFloor[0];
                 }
             }
@@ -108,7 +116,7 @@ public class Algorithm {
         return maxCard;
     }
 
-    public void wonThisCard(){
+    public void wonThisCard() {
         madeTricks[player]++;
     }
 
@@ -154,8 +162,8 @@ public class Algorithm {
     }
 
     /**
-     * Setzt die Change zu gewinnen, bei jeder Schwierigkeit anders.
-     * Dabei wird die Gewinnchance für die KIs festgelegt (NICHT fuer Benutzer)
+     * Setzt die Change zu gewinnen, bei jeder Schwierigkeit anders. Dabei wird die Gewinnchance für die KIs festgelegt
+     * (NICHT fuer Benutzer)
      */
     private void setWinChance() {
         PopupDifficulty pop = new PopupDifficulty();
@@ -188,9 +196,13 @@ public class Algorithm {
         return false;
     }
 
-    public void setHoldingCards(List<Card> holdingCards) { playerCards.setCards(holdingCards); }
+    public void setHoldingCards(List<Card> holdingCards) {
+        playerCards.setCards(holdingCards);
+    }
 
-    public List<Card> getHoldingCards(){ return playerCards.getCards(); }
+    public List<Card> getHoldingCards() {
+        return playerCards.getCards();
+    }
 
     /**
      * Es wird geprüft ob der Benutzer den Weli ziehen darf. Dazu wird das Int-Attribut dealer verwendet.
@@ -221,11 +233,10 @@ public class Algorithm {
     }
 
     /**
-     * Zu Rundenbeginn wird die Zufallszahl für den aktuellen Dealer
-     * (der, der den Weli abheben darf) ermittelt.
-     * Außerdem wird doubleRound standardmaessig auf false gesetzt.
-     * Zusaetzlich werdem jedem Spieler 20 Punkte zugeschrieben.
      * Zu Rundenbeginn wird die Zufallszahl für den aktuellen Dealer (der, der den Weli abheben darf) ermittelt.
+     * Außerdem wird doubleRound standardmaessig auf false gesetzt. Zusaetzlich werdem jedem Spieler 20 Punkte
+     * zugeschrieben. Zu Rundenbeginn wird die Zufallszahl für den aktuellen Dealer (der, der den Weli abheben darf)
+     * ermittelt.
      */
     public static void rundenbeginn() {
         Random r = new Random();
@@ -325,7 +336,7 @@ public class Algorithm {
      */
     public static List<Integer> scoring(Algorithm... algo) {
         int newPoints;
-        for(int i=0;i<algo.length;i++) {
+        for (int i = 0; i < algo.length; i++) {
             newPoints = points.get(i); //Die Punktestaende von davor aufrufen und abspeichern
             algo[i].getTrick();     //Die Stiche holen
 
@@ -333,13 +344,13 @@ public class Algorithm {
 
             //Stiche vergleichen (angesagt vs gemacht)
 
-            if(droppedOut == true) {
-                newPoints = newPoints+1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
+            if (droppedOut == true) {
+                newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
             }
-            if(doubleRound == true) {
+            if (doubleRound == true) {
                 newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
             }
-            points.set(i,newPoints);
+            points.set(i, newPoints);
         }
         return points;
 
@@ -349,18 +360,15 @@ public class Algorithm {
     }
 
 
-
     /**
      * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
-     *
      */
-    public void changeCards(List <Card> oldCards, int anzNew) {
+    public void changeCards(List<Card> oldCards, int anzNew) {
         this.playerCards.changeCard(oldCards, anzNew);
     }
 
     /**
-     * ZUM TESTEN - kann später evtl entfernt werden:
-     * Gibt alle gehaltenen Karten zurück
+     * ZUM TESTEN - kann später evtl entfernt werden: Gibt alle gehaltenen Karten zurück
      */
 
     public List<Card> getPlayerCards() {
@@ -368,16 +376,13 @@ public class Algorithm {
     }
 
 
-
     /**
-     * Gibt die Gesamtstichansage basierend der Spielkarten eines Spielers zurück.
-     * Die Stiche beziehen sich dabei auf:
-     * - Weli
-     * - Daus (Atoutfarbe), Daus
-     * - König (Atoutfarbe)
+     * Gibt die Gesamtstichansage basierend der Spielkarten eines Spielers zurück. Die Stiche beziehen sich dabei auf: -
+     * Weli - Daus (Atoutfarbe), Daus - König (Atoutfarbe)
+     *
      * @return Gesamtstichansage
      */
-    private int getStiche() {
+    public int getStiche() {
         int stiche = 0;
         for (Card card : this.playerCards.getCards()) {
             if (card.getColor() == Colors.WELI) stiche++;
@@ -388,5 +393,21 @@ public class Algorithm {
             }
         }
         return stiche;
+    }
+
+    public void setStichePlayer1(int stiche) {
+        this.stiche = stiche;
+    }
+
+    public int getDealer() {
+        return dealer;
+    }
+
+    public boolean istAusgestiegen() {
+        return ausgestiegen;
+    }
+
+    public void setAusgestiegen(boolean ausgestiegen) {
+        this.ausgestiegen = ausgestiegen;
     }
 }

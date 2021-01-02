@@ -196,10 +196,27 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public static Algorithm getPlayer1(){
         return player1;
     }
-
-
-
-
+    /**
+     * Spieler 1 zurückgeben
+     * @return - Player1
+     */
+    public static Algorithm getPlayer2(){
+        return player2;
+    }
+    /**
+     * Spieler 1 zurückgeben
+     * @return - Player1
+     */
+    public static Algorithm getPlayer3(){
+        return player3;
+    }
+    /**
+     * Spieler 1 zurückgeben
+     * @return - Player1
+     */
+    public static Algorithm getPlayer4(){
+        return player4;
+    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -255,5 +272,4 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
 
     }
-
 }
