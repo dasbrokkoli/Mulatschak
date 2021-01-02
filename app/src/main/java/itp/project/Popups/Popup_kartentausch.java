@@ -151,11 +151,11 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
             case R.id.card5:
                 change = Playground.getPlayer1().getHoldingCards().get(4);
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + v.getId());
         }
         //Methode im Algorithmus aufrufen
-
-
-
+        Playground.getPlayer1().changeCards(change);
     }
 
 }
