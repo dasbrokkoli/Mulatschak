@@ -25,7 +25,6 @@ public class PopupStichansage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_stichansage);
 
-        Playground.austeilen();
 
         eyeBtn = findViewById(R.id.eyeBtn);
         eyeBtn.setOnTouchListener(Listeners.newListener(this));

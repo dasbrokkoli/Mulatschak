@@ -18,12 +18,16 @@ import com.google.common.collect.HashBiMap;
 import itp.project.Enums.Colors;
 import itp.project.Popups.PopupLog;
 import itp.project.Popups.PopupStichansage;
+import itp.project.Popups.Popup_atout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
-    public static boolean alreadyLeft;
+//    public static boolean alreadyLeft;
     
     //Atout
     public static Colors Atout = null;
@@ -36,14 +40,18 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ConstraintLayout constraintLayout;
 
     //Cards
-    ImageView card1, card2, card3,card4,card5, destination, move;
+    ImageView card1, card2, card3,card4,card5, destination;
+            static ImageView move;
     //Gemachte Stiche
     //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
     public static TextView[] stitches = new TextView[4];
+    private static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4, pl1_announced,pl2_announced,pl3_announced,pl4_announced;
     //Liste für die Karten
 
     //Algorithmen für Spieler
     static Algorithm[] players = new Algorithm[4];
+
+    private static List<Card> inputCards;
 
     //View diffView = findViewById(R.layout.popup_difficulty);
 
@@ -54,7 +62,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
-        alreadyLeft = false;
+//        alreadyLeft = false;
         //Spieler
         austeilen();
 
@@ -111,6 +119,14 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         destination.setOnDragListener(this);
 
         //Stiche gemacht
+        stitches_pl1 = findViewById(R.id.player_stitches);
+        stitches_pl2 = findViewById(R.id.pl1_stitches);
+        stitches_pl3 = findViewById(R.id.pl2_stitches);
+        stitches_pl4 = findViewById(R.id.pl3_stitches);
+        pl1_announced = findViewById(R.id.player_announced);
+        pl2_announced = findViewById(R.id.pl1_announced);
+        pl3_announced = findViewById(R.id.pl2_announced);
+        pl4_announced = findViewById(R.id.pl3_announced);
         //stitches_pl1 = findViewById(R.id.player_stitches);
         //stitches_pl2 = findViewById(R.id.pl1_stitches);
         //stitches_pl3 = findViewById(R.id.pl2_stitches);
@@ -121,6 +137,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         stitches[2] = findViewById(R.id.pl2_announced);
         stitches[3] = findViewById(R.id.pl3_stitches);
 
+        inputCards = new ArrayList<>();
     }
 
     /**
@@ -150,9 +167,17 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     @Override
     protected void onResume() {
         super.onResume();
+        //Neu austeilen wenn ausgestiegen
+        if(Popup_atout.alreadyLeft) {
+           neuAusteilen();
+        }
+
         //Das Atout wird angezeigt
         showAtout();
         anzeigen();
+
+        //Das Spiel beginnt
+//        play();
     }
 
     /**
@@ -180,6 +205,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         players[1] = new Algorithm(MainActivity.getCards(), 2);
         players[2] = new Algorithm(MainActivity.getCards(), 3);
         players[3] = new Algorithm(MainActivity.getCards(), 4);
+    }
+
+    public void neuAusteilen(){
+        austeilen();
+        anzeigen();
+        startActivity(new Intent(Playground.this, PopupStichansage.class));
     }
 
     /**
@@ -232,6 +263,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                     destination.setImageDrawable(move.getDrawable());
                     move.setVisibility(View.INVISIBLE);
                     Toast.makeText(getApplicationContext(),"Geschafft", Toast.LENGTH_SHORT).show();
+//                    play();
                 }
             default:
                 break;
@@ -277,6 +309,46 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         Card winner = Algorithm.getWinnerFromCards((Card[]) cardsOnFloor.values().toArray());
         int winnerIndex = cardsOnFloor.inverse().get(winner);
         players[winnerIndex].wonThisCard();
+    /**
+     * Die angesagten Stiche werden angezeigt
+     * @param player - Spieler der Siche ansagt
+     * @param stiche - angesagte der Stiche
+     */
+    public static void angesagteSticheAnzeigen(Algorithm player, int stiche){
+        if (player1.equals(player)) {
+            pl1_announced.setText(stiche);
+        } else if (player2.equals(player)) {
+            pl2_announced.setText(stiche);
+        } else if (player3.equals(player)) {
+            pl3_announced.setText(stiche);
+        } else if (player4.equals(player)) {
+            pl4_announced.setText(stiche);
+        }
     }
 
+    /**
+     * Jeder Spieler spielt eine Karte.
+     * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
+     */
+    private void play(){
+        //Karte spieler
+//        inputCards.add(player1.getHoldingCards().get(0));
+//        inputCards.add(player2.getResponseCard(inputCards.get(0)));
+//        inputCards.add(player3.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
+//        inputCards.add(player4.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
+
+        //Gewinnder ermitteln
+        Card winner = Algorithm.getWinnerFromCards((Card[]) inputCards.toArray());
+        Toast.makeText(getApplicationContext(),""+winner.getColor()+winner.getValue(), Toast.LENGTH_SHORT).show();
+
+        //Log eintragen
+
+
+
+        //neu austeilen
+        austeilen();
+
+        //Stichansage aufrufen
+        startActivity(new Intent(Playground.this, PopupStichansage.class));
+    }
 }

@@ -20,6 +20,7 @@ public class Popup_selectAtout extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_select_atout);
+        Popup_atout.alreadyLeft = false;
 
         selected = "";
 

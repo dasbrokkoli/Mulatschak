@@ -16,6 +16,7 @@ import itp.project.Mulatschak.R;
 public class Popup_atout extends AppCompatActivity {
     ImageView atout, eyeBtn;
     Button mit, aus;
+    public static boolean alreadyLeft = false;
 
 
     @Override
@@ -61,7 +62,7 @@ public class Popup_atout extends AppCompatActivity {
         mit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Playground.alreadyLeft = false;
+                alreadyLeft = false;
                 //Zu Kartentausch weiterleiten
                 startActivity(new Intent(Popup_atout.this, Popup_kartentausch.class));
                 //Popup schließen
@@ -75,8 +76,7 @@ public class Popup_atout extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Neues Spiel (fängt mit stichansage an)
-                Playground.alreadyLeft = true;
-                startActivity(new Intent(Popup_atout.this, PopupStichansage.class));
+                alreadyLeft = true;
                 //Popup schließen
                 finish();
             }
@@ -84,7 +84,7 @@ public class Popup_atout extends AppCompatActivity {
 
 
         //Der Benutzer kann nicht aussteigen wenn er in der Runde davor ausgestiegen ist
-        if(Playground.alreadyLeft){
+        if(alreadyLeft){
             aus.setClickable(false);//Button kann nicht gedrückt werden
             aus.setBackgroundColor(R.color.grey);//Button ist heller um zu zeigen, dass er nichz gedrückt werden kann
         }
