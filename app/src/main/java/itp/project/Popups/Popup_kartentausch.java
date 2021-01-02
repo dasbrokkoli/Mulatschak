@@ -106,26 +106,7 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
      * @param v - Karte
      */
     public void changeCard(ImageView v){
-        Card change;//Die zu tauschende Karte
-        switch (v.getId()){
-            case R.id.card1:
-                change = Playground.getPlayer(1).getHoldingCards().get(0);
-                break;
-            case R.id.card2:
-                change = Playground.getPlayer(1).getHoldingCards().get(1);
-                break;
-            case R.id.card3:
-                change = Playground.getPlayer(1).getHoldingCards().get(2);
-                break;
-            case R.id.card4:
-                change = Playground.getPlayer(1).getHoldingCards().get(3);
-                break;
-            case R.id.card5:
-                change = Playground.getPlayer(1).getHoldingCards().get(4);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + v.getId());
-        }
+        Card change = Playground.getCardfromView(v);
         Playground.getPlayer(1).changeCard(change,5);
     }
 

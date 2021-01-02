@@ -246,8 +246,9 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 if (event.getResult()) {
                     destination.setImageDrawable(move.getDrawable());
                     move.setVisibility(View.INVISIBLE);
+                    cardsOnFloor.put(0, getCardfromView(move));
                     Toast.makeText(getApplicationContext(),"Geschafft", Toast.LENGTH_SHORT).show();
-//                    play();
+                    play();
                 }
             default:
                 break;
@@ -262,19 +263,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * @param player - Spieler der den Zug gewonnen hat
      * @param count - neue Stichanzahl des Spielers
      */
-    /*public static void stitchesMade(int player, int count){
-        switch(player){
-            case 1: stitches_pl1.setText(""+count);
-                break;
-            case 2: stitches_pl2.setText(count);
-                break;
-            case 3: stitches_pl3.setText(count);
-                break;
-            case 4: stitches_pl4.setText(count);
-                break;
-        }
-
-    }*/
     public static void stitchesMade(int player, int count){
         switch(player){
             case 1: stitches[0].setText(""+count);
@@ -310,5 +298,53 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         } else if (players[3].equals(player)) {
             pl4_announced.setText(String.valueOf(stiche));
         }
+    }
+
+    /**
+     * Jeder Spieler spielt eine Karte.
+     * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
+     */
+    private void play(){
+        for (int i = 1; cardsOnFloor.size()<4; i++){
+            cardsOnFloor.put(i,players[i].getResponseCard(Algorithm.getWinnerFromCards((Card[]) cardsOnFloor.values().toArray())));
+        }
+
+        //Gewinnder ermitteln
+        Card winner = Algorithm.getWinnerFromCards((Card[]) cardsOnFloor.values().toArray());
+        Toast.makeText(getApplicationContext(),""+winner.getColor()+winner.getValue(), Toast.LENGTH_SHORT).show();
+
+        //Log eintragen
+
+
+
+        //neu austeilen
+        //austeilen();
+
+        //Stichansage aufrufen
+        //startActivity(new Intent(Playground.this, PopupStichansage.class));
+    }
+
+    public static Card getCardfromView(ImageView v){
+        Card change;//Die zu tauschende Karte
+        switch (v.getId()){
+            case R.id.card1:
+                change = Playground.getPlayer(1).getHoldingCards().get(0);
+                break;
+            case R.id.card2:
+                change = Playground.getPlayer(1).getHoldingCards().get(1);
+                break;
+            case R.id.card3:
+                change = Playground.getPlayer(1).getHoldingCards().get(2);
+                break;
+            case R.id.card4:
+                change = Playground.getPlayer(1).getHoldingCards().get(3);
+                break;
+            case R.id.card5:
+                change = Playground.getPlayer(1).getHoldingCards().get(4);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + v.getId());
+        }
+        return change;
     }
 }
