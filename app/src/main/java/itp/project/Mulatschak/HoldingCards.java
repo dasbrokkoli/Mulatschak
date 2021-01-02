@@ -110,8 +110,13 @@ public class HoldingCards {
      * entfernt eine Karte z.B. wenn sie ausgespielt wird
      *
      */
-    public void deleteHoldingCard(Card card) throws ClassNotFoundException {
-        Boolean removed = HoldingCards.allCards.remove(card);
+    public void deleteAllCard(Card card) throws ClassNotFoundException {
+        boolean removed = HoldingCards.allCards.remove(card);
+        if(!removed) { throw new ClassNotFoundException();}
+    }
+
+    public void deleteHoldingCard(Card card) throws ClassNotFoundException{
+        boolean removed = player.remove(card);
         if(!removed) { throw new ClassNotFoundException();}
     }
 

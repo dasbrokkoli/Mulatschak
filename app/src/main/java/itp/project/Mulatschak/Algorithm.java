@@ -407,10 +407,8 @@ public class Algorithm {
      * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
      *
      */
-    public void changeCards(List<Card> oldCards, int anzNew) {
-        for(Card oldCard:oldCards){
-            this.playerCards.changeCard(oldCard, anzNew);
-        }
+    public void changeCard(Card oldCard, int anzNew) {
+        this.playerCards.changeCard(oldCard, anzNew);
     }
 
     /**

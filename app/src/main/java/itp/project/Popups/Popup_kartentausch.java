@@ -1,7 +1,6 @@
 package itp.project.Popups;
 
 import android.content.ClipData;
-import android.util.DisplayMetrics;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,13 +8,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import itp.project.Mulatschak.Card;
-import itp.project.Mulatschak.Listeners;
-import itp.project.Mulatschak.Playground;
-import itp.project.Mulatschak.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import itp.project.Mulatschak.*;
 
 public class Popup_kartentausch extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
 
@@ -75,7 +68,7 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
     }
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-
+        move = (ImageView) v;
         View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
                 v);
         ClipData data = ClipData.newPlainText("", "");
@@ -97,8 +90,8 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
             case DragEvent.ACTION_DRAG_ENDED:
                 //Karte in den Mistkübel gezogen
                 if (event.getResult()) {
-                    v.setVisibility(View.INVISIBLE);//unsichtbar setzten
-                    changeCard((ImageView) v);//Karte tauschen
+                    move.setVisibility(View.INVISIBLE);//unsichtbar setzten
+                    changeCard(move);//Karte tauschen
                     count++;
                 }
             default:
@@ -114,7 +107,6 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
      */
     public void changeCard(ImageView v){
         Card change;//Die zu tauschende Karte
-        System.out.println(v.getId());
         switch (v.getId()){
             case R.id.card1:
                 change = Playground.getPlayer(1).getHoldingCards().get(0);
@@ -134,10 +126,7 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
-        //Methode im Algorithmus aufrufen
-        List<Card> cardsToChange = new ArrayList<>();
-        cardsToChange.add(change);
-        Playground.getPlayer(1).changeCards(cardsToChange,5);
+        Playground.getPlayer(1).changeCard(change,5);
     }
 
 }
