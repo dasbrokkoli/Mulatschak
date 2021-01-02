@@ -65,6 +65,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 //        alreadyLeft = false;
         //Spieler
         austeilen();
+        Algorithm.rundenbeginn();
 
         startActivity(new Intent(Playground.this, PopupStichansage.class));
 

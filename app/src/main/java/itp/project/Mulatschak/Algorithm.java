@@ -437,7 +437,7 @@ public class Algorithm {
         this.stiche = stiche;
     }
 
-    public int getDealer() {
+    public static int getDealer() {
         return dealer;
     }
 

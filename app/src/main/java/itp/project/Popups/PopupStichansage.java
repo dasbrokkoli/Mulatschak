@@ -28,6 +28,7 @@ public class PopupStichansage extends AppCompatActivity {
     List<Algorithm> players;
     int dealer;
     int highestStitches;
+    int currentStiche;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class PopupStichansage extends AppCompatActivity {
         setContentView(R.layout.popup_stichansage);
 
         Playground.austeilen();
-        dealer = Playground.getPlayer(1).getDealer();
+        dealer = Algorithm.getDealer();
         rundenStichansage();
     }
 
@@ -57,17 +58,20 @@ public class PopupStichansage extends AppCompatActivity {
         // Reihenfolge
         this.players = order(dealer);
 
+        getSpieler1(dealer);
         int player1 = players.get(0).getStiche(); // dealer
         int player2 = players.get(1).getStiche();
         int player3 = players.get(2).getStiche();
         int player4 = players.get(3).getStiche();
-        int currentStiche = 0;
+        currentStiche = 0;
         while (!dreiSpielerAusgestiegen(players)) {
             if (!players.get(0).isKi()) {
                 popup();
             } else {
+                System.out.println("player1: " + player1);
                 if (player1 + currentStiche > currentStiche) {
                     currentStiche++;
+                    player1--;
                 } else {
                     players.get(0).setAusgestiegen(true);
                 }
@@ -75,8 +79,10 @@ public class PopupStichansage extends AppCompatActivity {
             if (!players.get(1).isKi()) {
                 popup();
             } else {
+                System.out.println("player2: " + player2);
                 if (player2 + currentStiche > currentStiche) {
                     currentStiche++;
+                    player2--;
                 } else {
                     players.get(1).setAusgestiegen(true);
                 }
@@ -84,8 +90,10 @@ public class PopupStichansage extends AppCompatActivity {
             if (!players.get(2).isKi()) {
                 popup();
             } else {
+                System.out.println("player3: " + player3);
                 if (player3 + currentStiche > currentStiche) {
                     currentStiche++;
+                    player3--;
                 } else {
                     players.get(2).setAusgestiegen(true);
                 }
@@ -93,8 +101,10 @@ public class PopupStichansage extends AppCompatActivity {
             if (!players.get(3).isKi()) {
                 popup();
             } else {
+                System.out.println("player4: " + player4);
                 if (player4 + currentStiche > currentStiche) {
                     currentStiche++;
+                    player4--;
                 } else {
                     players.get(3).setAusgestiegen(true);
                 }
@@ -104,32 +114,8 @@ public class PopupStichansage extends AppCompatActivity {
     }
 
     public void popup() {
-        //Popup größe
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        final int width = dm.widthPixels;
-        final int height = dm.heightPixels;
-
-        getWindow().setLayout((int) (width * .8), (int) (height * .8));//80% der höhe und Breite des Bildschirms
         eyeBtn = findViewById(R.id.eyeBtn);
         eyeBtn.setOnTouchListener(Listeners.newListener(this));
-        eyeBtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.performClick();
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        getWindow().setLayout(0, 0);
-                        System.out.println("Down");
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        getWindow().setLayout((int) (width * .8), (int) (height * .8));
-                        System.out.println("Up");
-                        return true;
-                }
-                return false;
-            }
-        });
 
 
         //Button Muli
@@ -146,6 +132,7 @@ public class PopupStichansage extends AppCompatActivity {
 
         //Bereits angesagte Stiche
         highest = findViewById(R.id.highest);
+        highest.setText(String.valueOf(currentStiche));
         try {
             said = Integer.parseInt(highest.getText().toString());
         } catch (NumberFormatException e) {
@@ -251,16 +238,16 @@ public class PopupStichansage extends AppCompatActivity {
     private int getSpieler1(int dealer) {
         switch (dealer) {
             case 1:
-                players.get(1).setKi(false);
+                players.get(0).setKi(false);
                 return 1;
             case 2:
-                players.get(4).setKi(false);
+                players.get(3).setKi(false);
                 return 4;
             case 3:
-                players.get(3).setKi(false);
+                players.get(2).setKi(false);
                 return 3;
             case 4:
-                players.get(2).setKi(false);
+                players.get(1).setKi(false);
                 return 2;
         }
         return 0;
