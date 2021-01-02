@@ -1,12 +1,13 @@
 package itp.project.Popups;
 
 import android.content.Intent;
-import android.util.DisplayMetrics;
-import android.view.View;
-import android.widget.*;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioGroup;
+import androidx.appcompat.app.AppCompatActivity;
 import itp.project.Enums.Difficulty;
+import itp.project.Mulatschak.Algorithm;
 import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.R;
 
@@ -37,6 +38,7 @@ public class PopupDifficulty extends AppCompatActivity {
                 //Leitet nur weiter, wenn was ausgewaehlt wurde
                 RadioGroup group = findViewById(R.id.radioGroup2);
                 if (group.getCheckedRadioButtonId() != -1) {
+                    Algorithm.setDifficulty(getDifficulty());
                     startActivity(new Intent(PopupDifficulty.this, PopupName.class));
 
                 }
@@ -48,28 +50,23 @@ public class PopupDifficulty extends AppCompatActivity {
 
     /**
      * Liefert die Schwierigkeit zurueck, die ausgewaehlt wurde.
-     * @param view
+     *
      * @return Difficulty
      */
-    public Difficulty getDifficulty(View view){
-        boolean checked = ((RadioButton) view).isChecked();
+    private Difficulty getDifficulty() {
         Difficulty d = null;
-        switch(view.getId()) {
+        switch (((RadioGroup) findViewById(R.id.radioGroup2)).getCheckedRadioButtonId()) {
             case R.id.easy:
-                if(checked)
-                    d = Difficulty.EASY;
+                d = Difficulty.EASY;
                 break;
             case R.id.medium:
-                if(checked)
-                    d = Difficulty.MEDIUM;
+                d = Difficulty.MEDIUM;
                 break;
             case R.id.hard:
-                if(checked)
-                    d = Difficulty.HARD;
+                d = Difficulty.HARD;
                 break;
             case R.id.unbeatable:
-                if(checked)
-                    d = Difficulty.UNBEATABLE;
+                d = Difficulty.UNBEATABLE;
                 break;
         }
 

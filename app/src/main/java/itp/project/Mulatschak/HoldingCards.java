@@ -96,11 +96,7 @@ public class HoldingCards {
      */
     public void changeCard(Card oldCard, int anzNew) {
         //Card wird entfernt
-        try {
             deleteHoldingCard(oldCard);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
         //und eine neue hinzugefügt
         initPlayer(anzNew);
@@ -108,16 +104,19 @@ public class HoldingCards {
 
     /**
      * entfernt eine Karte z.B. wenn sie ausgespielt wird
-     *
      */
-    public void deleteAllCard(Card card) throws ClassNotFoundException {
+    public void deleteAllCard(Card card) {
         boolean removed = HoldingCards.allCards.remove(card);
-        if(!removed) { throw new ClassNotFoundException();}
+        if (!removed) {
+            System.err.println("Upsi :(");
+        }
     }
 
-    public void deleteHoldingCard(Card card) throws ClassNotFoundException{
+    public void deleteHoldingCard(Card card) {
         boolean removed = player.remove(card);
-        if(!removed) { throw new ClassNotFoundException();}
+        if (!removed) {
+            System.err.println("Upsi :(");
+        }
     }
 
     /**

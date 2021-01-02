@@ -2,6 +2,7 @@ package itp.project.Mulatschak;
 
 import android.view.View;
 import itp.project.Enums.Colors;
+import itp.project.Enums.Difficulty;
 import itp.project.Enums.Values;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
@@ -32,6 +33,7 @@ public class Algorithm {
     private static List<Integer> points = new ArrayList<>(); //fuer die Punktestaende der Spieler
     private boolean ausgestiegen;
     private int stiche;
+    private static Difficulty difficulty;
 
     public boolean isKi() {
         return ki;
@@ -58,7 +60,6 @@ public class Algorithm {
         } catch (IndexOutOfBoundsException e) {
             points.add(player - 1,21);
         }
-        points.add(player - 1, 20);
         setAusgestiegen(false);
         setKi(true);
     }
@@ -100,10 +101,19 @@ public class Algorithm {
         }
         Card lowestCard = lowestCardValue(inputCard.getTempValue());
         if (lowestCard != null) {
+            playerCards.deleteHoldingCard(lowestCard);
             return lowestCard;
         } else {
             return lowestCardValue();
         }
+    }
+
+    public static Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public static void setDifficulty(Difficulty difficulty) {
+        Algorithm.difficulty = difficulty;
     }
 
     /**
@@ -112,6 +122,7 @@ public class Algorithm {
      * Algorithm#getResponseCard}
      */
     public static Card getWinnerFromCards(Card... cardsOnFloor) {
+        List<Card> cardsOnFloorList = Arrays.asList(cardsOnFloor.clone());
         List<Integer> valueList = new ArrayList<>();
         for (Card floorCard : cardsOnFloor) {
             for (Card card : cards) {
@@ -121,16 +132,8 @@ public class Algorithm {
             }
             valueList.add(floorCard.getTempValue());
         }
-        int maxIndex = Collections.max(valueList);
-        Card maxCard = cardsOnFloor[maxIndex];
-        for (int i = 0; i < cardsOnFloor.length; i++) {
-            if (i != maxIndex) {
-                if (cardsOnFloor[i].getTempValue() == maxCard.getTempValue()) {
-                    return cardsOnFloor[0];
-                }
-            }
-        }
-        return maxCard;
+        int highestIndex = valueList.indexOf(Collections.max(valueList));
+        return cardsOnFloorList.get(highestIndex);
     }
 
     public void wonThisCard(){
@@ -155,6 +158,7 @@ public class Algorithm {
         if (lowestValue.getTempValue() < moreThan) {
             return null;
         }
+        playerCards.deleteHoldingCard(lowestValue);
         return lowestValue;
     }
 
@@ -187,10 +191,8 @@ public class Algorithm {
      * (NICHT fuer Benutzer)
      */
     private void setWinChance() {
-        PopupDifficulty pop = new PopupDifficulty();
-        View diffView = pop.findViewById(R.layout.popup_difficulty);
-        //PopupDifficulty pop = this.findViewById(R.layout.popup_difficulty);
-        switch ((pop.getDifficulty(diffView))) {
+
+        switch (difficulty) {
             case EASY:
                 winChance = 25;
                 break;
@@ -203,8 +205,6 @@ public class Algorithm {
             case UNBEATABLE:
                 winChance = 100;
                 break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + Objects.requireNonNull(pop.getDifficulty(diffView)));
         }
     }
 

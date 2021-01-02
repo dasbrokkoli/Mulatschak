@@ -17,6 +17,7 @@ import com.google.android.flexbox.FlexboxItemDecoration;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.flexbox.JustifyContent;
 import itp.project.Mulatschak.Algorithm;
+import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.R;
 
 import java.util.ArrayList;
@@ -51,13 +52,7 @@ public class PopupLog extends AppCompatActivity {
             pointLayout.addView(tvPoints[i]);
         }
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-
-        getWindow().setLayout((int)(width*.8),(int)(height*.8));
+        Listeners.newListener(this);
 
         //Methodenaufruf
         setNames();

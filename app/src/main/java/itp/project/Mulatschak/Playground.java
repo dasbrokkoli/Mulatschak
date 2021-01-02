@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.View;
 import android.view.*;
 import android.widget.*;
-import android.content.Context;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
@@ -15,16 +14,11 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import itp.project.Enums.Colors;
 import itp.project.Popups.PopupLog;
 import itp.project.Popups.PopupStichansage;
 import itp.project.Popups.Popup_atout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
 //    public static boolean alreadyLeft;
@@ -38,7 +32,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ConstraintLayout constraintLayout;
 
     //Cards
-    ImageView card1, card2, card3,card4,card5, destination;
+    ImageView card4, card1, card2, card3,card5, destination;
             static ImageView move;
     //Gemachte Stiche
     //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
@@ -105,13 +99,13 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         //Cards
         card1 = findViewById(R.id.card1);
         card1.setOnTouchListener(this);
-        card2 = findViewById(R.id.card);
+        card2 = findViewById(R.id.card2);
         card2.setOnTouchListener(this);
-        card3 = findViewById(R.id.card2);
+        card3 = findViewById(R.id.card3);
         card3.setOnTouchListener(this);
-        card4 = findViewById(R.id.card3);
+        card4 = findViewById(R.id.card4);
         card4.setOnTouchListener(this);
-        card5 = findViewById(R.id.card4);
+        card5 = findViewById(R.id.card5);
         card5.setOnTouchListener(this);
 
         destination = findViewById(R.id.imageView);
@@ -247,7 +241,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                     destination.setImageDrawable(move.getDrawable());
                     move.setVisibility(View.INVISIBLE);
                     cardsOnFloor.put(0, getCardfromView(move));
-                    Toast.makeText(getApplicationContext(),"Geschafft", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),getCardfromView(move).getColor() + "" + getCardfromView(move).getValue(), Toast.LENGTH_SHORT).show();
                     play();
                 }
             default:
@@ -306,12 +300,17 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      */
     private void play(){
         for (int i = 1; cardsOnFloor.size()<4; i++){
-            cardsOnFloor.put(i,players[i].getResponseCard(Algorithm.getWinnerFromCards((Card[]) cardsOnFloor.values().toArray())));
+            Card[] cArray = new Card[i];
+            cardsOnFloor.values().toArray(cArray);
+            cardsOnFloor.put(i,players[i].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
+            System.out.println(cardsOnFloor.get(i).getColor() + " " + cardsOnFloor.get(i).getValue());
         }
 
         //Gewinnder ermitteln
-        Card winner = Algorithm.getWinnerFromCards((Card[]) cardsOnFloor.values().toArray());
-        Toast.makeText(getApplicationContext(),""+winner.getColor()+winner.getValue(), Toast.LENGTH_SHORT).show();
+        Card[] cArray = new Card[4];
+        cardsOnFloor.values().toArray(cArray);
+        Card winner = Algorithm.getWinnerFromCards(cArray);
+        Toast.makeText(getApplicationContext(),winner.getColor()+" "+winner.getValue(), Toast.LENGTH_SHORT).show();
 
         //Log eintragen
 

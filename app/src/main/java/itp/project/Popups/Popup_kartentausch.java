@@ -27,21 +27,26 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
         eyeBtn.setOnTouchListener(Listeners.newListener(this));
 
 
-        //Karten des SPielers anzeigen
+        //Karten des Spielers anzeigen
         card1 = findViewById(R.id.card1);
         card1.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(0).getPicture());
+        System.out.println("card1: " + Playground.getCardfromView(card1).getColor());
 
         card2 = findViewById(R.id.card2);
         card2.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(1).getPicture());
+        System.out.println("card2: " + Playground.getCardfromView(card2).getColor());
 
         card3 = findViewById(R.id.card3);
         card3.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(2).getPicture());
+        System.out.println("card3: " + Playground.getCardfromView(card3).getColor());
 
         card4 = findViewById(R.id.card4);
         card4.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(3).getPicture());
+        System.out.println("card4: " + Playground.getCardfromView(card4).getColor());
 
         card5 = findViewById(R.id.card5);
         card5.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(4).getPicture());
+        System.out.println("card5: " + Playground.getCardfromView(card5).getColor());
 
         card1.setOnTouchListener(this);
         card2.setOnTouchListener(this);
