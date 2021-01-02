@@ -45,7 +45,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     //Gemachte Stiche
     //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
     public static TextView[] stitches = new TextView[4];
-    private static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4, pl1_announced,pl2_announced,pl3_announced,pl4_announced;
+    private static TextView pl1_announced,pl2_announced,pl3_announced,pl4_announced;
     //Liste für die Karten
 
     //Algorithmen für Spieler
@@ -119,10 +119,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         destination.setOnDragListener(this);
 
         //Stiche gemacht
-        stitches_pl1 = findViewById(R.id.player_stitches);
-        stitches_pl2 = findViewById(R.id.pl1_stitches);
-        stitches_pl3 = findViewById(R.id.pl2_stitches);
-        stitches_pl4 = findViewById(R.id.pl3_stitches);
         pl1_announced = findViewById(R.id.player_announced);
         pl2_announced = findViewById(R.id.pl1_announced);
         pl3_announced = findViewById(R.id.pl2_announced);
@@ -225,32 +221,11 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     /**
-     * Spieler 1 zurückgeben
-     * @return - Player1
+     * Spieler zurückgeben
+     * @return - Player
      */
-    public static Algorithm getPlayer1(){
-        return players[0];
-    }
-    /**
-     * Spieler 1 zurückgeben
-     * @return - Player1
-     */
-    public static Algorithm getPlayer2(){
-        return player2;
-    }
-    /**
-     * Spieler 1 zurückgeben
-     * @return - Player1
-     */
-    public static Algorithm getPlayer3(){
-        return player3;
-    }
-    /**
-     * Spieler 1 zurückgeben
-     * @return - Player1
-     */
-    public static Algorithm getPlayer4(){
-        return player4;
+    public static Algorithm getPlayer(int playernumber){
+        return players[playernumber-1];
     }
 
     @Override
@@ -322,23 +297,25 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     }
 
-    public void whichCardWon(){
+    public void whichCardWon() {
         Card winner = Algorithm.getWinnerFromCards((Card[]) cardsOnFloor.values().toArray());
         int winnerIndex = cardsOnFloor.inverse().get(winner);
         players[winnerIndex].wonThisCard();
+    }
+
     /**
      * Die angesagten Stiche werden angezeigt
      * @param player - Spieler der Siche ansagt
      * @param stiche - angesagte der Stiche
      */
     public static void angesagteSticheAnzeigen(Algorithm player, int stiche){
-        if (player1.equals(player)) {
+        if (players[0].equals(player)) {
             pl1_announced.setText(stiche);
-        } else if (player2.equals(player)) {
+        } else if (players[1].equals(player)) {
             pl2_announced.setText(stiche);
-        } else if (player3.equals(player)) {
+        } else if (players[2].equals(player)) {
             pl3_announced.setText(stiche);
-        } else if (player4.equals(player)) {
+        } else if (players[3].equals(player)) {
             pl4_announced.setText(stiche);
         }
     }

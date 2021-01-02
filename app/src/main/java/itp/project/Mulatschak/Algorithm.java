@@ -364,24 +364,26 @@ public class Algorithm {
             int madeStitches = Integer.parseInt(tmp2);
 
             //Stiche vergleichen (angesagt vs gemacht)
-            if(droppedOut == true) {
-                newPoints = newPoints+1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
-            }else if(saidStitches > madeStitches) {
-                newPoints += 10; //Wenn mehr angesagt wurden als gemacht
-            }else if((saidStitches == 0) && (madeStitches == 0)) {
-                newPoints += 5; //Wenn keine angesagt und keine gemacht wurden
-            }else{
-                newPoints -= madeStitches; //Sonst schreibt man die gemachten Stiche runter
-
             if (droppedOut == true) {
                 newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
-            }
-            if (doubleRound == true) {
+            } else if (saidStitches > madeStitches) {
+                newPoints += 10; //Wenn mehr angesagt wurden als gemacht
+            } else if ((saidStitches == 0) && (madeStitches == 0)) {
+                newPoints += 5; //Wenn keine angesagt und keine gemacht wurden
+            } else {
+                newPoints -= madeStitches; //Sonst schreibt man die gemachten Stiche runter
 
-            if(atout == Colors.HERZ) {
-                newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
+                if (droppedOut == true) {
+                    newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
+                }
+                if (doubleRound == true) {
+
+                    if (atout == Colors.HERZ) {
+                        newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
+                    }
+                    points.set(i, newPoints);
+                }
             }
-            points.set(i, newPoints);
         }
     }
 
@@ -392,7 +394,9 @@ public class Algorithm {
      *
      */
     public void changeCards(List<Card> oldCards, int anzNew) {
-        this.playerCards.changeCard(oldCards, anzNew);
+        for(Card oldCard:oldCards){
+            this.playerCards.changeCard(oldCard, anzNew);
+        }
     }
 
     /**

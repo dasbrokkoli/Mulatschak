@@ -35,7 +35,7 @@ public class PopupStichansage extends AppCompatActivity {
         setContentView(R.layout.popup_stichansage);
 
         Playground.austeilen();
-        dealer = Playground.getPlayer1().getDealer();
+        dealer = Playground.getPlayer(1).getDealer();
         rundenStichansage();
     }
 
@@ -57,16 +57,25 @@ public class PopupStichansage extends AppCompatActivity {
         // Reihenfolge
         this.players = order(dealer);
 
-        int player1 = players.get(1).getStiche(); // dealer
-        int player2 = players.get(2).getStiche();
-        int player3 = players.get(3).getStiche();
-        int player4 = players.get(4).getStiche();
+        int player1 = players.get(0).getStiche(); // dealer
+        int player2 = players.get(1).getStiche();
+        int player3 = players.get(2).getStiche();
+        int player4 = players.get(3).getStiche();
         int currentStiche = 0;
         while (!dreiSpielerAusgestiegen(players)) {
-            if (!players.get(1).isKi()) {
+            if (!players.get(0).isKi()) {
                 popup();
             } else {
                 if (player1 + currentStiche > currentStiche) {
+                    currentStiche++;
+                } else {
+                    players.get(0).setAusgestiegen(true);
+                }
+            }
+            if (!players.get(1).isKi()) {
+                popup();
+            } else {
+                if (player2 + currentStiche > currentStiche) {
                     currentStiche++;
                 } else {
                     players.get(1).setAusgestiegen(true);
@@ -75,7 +84,7 @@ public class PopupStichansage extends AppCompatActivity {
             if (!players.get(2).isKi()) {
                 popup();
             } else {
-                if (player2 + currentStiche > currentStiche) {
+                if (player3 + currentStiche > currentStiche) {
                     currentStiche++;
                 } else {
                     players.get(2).setAusgestiegen(true);
@@ -84,19 +93,10 @@ public class PopupStichansage extends AppCompatActivity {
             if (!players.get(3).isKi()) {
                 popup();
             } else {
-                if (player3 + currentStiche > currentStiche) {
-                    currentStiche++;
-                } else {
-                    players.get(3).setAusgestiegen(true);
-                }
-            }
-            if (!players.get(4).isKi()) {
-                popup();
-            } else {
                 if (player4 + currentStiche > currentStiche) {
                     currentStiche++;
                 } else {
-                    players.get(4).setAusgestiegen(true);
+                    players.get(3).setAusgestiegen(true);
                 }
             }
         }
@@ -213,10 +213,10 @@ public class PopupStichansage extends AppCompatActivity {
      */
     private List<Algorithm> order(int dealer) {
         List<Algorithm> reihenfolge = new ArrayList<>();
-        reihenfolge.add(Playground.getPlayer1());
-        reihenfolge.add(Playground.getPlayer2());
-        reihenfolge.add(Playground.getPlayer3());
-        reihenfolge.add(Playground.getPlayer4());
+        reihenfolge.add(Playground.getPlayer(1));
+        reihenfolge.add(Playground.getPlayer(2));
+        reihenfolge.add(Playground.getPlayer(3));
+        reihenfolge.add(Playground.getPlayer(4));
         switch (dealer) {
             case 1:
                 Collections.rotate(reihenfolge, 0);

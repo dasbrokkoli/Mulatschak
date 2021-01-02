@@ -14,6 +14,9 @@ import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Popup_kartentausch extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
 
     ImageView card1, card2, card3, card4, card5, delete, move, eyeBtn;
@@ -33,19 +36,19 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
 
         //Karten des SPielers anzeigen
         card1 = findViewById(R.id.card1);
-        card1.setImageDrawable(Playground.getPlayer1().getHoldingCards().get(0).getPicture());
+        card1.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(0).getPicture());
 
         card2 = findViewById(R.id.card2);
-        card2.setImageDrawable(Playground.getPlayer1().getHoldingCards().get(1).getPicture());
+        card2.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(1).getPicture());
 
         card3 = findViewById(R.id.card3);
-        card3.setImageDrawable(Playground.getPlayer1().getHoldingCards().get(2).getPicture());
+        card3.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(2).getPicture());
 
         card4 = findViewById(R.id.card4);
-        card4.setImageDrawable(Playground.getPlayer1().getHoldingCards().get(3).getPicture());
+        card4.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(3).getPicture());
 
         card5 = findViewById(R.id.card5);
-        card5.setImageDrawable(Playground.getPlayer1().getHoldingCards().get(4).getPicture());
+        card5.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(4).getPicture());
 
         card1.setOnTouchListener(this);
         card2.setOnTouchListener(this);
@@ -114,25 +117,27 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
         Card change;//Die zu tauschende Karte
         switch (v.getId()){
             case R.id.card1:
-                change = Playground.getPlayer1().getHoldingCards().get(0);
+                change = Playground.getPlayer(1).getHoldingCards().get(0);
                 break;
             case R.id.card2:
-                change = Playground.getPlayer1().getHoldingCards().get(1);
+                change = Playground.getPlayer(1).getHoldingCards().get(1);
                 break;
             case R.id.card3:
-                change = Playground.getPlayer1().getHoldingCards().get(2);
+                change = Playground.getPlayer(1).getHoldingCards().get(2);
                 break;
             case R.id.card4:
-                change = Playground.getPlayer1().getHoldingCards().get(3);
+                change = Playground.getPlayer(1).getHoldingCards().get(3);
                 break;
             case R.id.card5:
-                change = Playground.getPlayer1().getHoldingCards().get(4);
+                change = Playground.getPlayer(1).getHoldingCards().get(4);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
         //Methode im Algorithmus aufrufen
-        Playground.getPlayer1().changeCards(change);
+        List<Card> cardsToChange = new ArrayList<>();
+        cardsToChange.add(change);
+        Playground.getPlayer(1).changeCards(cardsToChange,5);
     }
 
 }
