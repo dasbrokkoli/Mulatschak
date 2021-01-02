@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import itp.project.Enums.Colors;
+import itp.project.Mulatschak.Algorithm;
 import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
@@ -59,7 +60,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 herz.setBackgroundColor(R.color.colorPrimary);
                 selected = "herz";
-                Playground.Atout = Colors.HERZ;
+                Algorithm.setAtout(Colors.HERZ);
             }
         });
 
@@ -72,7 +73,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 blatt.setBackgroundColor(R.color.colorPrimary);
                 selected = "blatt";
-                Playground.Atout = Colors.BLATT;
+                Algorithm.setAtout(Colors.BLATT);
             }
         });
 
@@ -85,7 +86,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 schelle.setBackgroundColor(R.color.colorPrimary);
                 selected = "schelle";
-                Playground.Atout = Colors.SCHELLE;
+                Algorithm.setAtout(Colors.SCHELLE);
             }
         });
 
@@ -98,7 +99,7 @@ public class Popup_selectAtout extends AppCompatActivity {
                 reset();
                 eiche.setBackgroundColor(R.color.colorPrimary);
                 selected = "eiche";
-                Playground.Atout = Colors.EICHEL;
+                Algorithm.setAtout(Colors.EICHEL);
             }
         });
 

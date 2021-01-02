@@ -28,7 +28,12 @@ public class HoldingCards {
      * @param all
      */
     public static void setAllCards(List<Card> all) {
-        HoldingCards.allCards = all;
+        HoldingCards.allCards = new ArrayList<>();
+        HoldingCards.allCards.addAll(all);
+    }
+
+    public static List<Card> getAllCards(){
+        return HoldingCards.allCards;
     }
 
     /**
@@ -91,7 +96,11 @@ public class HoldingCards {
      */
     public void changeCard(Card oldCard, int anzNew) {
         //Card wird entfernt
-        deleteHoldingCard(oldCard);
+        try {
+            deleteHoldingCard(oldCard);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         //und eine neue hinzugefügt
         initPlayer(anzNew);
@@ -101,9 +110,9 @@ public class HoldingCards {
      * entfernt eine Karte z.B. wenn sie ausgespielt wird
      *
      */
-    public void deleteHoldingCard(Card card) {
+    public void deleteHoldingCard(Card card) throws ClassNotFoundException {
         Boolean removed = HoldingCards.allCards.remove(card);
-        if(!removed) { System.err.println("Ups...something went wrong :(");}
+        if(!removed) { throw new ClassNotFoundException();}
     }
 
     /**
@@ -142,4 +151,6 @@ public class HoldingCards {
     public void setCards(List<Card> holdingCards) {
         this.player = holdingCards;
     }
+
+
 }

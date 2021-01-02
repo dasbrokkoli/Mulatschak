@@ -75,7 +75,6 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
     }
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        move = (ImageView) v;
 
         View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
                 v);
@@ -98,8 +97,8 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
             case DragEvent.ACTION_DRAG_ENDED:
                 //Karte in den Mistkübel gezogen
                 if (event.getResult()) {
-                    move.setVisibility(View.INVISIBLE);//unsichtbar setzten
-                    changeCard(move);//Karte tauschen
+                    v.setVisibility(View.INVISIBLE);//unsichtbar setzten
+                    changeCard((ImageView) v);//Karte tauschen
                     count++;
                 }
             default:

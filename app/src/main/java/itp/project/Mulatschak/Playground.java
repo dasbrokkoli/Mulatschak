@@ -29,8 +29,6 @@ import java.util.Map;
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
 //    public static boolean alreadyLeft;
     
-    //Atout
-    public static Colors Atout = null;
     ImageView atout;
 
     //LogPopup
@@ -143,11 +141,11 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      */
     private void showAtout(){
         //Wenn noch kein Atout gespeichert ist wird ein leeres Feld angezeigt
-        if(Atout == null){
+        if(Algorithm.getAtout() == null){
             atout.setImageResource(R.drawable.empty);
         }else{
             //Das gespeicherte Atout wird angezeigt
-            switch(Atout){
+            switch(Algorithm.getAtout()){
                 case HERZ: atout.setImageResource(R.drawable.herz);
                     break;
                 case BLATT: atout.setImageResource(R.drawable.blatt);
@@ -178,14 +176,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     /**
-     * Gibt das Gespeicherte Atout als Color Object zurück;
-     * @return - Atout
-     */
-    public static Colors getAdout() {
-        return Atout;
-    }
-
-    /**
      * Eine Karte wird ausgespielt. Diese wird im Parameter übergeben.
      */
     public void playCard(Card card){
@@ -198,6 +188,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * Jeder Spieler bekommt einen neuen Algorithmus
      */
     public static void austeilen(){
+        HoldingCards.setAllCards(MainActivity.getCards());
         players[0] = new Algorithm(MainActivity.getCards(), 1);
         players[1] = new Algorithm(MainActivity.getCards(), 2);
         players[2] = new Algorithm(MainActivity.getCards(), 3);
@@ -311,39 +302,13 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      */
     public static void angesagteSticheAnzeigen(Algorithm player, int stiche){
         if (players[0].equals(player)) {
-            pl1_announced.setText(stiche);
+            pl1_announced.setText(String.valueOf(stiche));
         } else if (players[1].equals(player)) {
-            pl2_announced.setText(stiche);
+            pl2_announced.setText(String.valueOf(stiche));
         } else if (players[2].equals(player)) {
-            pl3_announced.setText(stiche);
+            pl3_announced.setText(String.valueOf(stiche));
         } else if (players[3].equals(player)) {
-            pl4_announced.setText(stiche);
+            pl4_announced.setText(String.valueOf(stiche));
         }
-    }
-
-    /**
-     * Jeder Spieler spielt eine Karte.
-     * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
-     */
-    private void play(){
-        //Karte spieler
-//        inputCards.add(player1.getHoldingCards().get(0));
-//        inputCards.add(player2.getResponseCard(inputCards.get(0)));
-//        inputCards.add(player3.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
-//        inputCards.add(player4.getResponseCard(Algorithm.getWinnerFromCards((Card[]) inputCards.toArray())));
-
-        //Gewinnder ermitteln
-        Card winner = Algorithm.getWinnerFromCards((Card[]) inputCards.toArray());
-        Toast.makeText(getApplicationContext(),""+winner.getColor()+winner.getValue(), Toast.LENGTH_SHORT).show();
-
-        //Log eintragen
-
-
-
-        //neu austeilen
-        austeilen();
-
-        //Stichansage aufrufen
-        startActivity(new Intent(Playground.this, PopupStichansage.class));
     }
 }

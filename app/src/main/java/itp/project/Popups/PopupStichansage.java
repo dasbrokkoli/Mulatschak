@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import itp.project.Exceptions.WhatTheFuckHowException;
 import itp.project.Mulatschak.Algorithm;
 import android.os.Bundle;
 import itp.project.Mulatschak.Listeners;
@@ -29,13 +30,14 @@ public class PopupStichansage extends AppCompatActivity {
     int dealer;
     int highestStitches;
     int currentStiche;
+    int indexOfHighestStich;
+    int howMuch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_stichansage);
 
-        Playground.austeilen();
         dealer = Algorithm.getDealer();
         rundenStichansage();
     }
@@ -46,9 +48,17 @@ public class PopupStichansage extends AppCompatActivity {
      */
     private void nextPopup() {
         if (countStitches > said) {
+            Collections.rotate(players,howMuch);
+            Playground.angesagteSticheAnzeigen(players.get(0),countStitches);
             //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
             startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
         } else {
+            Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich),highestStitches);
+            try {
+                Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
+            } catch (WhatTheFuckHowException e) {
+                e.printStackTrace();
+            }
             startActivity(new Intent(PopupStichansage.this, Popup_atout.class));
         }
         finish();
@@ -68,9 +78,9 @@ public class PopupStichansage extends AppCompatActivity {
             if (!players.get(0).isKi()) {
                 popup();
             } else {
-                System.out.println("player1: " + player1);
                 if (player1 + currentStiche > currentStiche) {
                     currentStiche++;
+                    indexOfHighestStich = 0;
                     player1--;
                 } else {
                     players.get(0).setAusgestiegen(true);
@@ -79,9 +89,9 @@ public class PopupStichansage extends AppCompatActivity {
             if (!players.get(1).isKi()) {
                 popup();
             } else {
-                System.out.println("player2: " + player2);
                 if (player2 + currentStiche > currentStiche) {
                     currentStiche++;
+                    indexOfHighestStich = 1;
                     player2--;
                 } else {
                     players.get(1).setAusgestiegen(true);
@@ -90,9 +100,9 @@ public class PopupStichansage extends AppCompatActivity {
             if (!players.get(2).isKi()) {
                 popup();
             } else {
-                System.out.println("player3: " + player3);
                 if (player3 + currentStiche > currentStiche) {
                     currentStiche++;
+                    indexOfHighestStich = 2;
                     player3--;
                 } else {
                     players.get(2).setAusgestiegen(true);
@@ -101,15 +111,16 @@ public class PopupStichansage extends AppCompatActivity {
             if (!players.get(3).isKi()) {
                 popup();
             } else {
-                System.out.println("player4: " + player4);
                 if (player4 + currentStiche > currentStiche) {
                     currentStiche++;
+                    indexOfHighestStich = 3;
                     player4--;
                 } else {
                     players.get(3).setAusgestiegen(true);
                 }
             }
         }
+
         highestStitches = currentStiche;
     }
 
@@ -124,6 +135,8 @@ public class PopupStichansage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 countStitches = 5;
+                Collections.rotate(players, howMuch);
+                Playground.angesagteSticheAnzeigen(players.get(0),countStitches);
                 //Atout wählen
                 startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
                 finish();
@@ -145,9 +158,8 @@ public class PopupStichansage extends AppCompatActivity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(PopupStichansage.this, Popup_atout.class));
-                players.get(getSpieler1(dealer)).setAusgestiegen(true);
-                finish();
+                countStitches = 0;
+                nextPopup();
             }
         });
 
@@ -207,12 +219,20 @@ public class PopupStichansage extends AppCompatActivity {
         switch (dealer) {
             case 1:
                 Collections.rotate(reihenfolge, 0);
+                howMuch = 0;
+                break;
             case 2:
                 Collections.rotate(reihenfolge, 3);
+                howMuch = -3;
+                break;
             case 3:
                 Collections.rotate(reihenfolge, 2);
+                howMuch = -2;
+                break;
             case 4:
                 Collections.rotate(reihenfolge, 1);
+                howMuch = -1;
+                break;
         }
         return reihenfolge;
     }
@@ -227,7 +247,7 @@ public class PopupStichansage extends AppCompatActivity {
         for (Algorithm player : players) {
             if (player.istAusgestiegen()) ausgestiegen++;
         }
-        return ausgestiegen == 3;
+        return ausgestiegen >= 3;
     }
 
     /**

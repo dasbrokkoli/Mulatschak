@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /**constraintLayout = (ConstraintLayout) findViewById(R.id.mainConstraintLayout);
+        /*constraintLayout = (ConstraintLayout) findViewById(R.id.mainConstraintLayout);
         showLogBtn = findViewById(R.id.log);
         showLogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         //HoldingCards
-        HoldingCards.setAllCards(this.cards);
         HoldingCards.setWeliStatus(false);
     }
 

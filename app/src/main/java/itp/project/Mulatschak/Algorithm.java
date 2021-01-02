@@ -9,6 +9,7 @@ import itp.project.Popups.PopupDifficulty;
 import itp.project.Mulatschak.R;
 
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class Algorithm {
     private final int player;
     //Attribut für die Kartenzuweisung
     private HoldingCards playerCards;
-    public static Colors atout;
+    private static Colors atout;
     private static final int[] madeTricks = new int[4];
     private static boolean doubleRound; //ob doppelte Runde (wenn Herz atout)
     private static boolean droppedOut; //ob der Spieler ausgestiegen ist oder nicht
@@ -42,11 +43,14 @@ public class Algorithm {
 
     private boolean ki;
 
+    public static Colors getAtout() {
+        return atout;
+    }
+
     public Algorithm(List<Card> cards, int player) {
         Algorithm.cards = cards;
 
         this.playerCards = new HoldingCards();
-        HoldingCards.setAllCards(cards);
         this.playerCards.initPlayer(5);
         this.player = player;
         try {
@@ -154,9 +158,13 @@ public class Algorithm {
         return lowestValue;
     }
 
+    public static void setAtout(Colors atout) {
+        Algorithm.atout = atout;
+    }
+
     private void setValues() {
         for (Card card : cards) {
-            if (card.getColor() == Playground.getAdout()) {
+            if (card.getColor() == Algorithm.getAtout()) {
                 card.setTempValue(card.getValue() + 10);
             } else {
                 card.setTempValue(card.getValue());
@@ -270,10 +278,9 @@ public class Algorithm {
      * {@link Colors} mehr high-valued {@link Card} liegen. Aus dieser ergibt sich die Atoutfarbe. Bei Farben mit
      * derselben Gesamtsumme, wird die Anzahl der hohen Karten ermittelt.
      *
-     * @param playersCardsAtout Spielerhand des Spielers mit gewonnener Stichansage
      * @return Atoutfarbe
      */
-    private static Colors getAtoutFromPlayers(List<Card> playersCardsAtout) throws WhatTheFuckHowException {
+    public Colors getAtoutFromPlayers() throws WhatTheFuckHowException {
         int anzahlHerz = 0;
         int anzahlSchelle = 0;
         int anzahlBlatt = 0;
@@ -284,7 +291,7 @@ public class Algorithm {
         final int EICHEL = 3;
         int[] high_cards = new int[4];
         Colors atout = null;
-        for (Card cards : playersCardsAtout) {
+        for (Card cards : playerCards.getCards()) {
             switch (cards.getColor()) {
                 case HERZ:
                     anzahlHerz += cards.getValue();
@@ -310,9 +317,16 @@ public class Algorithm {
                         high_cards[EICHEL]++;
                     }
                     break;
+                default:
+                    System.out.println("Weli vorhanden");
             }
         }
         int highestValue = Math.max(anzahlHerz, Math.max(anzahlSchelle, Math.max(anzahlBlatt, anzahlEichel)));
+        System.out.println("highestValue: " + highestValue);
+        System.out.println("anzahlHerz: " + anzahlHerz);
+        System.out.println("anzahlSchelle: " + anzahlSchelle);
+        System.out.println("anzahlBlatt: " + anzahlBlatt);
+        System.out.println("anzahlEichel: " + anzahlBlatt);
         if (highestValue == anzahlHerz) {
             if (anzahlHerz == anzahlSchelle) {
                 return high_cards[HERZ] > high_cards[SCHELLE] ? Colors.HERZ : Colors.SCHELLE;
@@ -321,6 +335,7 @@ public class Algorithm {
             } else if (anzahlHerz == anzahlEichel) {
                 return high_cards[HERZ] > high_cards[EICHEL] ? Colors.HERZ : Colors.EICHEL;
             }
+            return Colors.HERZ;
         }
         if (highestValue == anzahlSchelle) {
             if (anzahlSchelle == anzahlBlatt) {
@@ -328,16 +343,15 @@ public class Algorithm {
             } else if (anzahlSchelle == anzahlEichel) {
                 return high_cards[SCHELLE] > high_cards[EICHEL] ? Colors.SCHELLE : Colors.EICHEL;
             }
+            return Colors.SCHELLE;
         }
         if (highestValue == anzahlBlatt) {
             if (anzahlBlatt == anzahlEichel) {
                 return high_cards[BLATT] > high_cards[EICHEL] ? Colors.BLATT : Colors.EICHEL;
             }
+            return Colors.BLATT;
         }
-        if (highestValue == anzahlEichel) {
-            return Colors.EICHEL;
-        }
-        throw new WhatTheFuckHowException();
+        return Colors.EICHEL;
     }
 
     /**

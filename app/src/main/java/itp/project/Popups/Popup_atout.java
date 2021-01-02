@@ -53,7 +53,6 @@ public class Popup_atout extends AppCompatActivity {
 
         //Atout anzeigen
         atout = findViewById(R.id.at);
-        selectAtout();//Auslesen
         showAtout();//Anzeigen
 
 
@@ -77,14 +76,14 @@ public class Popup_atout extends AppCompatActivity {
             public void onClick(View view) {
                 //Neues Spiel (fängt mit stichansage an)
                 alreadyLeft = true;
-                //Popup schließen
+//                startActivity(new Intent(Popup_atout.this, Playground.class));
                 finish();
             }
         });
 
 
         //Der Benutzer kann nicht aussteigen wenn er in der Runde davor ausgestiegen ist
-        if(alreadyLeft){
+        if(alreadyLeft || Algorithm.getAtout()==Colors.SCHELLE){
             aus.setClickable(false);//Button kann nicht gedrückt werden
             aus.setBackgroundColor(R.color.grey);//Button ist heller um zu zeigen, dass er nichz gedrückt werden kann
         }
@@ -95,7 +94,7 @@ public class Popup_atout extends AppCompatActivity {
      * Dafür wird das gespeicherte Atout der Klasse Playground verwendet.
      */
     private void showAtout(){
-        switch(Playground.Atout){
+        switch(Algorithm.getAtout()){
             case HERZ: atout.setImageResource(R.drawable.herz);
                 break;
             case BLATT: atout.setImageResource(R.drawable.blatt);
@@ -106,14 +105,5 @@ public class Popup_atout extends AppCompatActivity {
                 break;
             default: atout.setImageResource(R.drawable.empty);
         }
-    }
-
-    /**
-     * Das Atout wird ausgelesen und im Attribut in der Klasse Playground gespeichert gespeichert
-     */
-    public static void selectAtout(){
-        //Atout aus dem Algorithmus Übernehmen
-        Playground.Atout = Algorithm.atout;
-        Playground.Atout = Colors.HERZ;
     }
 }
