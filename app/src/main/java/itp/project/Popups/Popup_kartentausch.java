@@ -114,6 +114,7 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
      */
     public void changeCard(ImageView v){
         Card change;//Die zu tauschende Karte
+        System.out.println(v.getId());
         switch (v.getId()){
             case R.id.card1:
                 change = Playground.getPlayer(1).getHoldingCards().get(0);
