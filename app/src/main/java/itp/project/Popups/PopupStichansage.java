@@ -142,7 +142,7 @@ public class PopupStichansage extends AppCompatActivity {
                 Collections.rotate(players, howMuch);
                 playground.angesagteSticheAnzeigen(players.get(0),countStitches);
                 //Atout wählen
-                startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
+                startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class).putExtra("Playground", playground));
                 finish();
             }
         });

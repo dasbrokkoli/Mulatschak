@@ -280,7 +280,7 @@ public class Algorithm {
     }
 
     public int getTrick() {
-        return tricks[player];
+        return tricks[player-1];
     }
 
     public void setTrick(int i) {
@@ -459,10 +459,6 @@ public class Algorithm {
         return points;
     }
 
-    public void setStichePlayer1(int stiche) {
-        this.stiche = stiche;
-    }
-
     public static int getDealer() {
         return dealer;
     }
@@ -485,5 +481,9 @@ public class Algorithm {
 
     public String getName() {
         return String.valueOf(player);
+    }
+
+    public HoldingCards getHoldingClass() {
+        return playerCards;
     }
 }

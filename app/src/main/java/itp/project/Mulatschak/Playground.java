@@ -2,6 +2,7 @@ package itp.project.Mulatschak;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
 import android.view.*;
@@ -22,7 +23,7 @@ import itp.project.Popups.Popup_atout;
 import java.io.Serializable;
 import java.util.*;
 
-public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable {
+public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable{
 //    public static boolean alreadyLeft;
     
     ImageView atout;
@@ -50,7 +51,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     //View diffView = findViewById(R.layout.popup_difficulty);
 
-    private final BiMap<Integer,Card> cardsOnFloor = HashBiMap.create();
+    private static final BiMap<Integer,Card> cardsOnFloor = HashBiMap.create();
+    private static int playerCardNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         austeilen();
         Algorithm.rundenbeginn();
 
-        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", this));
+        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", (Parcelable) this));
 
         //Settings Button
         View settings = findViewById(R.id.settings);
@@ -174,6 +176,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public static void austeilen(){
         HoldingCards.setAllCards(MainActivity.getCards());
         players[0] = new Algorithm(MainActivity.getCards(), 1);
+        playerCardNumber = 5;
         players[1] = new Algorithm(MainActivity.getCards(), 2);
         players[2] = new Algorithm(MainActivity.getCards(), 3);
         players[3] = new Algorithm(MainActivity.getCards(), 4);
@@ -182,7 +185,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public void neuAusteilen(){
         austeilen();
         anzeigen();
-        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", this));
+        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", (Parcelable) this));
     }
 
     /**
@@ -234,6 +237,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                     destination.setImageDrawable(move.getDrawable());
                     move.setVisibility(View.INVISIBLE);
                     cardsOnFloor.put(beginner, getCardfromView(move));
+                    playerCardNumber--;
                     System.out.println(getCardfromView(move).getColor() + "" + getCardfromView(move).getValue());
                     rotateBeginner();
                     play();
@@ -330,7 +334,9 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         cardsOnFloor.clear();
 
         //Noch Karten vorhanden?
-        if(players[0].getHoldingCards().size() == 0){
+        System.out.println("Playerkarten: " + playerCardNumber);
+        if(playerCardNumber == 0){
+            System.out.println("Runde fertig");
             Algorithm.scoring(players);
             neuAusteilen();
             return;
