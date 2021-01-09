@@ -51,4 +51,6 @@
         Habitasse platea dictumst quisque sagittis purus sit amet volutpat consequat. Nullam vehicula ipsum a arcu cursus. Congue mauris rhoncus aenean vel elit scelerisque. Ut lectus arcu bibendum at varius vel pharetra vel. Faucibus pulvinar elementum integer enim neque. Eget mauris pharetra et ultrices neque ornare aenean. Nunc id cursus metus aliquam eleifend mi in nulla. Faucibus nisl tincidunt eget nullam non nisi. Tellus rutrum tellus pellentesque eu tincidunt. Malesuada nunc vel risus commodo viverra maecenas accumsan. Neque convallis a cras semper auctor neque vitae tempus quam.
         Sagittis vitae et leo duis. Ornare suspendisse sed nisi lacus sed viverra tellus. Tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Duis at consectetur lorem donec massa. In nulla posuere sollicitudin aliquam ultrices sagittis orci a scelerisque. Eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum. Et ligula ullamcorper malesuada proin libero nunc consequat interdum varius. Fermentum et sollicitudin ac orci phasellus egestas. Nunc aliquet bibendum enim facilisis. Ipsum dolor sit amet consectetur adipiscing. A erat nam at lectus.
     </string>
+    <string name="playerNotDran">It\'s not your move! Please wait</string>
+    <string name="playerDran">Now you can play!</string>
 </resources>

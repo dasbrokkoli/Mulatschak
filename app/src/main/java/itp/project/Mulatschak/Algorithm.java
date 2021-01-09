@@ -10,6 +10,7 @@ import itp.project.Popups.PopupDifficulty;
 import itp.project.Mulatschak.R;
 
 
+import javax.annotation.Nullable;
 import java.sql.SQLOutput;
 import java.util.*;
 
@@ -90,12 +91,18 @@ public class Algorithm {
      * @param inputCard the highest Card currently laying on the floor
      * @return the best {@link Card} the Computer could play in this move
      */
-    public Card getResponseCard(Card inputCard) {
+    public Card getResponseCard(@Nullable Card inputCard) {
         this.setValues();
         this.setHoldingValues();
         this.setWinChance();
 
         boolean winMove = new Random().nextInt(101) < winChance;
+
+        //TODO make Algorithms play better cards if they're first
+        if(inputCard == null){
+            winMove = false;
+        }
+
         if (!winMove) {
             System.out.println("Random");
             int random = new Random().nextInt(playerCards.getCards().size());
@@ -105,7 +112,6 @@ public class Algorithm {
         }
         Card lowestCard = lowestCardValue(inputCard.getTempValue());
         if (lowestCard != null) {
-            playerCards.deleteHoldingCard(lowestCard);
             return lowestCard;
         } else {
             return lowestCardValue();
@@ -128,6 +134,7 @@ public class Algorithm {
     public static Card getWinnerFromCards(Card... cardsOnFloor) {
         List<Card> cardsOnFloorList = Arrays.asList(cardsOnFloor.clone());
         List<Integer> valueList = new ArrayList<>();
+        System.out.println("Auswahl der Gewinnerkarte aus " + cardsOnFloor.length + " Karten");
         for (Card floorCard : cardsOnFloor) {
             for (Card card : cards) {
                 if (card.getValue() == floorCard.getValue() && card.getColor() == floorCard.getColor()) {
@@ -135,6 +142,9 @@ public class Algorithm {
                 }
             }
             valueList.add(floorCard.getTempValue());
+        }
+        if(valueList.isEmpty()){
+            return null;
         }
         int highestIndex = valueList.indexOf(Collections.max(valueList));
         return cardsOnFloorList.get(highestIndex);

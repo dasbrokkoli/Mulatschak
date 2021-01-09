@@ -2,6 +2,7 @@ package itp.project.Mulatschak;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.*;
 import android.widget.*;
@@ -18,9 +19,10 @@ import itp.project.Popups.PopupLog;
 import itp.project.Popups.PopupStichansage;
 import itp.project.Popups.Popup_atout;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
+public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable {
 //    public static boolean alreadyLeft;
     
     ImageView atout;
@@ -44,11 +46,10 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     //Algorithmen für Spieler
     static Algorithm[] players = new Algorithm[4];
 
-    private static List<Card> inputCards;
+    private static int beginner;
 
     //View diffView = findViewById(R.layout.popup_difficulty);
 
-    //TODO Ausgespielte Karten von jedem Spieler in die Map eintragen (playerIndex, Ausgespielte Karte)
     private final BiMap<Integer,Card> cardsOnFloor = HashBiMap.create();
 
     @Override
@@ -60,7 +61,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         austeilen();
         Algorithm.rundenbeginn();
 
-        startActivity(new Intent(Playground.this, PopupStichansage.class));
+        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", this));
 
         //Settings Button
         View settings = findViewById(R.id.settings);
@@ -127,7 +128,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         stitches[2] = findViewById(R.id.pl2_stitches);
         stitches[3] = findViewById(R.id.pl3_stitches);
 
-        inputCards = new ArrayList<>();
     }
 
     /**
@@ -165,17 +165,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         //Das Atout wird angezeigt
         showAtout();
         anzeigen();
-
-        //Das Spiel beginnt
-//        play();
-    }
-
-    /**
-     * Eine Karte wird ausgespielt. Diese wird im Parameter übergeben.
-     */
-    public void playCard(Card card){
-        //Methode im Algotithmus aufrufen
-
     }
 
     /**
@@ -193,7 +182,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public void neuAusteilen(){
         austeilen();
         anzeigen();
-        startActivity(new Intent(Playground.this, PopupStichansage.class));
+        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", this));
     }
 
     /**
@@ -217,11 +206,15 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if(beginner != 0){
+            Toast.makeText(this,R.string.playerNotDran, Toast.LENGTH_SHORT).show();
+            return false;
+        }
         move = (ImageView) v;
         View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
         ClipData data = ClipData.newPlainText("", "");
         v.startDrag(data, shadowBuilder, v, 0);
-        return false;
+        return true;
     }
 
     @Override
@@ -240,8 +233,9 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 if (event.getResult()) {
                     destination.setImageDrawable(move.getDrawable());
                     move.setVisibility(View.INVISIBLE);
-                    cardsOnFloor.put(0, getCardfromView(move));
-                    Toast.makeText(getApplicationContext(),getCardfromView(move).getColor() + "" + getCardfromView(move).getValue(), Toast.LENGTH_SHORT).show();
+                    cardsOnFloor.put(beginner, getCardfromView(move));
+                    System.out.println(getCardfromView(move).getColor() + "" + getCardfromView(move).getValue());
+                    rotateBeginner();
                     play();
                 }
             default:
@@ -280,9 +274,13 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     public void whichCardWon() {
-        Card winner = Algorithm.getWinnerFromCards((Card[]) cardsOnFloor.values().toArray());
+        Card[] cards = cardsOnFloor.values().toArray(new Card[0]);
+        Card winner = Algorithm.getWinnerFromCards(cards);
         int winnerIndex = cardsOnFloor.inverse().get(winner);
+        beginner = winnerIndex;
         players[winnerIndex].wonThisCard();
+        assert winner != null;
+        System.out.println("Winning Card: " + winner.getColor()+winner.getValue() + " von Spieler " + (winnerIndex + 1));
     }
 
     /**
@@ -290,14 +288,18 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * @param player - Spieler der Siche ansagt
      * @param stiche - angesagte der Stiche
      */
-    public static void angesagteSticheAnzeigen(Algorithm player, int stiche){
+    public void angesagteSticheAnzeigen(Algorithm player, int stiche){
         if (players[0].equals(player)) {
+            beginner = 0;
             pl1_announced.setText(String.valueOf(stiche));
         } else if (players[1].equals(player)) {
+            beginner = 1;
             pl2_announced.setText(String.valueOf(stiche));
         } else if (players[2].equals(player)) {
+            beginner = 2;
             pl3_announced.setText(String.valueOf(stiche));
         } else if (players[3].equals(player)) {
+            beginner = 3;
             pl4_announced.setText(String.valueOf(stiche));
         }
     }
@@ -306,27 +308,42 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * Jeder Spieler spielt eine Karte.
      * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
      */
-    private void play(){
-        for (int i = 1; cardsOnFloor.size()<4; i++){
-            Card[] cArray = new Card[i];
+    public void play(){
+        while (cardsOnFloor.size()<4) {
+            System.out.println("While: " + cardsOnFloor.size());
+            if(beginner == 0){
+                System.out.println("Spieler ist dran");
+                return;
+            }
+            Card[] cArray = new Card[cardsOnFloor.size()];
             cardsOnFloor.values().toArray(cArray);
-            cardsOnFloor.put(i,players[i].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
-            System.out.println(("Ich bin " + players[i].getName() + " und spiele " + cardsOnFloor.get(i).getColor() + cardsOnFloor.get(i).getValue() + ". Ich habe folgende Karten: " + players[i].getHoldingCardsString()));
+            cardsOnFloor.put(beginner,players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
+            System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
+            rotateBeginner();
         }
 
         //Gewinner ermitteln
-        Card[] cArray = new Card[4];
-        cardsOnFloor.values().toArray(cArray);
-        Card winner = Algorithm.getWinnerFromCards(cArray);
-        Toast.makeText(getApplicationContext(),winner.getColor()+" "+winner.getValue(), Toast.LENGTH_SHORT).show();
-
         //Stich eintragen
-        Integer winAlgo = cardsOnFloor.inverse().get(winner);
-        players[winAlgo].wonThisCard();
+        this.whichCardWon();
 
+        //Spielfeldkarten löschen
+        cardsOnFloor.clear();
 
-        if(!cardsOnFloor.isEmpty()){
-            cardsOnFloor.clear();
+        //Noch Karten vorhanden?
+        if(players[0].getHoldingCards().size() == 0){
+            Algorithm.scoring(players);
+            neuAusteilen();
+            return;
+        }
+
+        play();
+    }
+
+    private void rotateBeginner() {
+        if(beginner < 3){
+            beginner++;
+        }else {
+            beginner = 0;
         }
     }
 

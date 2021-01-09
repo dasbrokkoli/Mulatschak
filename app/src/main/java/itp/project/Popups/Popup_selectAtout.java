@@ -109,7 +109,7 @@ public class Popup_selectAtout extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!selected.equals("")){
-                    startActivity(new Intent(Popup_selectAtout.this, Popup_kartentausch.class));
+                    startActivity(new Intent(Popup_selectAtout.this, Popup_kartentausch.class).putExtra("Playground", getIntent().getSerializableExtra("Playground")));
                     //Popup schließen
                     finish();
                 }
