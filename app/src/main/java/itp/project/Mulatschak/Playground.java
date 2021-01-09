@@ -124,7 +124,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
         stitches[0] = findViewById(R.id.player_stitches);
         stitches[1] = findViewById(R.id.pl1_stitches);
-        stitches[2] = findViewById(R.id.pl2_announced);
+        stitches[2] = findViewById(R.id.pl2_stitches);
         stitches[3] = findViewById(R.id.pl3_stitches);
 
         inputCards = new ArrayList<>();
