@@ -97,7 +97,11 @@ public class Algorithm {
 
         boolean winMove = new Random().nextInt(101) < winChance;
         if (!winMove) {
-            return playerCards.getCards().get(new Random().nextInt(playerCards.getCards().size()));
+            System.out.println("Random");
+            int random = new Random().nextInt(playerCards.getCards().size());
+            Card card = playerCards.getCards().get(random);
+            playerCards.deleteHoldingCard(card);
+            return card;
         }
         Card lowestCard = lowestCardValue(inputCard.getTempValue());
         if (lowestCard != null) {
@@ -137,7 +141,7 @@ public class Algorithm {
     }
 
     public void wonThisCard(){
-        Playground.stitchesMade(this.player,madeTricks[player]++);
+        Playground.stitchesMade(this.player,++madeTricks[player-1]);
     }
 
     private Card lowestCardValue() {
@@ -459,5 +463,17 @@ public class Algorithm {
 
     public void setAusgestiegen(boolean ausgestiegen) {
         this.ausgestiegen = ausgestiegen;
+    }
+
+    public String getHoldingCardsString() {
+        StringBuilder sb = new StringBuilder("");
+        for(Card card : playerCards.getCards()){
+            sb.append(card.getColor()).append(card.getValue()).append(" ");
+        }
+        return sb.toString();
+    }
+
+    public String getName() {
+        return String.valueOf(player);
     }
 }

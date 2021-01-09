@@ -48,14 +48,6 @@ public class HoldingCards {
     }
 
     /**
-     * löscht eine Card aus der globalen Liste
-     * @param i
-     */
-    public static void deleteCards(int i) {
-        HoldingCards.allCards.remove(i);
-    }
-
-    /**
      * Initialisiert die Karten für einen Spieler
      */
     public void initPlayer(int cardAnz) {
@@ -80,11 +72,11 @@ public class HoldingCards {
                 setWeliStatus(true);
             }
 
-            //Card wird entfernt
-            deleteCards(zz);
-
             //Karte wird dem Spieler zugewiesen
             this.player.add(card);
+
+            //Card wird entfernt
+            deleteAllCard(card);
         }
     }
 
@@ -127,7 +119,7 @@ public class HoldingCards {
         int index = HoldingCards.allCards.size()-1;
         Card card = HoldingCards.allCards.get(index);
         this.player.add(card);
-        deleteCards(index);
+        deleteAllCard(card);
     }
 
     public int[] getValue() {

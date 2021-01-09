@@ -38,6 +38,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
     public static TextView[] stitches = new TextView[4];
     private static TextView pl1_announced,pl2_announced,pl3_announced,pl4_announced;
+
     //Liste für die Karten
 
     //Algorithmen für Spieler
@@ -217,8 +218,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         move = (ImageView) v;
-        View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
-                v);
+        View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
         ClipData data = ClipData.newPlainText("", "");
         v.startDrag(data, shadowBuilder, v, 0);
         return false;
@@ -259,13 +259,21 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      */
     public static void stitchesMade(int player, int count){
         switch(player){
-            case 1: stitches[0].setText(""+count);
+            case 1:
+                stitches[0].setText(""+count);
+                System.out.println("Player 1 won: " + count);
                 break;
-            case 2: stitches[1].setText(""+count);
+            case 2:
+                stitches[1].setText(""+count);
+                System.out.println("Player 2 won: " + count);
                 break;
-            case 3: stitches[2].setText(""+count);
+            case 3:
+                stitches[2].setText(""+count);
+                System.out.println("Player 3 won: " + count);
                 break;
-            case 4: stitches[4].setText(""+count);
+            case 4:
+                stitches[3].setText(""+count);
+                System.out.println("Player 4 won: " + count);
                 break;
         }
 
@@ -303,24 +311,23 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             Card[] cArray = new Card[i];
             cardsOnFloor.values().toArray(cArray);
             cardsOnFloor.put(i,players[i].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
-            System.out.println(cardsOnFloor.get(i).getColor() + " " + cardsOnFloor.get(i).getValue());
+            System.out.println(("Ich bin " + players[i].getName() + " und spiele " + cardsOnFloor.get(i).getColor() + cardsOnFloor.get(i).getValue() + ". Ich habe folgende Karten: " + players[i].getHoldingCardsString()));
         }
 
-        //Gewinnder ermitteln
+        //Gewinner ermitteln
         Card[] cArray = new Card[4];
         cardsOnFloor.values().toArray(cArray);
         Card winner = Algorithm.getWinnerFromCards(cArray);
         Toast.makeText(getApplicationContext(),winner.getColor()+" "+winner.getValue(), Toast.LENGTH_SHORT).show();
 
-        //Log eintragen
+        //Stich eintragen
+        Integer winAlgo = cardsOnFloor.inverse().get(winner);
+        players[winAlgo].wonThisCard();
 
 
-
-        //neu austeilen
-        //austeilen();
-
-        //Stichansage aufrufen
-        //startActivity(new Intent(Playground.this, PopupStichansage.class));
+        if(!cardsOnFloor.isEmpty()){
+            cardsOnFloor.clear();
+        }
     }
 
     public static Card getCardfromView(ImageView v){
