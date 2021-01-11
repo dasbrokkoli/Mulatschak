@@ -181,9 +181,9 @@
             android:background="@layout/border"
             android:padding="2dp"
             android:scaleType="centerInside"
-            tools:layout_editor_absoluteY="172dp"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/card_pl3"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_chainStyle="packed"/>
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
             android:text="0"
             android:layout_width="50dp"
