@@ -390,4 +390,31 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 break;
         }
     }
+
+    /**
+     * Setzt alle Anzeigen zurück
+     */
+    private void reset(){
+        //Angesagte Stiche zurücksetzen
+        pl1_announced.setText("/");
+        pl2_announced.setText("/");
+        pl3_announced.setText("/");
+        pl4_announced.setText("/");
+
+        //Karten wieder Visible setzen
+        card1.setVisibility(View.VISIBLE);
+        card2.setVisibility(View.VISIBLE);
+        card3.setVisibility(View.VISIBLE);
+        card4.setVisibility(View.VISIBLE);
+        card4.setVisibility(View.VISIBLE);
+
+        //gemachte Stiche zurücksetzen
+        stitches[0].setText("/");
+        stitches[1].setText("/");
+        stitches[2].setText("/");
+        stitches[3].setText("/");
+
+        //Atout zurücksetzen
+        atout.setImageResource(R.drawable.empty);
+    }
 }
