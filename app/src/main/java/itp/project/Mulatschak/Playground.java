@@ -325,6 +325,31 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
     }
 
+    public static Map<Integer, Integer> getHighestStich(){
+        Map<Integer,Integer> tempMap = new HashMap<>();
+        try {
+            tempMap.put(0,Integer.parseInt(pl1_announced.getText().toString()));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        try {
+            tempMap.put(1,Integer.parseInt(pl2_announced.getText().toString()));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        try {
+            tempMap.put(2,Integer.parseInt(pl3_announced.getText().toString()));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        try {
+            tempMap.put(3,Integer.parseInt(pl4_announced.getText().toString()));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return tempMap;
+    }
+
     /**
      * Jeder Spieler spielt eine Karte.
      * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
