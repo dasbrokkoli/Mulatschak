@@ -321,9 +321,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             }
             Card[] cArray = new Card[cardsOnFloor.size()];
             cardsOnFloor.values().toArray(cArray);
-            Card c = players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray));
-            cardsOnFloor.put(beginner,c);
-            kartenAnzeigen(beginner,c);
+            cardsOnFloor.put(beginner,players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
             System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
             rotateBeginner();
         }
