@@ -53,4 +53,5 @@
     </string>
     <string name="playerNotDran">It\'s not your move! Please wait</string>
     <string name="playerDran">Now you can play!</string>
+    <string name="winMessage">has won!</string>
 </resources>

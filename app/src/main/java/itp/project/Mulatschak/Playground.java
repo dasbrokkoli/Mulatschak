@@ -1,27 +1,30 @@
 package itp.project.Mulatschak;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.view.View;
-import android.view.*;
-import android.widget.*;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.PopupWindow;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.view.DragEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.*;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import itp.project.Exceptions.WinException;
 import itp.project.Popups.PopupLog;
+import itp.project.Popups.PopupName;
 import itp.project.Popups.PopupStichansage;
 import itp.project.Popups.Popup_atout;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable{
 //    public static boolean alreadyLeft;
@@ -358,17 +361,17 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * Jeder Spieler spielt eine Karte.
      * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
      */
-    public void play(){
-        while (cardsOnFloor.size()<4) {
+    public void play() {
+        while (cardsOnFloor.size() < 4) {
             System.out.println("While: " + cardsOnFloor.size());
-            if(beginner == 0){
+            if (beginner == 0) {
                 System.out.println("Spieler ist dran");
                 return;
             }
             Card[] cArray = new Card[cardsOnFloor.size()];
             cardsOnFloor.values().toArray(cArray);
-            cardsOnFloor.put(beginner,players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
-            kartenAnzeigen(beginner,cardsOnFloor.get(beginner).getPicture());
+            cardsOnFloor.put(beginner, players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
+            kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
             System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
             rotateBeginner();
         }
@@ -379,12 +382,20 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
         //Spielfeldkarten löschen
         cardsOnFloor.clear();
+        kartenAnzeigen(0, null);
+        kartenAnzeigen(1, null);
+        kartenAnzeigen(2, null);
+        kartenAnzeigen(3, null);
 
         //Noch Karten vorhanden?
         System.out.println("Playerkarten: " + playerCardNumber);
-        if(playerCardNumber == 0){
+        if (playerCardNumber == 0) {
             System.out.println("Runde fertig");
-            Algorithm.scoring(players);
+            try {
+                Algorithm.scoring(players);
+            } catch (WinException e) {
+                win(Integer.parseInt(e.getMessage()));
+            }
             neuAusteilen();
             return;
         }
@@ -425,16 +436,18 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         return change;
     }
 
-    public void kartenAnzeigen(int spieler, Drawable card){
-        switch (spieler){
+    public void kartenAnzeigen(int spieler, Drawable card) {
+        switch (spieler) {
+            case 0:
+                runOnUiThread(() -> destination.setImageDrawable(null));
             case 1:
-                card_pl2.setImageDrawable(card);
+                runOnUiThread(() -> card_pl2.setImageDrawable(card));
                 break;
             case 2:
-                card_pl3.setImageDrawable(card);
+                runOnUiThread(() -> card_pl3.setImageDrawable(card));
                 break;
             case 3:
-                card_pl4.setImageDrawable(card);
+                runOnUiThread(() -> card_pl4.setImageDrawable(card));
                 break;
         }
     }
@@ -442,7 +455,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     /**
      * Setzt alle Anzeigen zurück
      */
-    private void reset(){
+    private void reset() {
         //Angesagte Stiche zurücksetzen
         pl1_announced.setText("/");
         pl2_announced.setText("/");
@@ -468,5 +481,10 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
         //Atout zurücksetzen
         atout.setImageResource(R.drawable.empty);
+    }
+
+    public void win(int playerNumber){
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("PlayerNames", Context.MODE_PRIVATE);
+        Toast.makeText(this, sharedPreferences.getString("PlayerName"+playerNumber,"Player " + (playerNumber + 1)) + " " + getString(R.string.winMessage),Toast.LENGTH_LONG ).show();
     }
 }

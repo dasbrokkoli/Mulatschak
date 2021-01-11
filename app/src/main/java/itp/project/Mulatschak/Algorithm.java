@@ -6,6 +6,7 @@ import itp.project.Enums.Difficulty;
 import itp.project.Enums.Values;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
+import itp.project.Exceptions.WinException;
 import itp.project.Popups.PopupDifficulty;
 import itp.project.Mulatschak.R;
 import itp.project.Popups.Popup_atout;
@@ -21,6 +22,7 @@ import java.util.Random;
 
 public class Algorithm {
 
+    private static final Integer MAX_POINTS = 21;
     private static int dealer;
     private static final int[] tricks = new int[4];
     private static List<Card> cards;
@@ -56,10 +58,10 @@ public class Algorithm {
         this.player = player;
         if(points.size() < 4){
             try {
-                points.set(player - 1,21);
+                points.set(player - 1,MAX_POINTS);
                 System.out.println("Punkte für Spieler " + (player - 1) + " wurden gesetzt");
             } catch (IndexOutOfBoundsException e) {
-                points.add(player - 1,21);
+                points.add(player - 1,MAX_POINTS);
             }
         }
         setAusgestiegen(false);
@@ -376,7 +378,7 @@ public class Algorithm {
      * @param algo
      * @return scores -> Eine ArrayList mit all den Punkteständen
      */
-    public static void scoring(Algorithm... algo) {
+    public static void scoring(Algorithm... algo) throws WinException {
         int newPoints;
         //Angesagte Stiche
         Map<Integer, Integer> highestStitches = Playground.getHighestStich();
@@ -413,6 +415,11 @@ public class Algorithm {
 
             System.out.println("Neue Punkte für Spieler " + i + ": " + newPoints);
             points.set(i, newPoints);
+        }
+        for(int i = 0; i<points.size(); i++){
+            if(points.get(i) <= 0){
+                throw new WinException(i);
+            }
         }
     }
 
