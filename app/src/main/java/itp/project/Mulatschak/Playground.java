@@ -2,8 +2,6 @@ package itp.project.Mulatschak;
 
 import android.content.ClipData;
 import android.content.Intent;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.view.View;
 import android.view.*;
 import android.widget.*;
@@ -21,7 +19,6 @@ import itp.project.Popups.PopupStichansage;
 import itp.project.Popups.Popup_atout;
 
 import java.io.Serializable;
-import java.util.*;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable{
 //    public static boolean alreadyLeft;
@@ -35,7 +32,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ConstraintLayout constraintLayout;
 
     //Cards
-    ImageView card4, card1, card2, card3,card5, destination;
+    ImageView card4, card1, card2, card3,card5, destination, card_pl2, card_pl3, card_pl4;
             static ImageView move;
     //Gemachte Stiche
     //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
@@ -114,8 +111,11 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         card5 = findViewById(R.id.card5);
         card5.setOnTouchListener(this);
 
-        destination = findViewById(R.id.imageView);
+        destination = findViewById(R.id.card_pl1);
         destination.setOnDragListener(this);
+        card_pl2 = findViewById(R.id.card_pl2);
+        card_pl3 = findViewById(R.id.card_pl3);
+        card_pl4 = findViewById(R.id.card_pl4);
 
         //Stiche gemacht
         pl1_announced = findViewById(R.id.player_announced);
@@ -417,5 +417,46 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
         return change;
+    }
+
+    public void kartenAnzeigen(int spieler, Card card){
+        switch (spieler){
+            case 1:
+                card_pl2.setImageDrawable(card.getPicture());
+                break;
+            case 2:
+                card_pl3.setImageDrawable(card.getPicture());
+                break;
+            case 3:
+                card_pl4.setImageDrawable(card.getPicture());
+                break;
+        }
+    }
+
+    /**
+     * Setzt alle Anzeigen zurück
+     */
+    private void reset(){
+        //Angesagte Stiche zurücksetzen
+        pl1_announced.setText("/");
+        pl2_announced.setText("/");
+        pl3_announced.setText("/");
+        pl4_announced.setText("/");
+
+        //Karten wieder Visible setzen
+        card1.setVisibility(View.VISIBLE);
+        card2.setVisibility(View.VISIBLE);
+        card3.setVisibility(View.VISIBLE);
+        card4.setVisibility(View.VISIBLE);
+        card4.setVisibility(View.VISIBLE);
+
+        //gemachte Stiche zurücksetzen
+        stitches[0].setText("/");
+        stitches[1].setText("/");
+        stitches[2].setText("/");
+        stitches[3].setText("/");
+
+        //Atout zurücksetzen
+        atout.setImageResource(R.drawable.empty);
     }
 }
