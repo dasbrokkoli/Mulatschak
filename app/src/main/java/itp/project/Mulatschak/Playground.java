@@ -63,7 +63,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         austeilen();
         Algorithm.rundenbeginn();
 
-        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", (Parcelable) this));
+        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", this));
 
         //Settings Button
         View settings = findViewById(R.id.settings);
@@ -185,7 +185,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public void neuAusteilen(){
         austeilen();
         anzeigen();
-        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", (Parcelable) this));
+        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", this));
     }
 
     /**
