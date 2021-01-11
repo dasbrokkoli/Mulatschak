@@ -19,6 +19,8 @@ import itp.project.Popups.PopupStichansage;
 import itp.project.Popups.Popup_atout;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable{
 //    public static boolean alreadyLeft;
