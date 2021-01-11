@@ -2,6 +2,7 @@ package itp.project.Mulatschak;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.*;
 import android.widget.*;
@@ -367,6 +368,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             Card[] cArray = new Card[cardsOnFloor.size()];
             cardsOnFloor.values().toArray(cArray);
             cardsOnFloor.put(beginner,players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
+            kartenAnzeigen(beginner,cardsOnFloor.get(beginner).getPicture());
             System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
             rotateBeginner();
         }
@@ -386,6 +388,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             neuAusteilen();
             return;
         }
+
 
         play();
     }
@@ -422,16 +425,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         return change;
     }
 
-    public void kartenAnzeigen(int spieler, Card card){
+    public void kartenAnzeigen(int spieler, Drawable card){
         switch (spieler){
             case 1:
-                card_pl2.setImageDrawable(card.getPicture());
+                card_pl2.setImageDrawable(card);
                 break;
             case 2:
-                card_pl3.setImageDrawable(card.getPicture());
+                card_pl3.setImageDrawable(card);
                 break;
             case 3:
-                card_pl4.setImageDrawable(card.getPicture());
+                card_pl4.setImageDrawable(card);
                 break;
         }
     }
