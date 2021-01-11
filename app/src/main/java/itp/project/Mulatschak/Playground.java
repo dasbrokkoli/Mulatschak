@@ -2,8 +2,6 @@ package itp.project.Mulatschak;
 
 import android.content.ClipData;
 import android.content.Intent;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.view.View;
 import android.view.*;
 import android.widget.*;
@@ -21,7 +19,6 @@ import itp.project.Popups.PopupStichansage;
 import itp.project.Popups.Popup_atout;
 
 import java.io.Serializable;
-import java.util.*;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable{
 //    public static boolean alreadyLeft;
@@ -112,7 +109,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         card5 = findViewById(R.id.card5);
         card5.setOnTouchListener(this);
 
-        destination = findViewById(R.id.imageView);
+        destination = findViewById(R.id.card_pl1);
         destination.setOnDragListener(this);
 
         //Stiche gemacht

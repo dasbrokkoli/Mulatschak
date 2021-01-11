@@ -8,6 +8,17 @@
         tools:context=".Playground"
         android:screenOrientation="landscape" android:background="#4CAF50" android:id="@+id/playgroundConstraintLayout">
 
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" app:srcCompat="@android:drawable/menuitem_background"
+            android:id="@+id/card_pl3" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@layout/border"
+            android:padding="2dp"
+            android:scaleType="centerInside"
+            app:layout_constraintVertical_bias="0.501"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/card_pl2"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_chainStyle="packed"/>
     <TextView
             android:text="0"
             android:layout_width="50dp"
@@ -147,12 +158,30 @@
     <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp" app:srcCompat="@android:drawable/menuitem_background"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/imageView" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/card_pl1" app:layout_constraintTop_toTopOf="@+id/card_pl2"
             android:background="@layout/border"
             android:padding="2dp"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toEndOf="@+id/card_pl2" android:layout_marginStart="16dp"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/card_pl4"/>
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" app:srcCompat="@android:drawable/menuitem_background"
+            android:id="@+id/card_pl4" app:layout_constraintTop_toTopOf="@+id/card_pl1"
+            android:background="@layout/border"
+            android:padding="2dp"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toEndOf="@+id/card_pl1" android:layout_marginStart="16dp"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" app:srcCompat="@android:drawable/menuitem_background"
+            android:id="@+id/card_pl2" app:layout_constraintTop_toTopOf="@+id/card_pl3"
+            android:background="@layout/border"
+            android:padding="2dp"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toEndOf="@+id/card_pl3" android:layout_marginStart="16dp"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/card_pl1"/>
     <TextView
             android:text="0"
             android:layout_width="50dp"
