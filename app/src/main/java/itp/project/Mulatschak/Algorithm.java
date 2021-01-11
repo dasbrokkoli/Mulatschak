@@ -380,40 +380,39 @@ public class Algorithm {
      */
     public static void scoring(Algorithm... algo) {
         int newPoints;
-        int tempSticheAngesagt = 4;
+        //Angesagte Stiche
+        Map<Integer, Integer> highestStitches = Playground.getHighestStich();
+
         for (int i = 0; i < algo.length; i++) {
             newPoints = points.get(i); //Die Punktestaende von davor aufrufen und abspeichern
             algo[i].getTrick();     //Die Stiche holen
 
-            //Sieger ermitteln
-
-            //Angesagte Stiche
-            int saidStitches = tempSticheAngesagt;
             //Gemachte stiche
             CharSequence tmp = (Playground.stitches[i].getText());
             String tmp2 = tmp.toString();
             int madeStitches = Integer.parseInt(tmp2);
 
-            //Stiche vergleichen (angesagt vs gemacht)
-            if (droppedOut) {
+            if(highestStitches.containsKey(i)) {
+                int saidStitches = highestStitches.get(i);
+                if (saidStitches > madeStitches) {
+                    newPoints += 10; //Wenn mehr angesagt wurden als gemacht
+                } else {
+                    newPoints -= madeStitches;
+                }
+            } else if(droppedOut) {
                 newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
-            } else if (saidStitches > madeStitches) {
-                newPoints += 10; //Wenn mehr angesagt wurden als gemacht
-            } else if ((saidStitches == 0) && (madeStitches == 0)) {
+
+            } else if(madeStitches == 0) {
                 newPoints += 5; //Wenn keine angesagt und keine gemacht wurden
+
             } else {
                 newPoints -= madeStitches; //Sonst schreibt man die gemachten Stiche runter
 
-                if (droppedOut) {
-                    newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
-                }
-                if (doubleRound) {
-
-                    if (atout == Colors.HERZ) {
-                        newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
-                    }
-                }
             }
+            if (doubleRound) {
+                newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
+            }
+
             System.out.println("Neue Punkte für Spieler " + i + ": " + newPoints);
             points.set(i, newPoints);
         }
