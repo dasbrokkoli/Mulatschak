@@ -8,6 +8,7 @@ import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
 import itp.project.Popups.PopupDifficulty;
 import itp.project.Mulatschak.R;
+import itp.project.Popups.Popup_atout;
 
 
 import javax.annotation.Nullable;
@@ -28,9 +29,6 @@ public class Algorithm {
     //Attribut für die Kartenzuweisung
     private HoldingCards playerCards;
     private static Colors atout;
-    private static final int[] madeTricks = new int[4];
-    private static boolean doubleRound; //ob doppelte Runde (wenn Herz atout)
-    private static boolean droppedOut; //ob der Spieler ausgestiegen ist oder nicht
     private static List<Integer> points = new ArrayList<>(); //fuer die Punktestaende der Spieler
     private boolean ausgestiegen;
     private int stiche;
@@ -154,7 +152,7 @@ public class Algorithm {
     }
 
     public void wonThisCard(){
-        Playground.stitchesMade(this.player,++madeTricks[player-1]);
+        Playground.stitchesMade(this.player,++tricks[player-1]);
     }
 
     private Card lowestCardValue() {
@@ -279,7 +277,7 @@ public class Algorithm {
     public static void rundenbeginn() {
         Random r = new Random();
         dealer = 1 + r.nextInt(4);
-        Arrays.fill(madeTricks, 0);
+        Arrays.fill(tricks, 0);
     }
 
     public int getTrick() {
@@ -287,7 +285,7 @@ public class Algorithm {
     }
 
     public void setTrick(int i) {
-        tricks[player] = i;
+        tricks[player-1] = i;
     }
 
     /**
@@ -399,7 +397,7 @@ public class Algorithm {
                 } else {
                     newPoints -= madeStitches;
                 }
-            } else if(droppedOut) {
+            } else if(i==0 && Popup_atout.alreadyLeft) {
                 newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
 
             } else if(madeStitches == 0) {
@@ -409,7 +407,7 @@ public class Algorithm {
                 newPoints -= madeStitches; //Sonst schreibt man die gemachten Stiche runter
 
             }
-            if (doubleRound) {
+            if (atout == Colors.HERZ) {
                 newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
             }
 

@@ -202,6 +202,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     public void neuAusteilen(){
+        reset();
         austeilen();
         anzeigen();
         startActivity(new Intent(Playground.this, PopupStichansage.class));
@@ -450,13 +451,17 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         card2.setVisibility(View.VISIBLE);
         card3.setVisibility(View.VISIBLE);
         card4.setVisibility(View.VISIBLE);
-        card4.setVisibility(View.VISIBLE);
+        card5.setVisibility(View.VISIBLE);
 
         //gemachte Stiche zurücksetzen
-        stitches[0].setText("/");
-        stitches[1].setText("/");
-        stitches[2].setText("/");
-        stitches[3].setText("/");
+        stitches[0].setText("0");
+        stitches[1].setText("0");
+        stitches[2].setText("0");
+        stitches[3].setText("0");
+
+        for (Algorithm player:players){
+            player.setTrick(0);
+        }
 
         //Atout zurücksetzen
         atout.setImageResource(R.drawable.empty);
