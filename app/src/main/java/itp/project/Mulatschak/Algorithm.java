@@ -56,10 +56,13 @@ public class Algorithm {
         this.playerCards = new HoldingCards();
         this.playerCards.initPlayer(5);
         this.player = player;
-        try {
-            points.set(player - 1,21);
-        } catch (IndexOutOfBoundsException e) {
-            points.add(player - 1,21);
+        if(points.size() < 4){
+            try {
+                points.set(player - 1,21);
+                System.out.println("Punkte für Spieler " + (player - 1) + " wurden gesetzt");
+            } catch (IndexOutOfBoundsException e) {
+                points.add(player - 1,21);
+            }
         }
         setAusgestiegen(false);
         setKi(true);
@@ -392,7 +395,7 @@ public class Algorithm {
             int madeStitches = Integer.parseInt(tmp2);
 
             //Stiche vergleichen (angesagt vs gemacht)
-            if (droppedOut == true) {
+            if (droppedOut) {
                 newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
             } else if (saidStitches > madeStitches) {
                 newPoints += 10; //Wenn mehr angesagt wurden als gemacht
@@ -401,17 +404,18 @@ public class Algorithm {
             } else {
                 newPoints -= madeStitches; //Sonst schreibt man die gemachten Stiche runter
 
-                if (droppedOut == true) {
+                if (droppedOut) {
                     newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
                 }
-                if (doubleRound == true) {
+                if (doubleRound) {
 
                     if (atout == Colors.HERZ) {
                         newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
                     }
-                    points.set(i, newPoints);
                 }
             }
+            System.out.println("Neue Punkte für Spieler " + i + ": " + newPoints);
+            points.set(i, newPoints);
         }
     }
 

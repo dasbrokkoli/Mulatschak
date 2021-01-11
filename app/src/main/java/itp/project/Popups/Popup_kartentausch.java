@@ -62,7 +62,9 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
                 //Es können nicht 4 Karten getauscht werden
                 if(count != 4) {
 //                    startActivity(new Intent(Popup_kartentausch.this, Playground.class));
-                    ((Playground) getIntent().getSerializableExtra("Playground")).play();
+                    synchronized (Playground.playThread){
+                        Playground.playThread.notify();
+                    }
                     finish();
                 }
             }

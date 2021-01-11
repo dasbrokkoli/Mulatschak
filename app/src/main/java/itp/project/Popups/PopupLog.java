@@ -69,6 +69,7 @@ public class PopupLog extends AppCompatActivity {
     public void setScoring() {
         List<Integer> points = Algorithm.getPoints();
         for(int i = 0; i < points.size(); i++) {
+            System.out.println("Spieler " + i + " hat " + points.get(i) + " Punkte");
             tvPoints[i].setText(String.valueOf(points.get(i)));
         }
     }

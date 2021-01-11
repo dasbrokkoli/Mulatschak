@@ -33,12 +33,9 @@ public class PopupStichansage extends AppCompatActivity {
     int indexOfHighestStich;
     int howMuch;
 
-    Playground playground;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        playground = (Playground) getIntent().getSerializableExtra("Playground");
 
         setContentView(R.layout.popup_stichansage);
 
@@ -53,17 +50,17 @@ public class PopupStichansage extends AppCompatActivity {
     private void nextPopup() {
         if (countStitches > said) {
             Collections.rotate(players,howMuch);
-            playground.angesagteSticheAnzeigen(players.get(0),countStitches);
+            Playground.angesagteSticheAnzeigen(players.get(0),countStitches);
             //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
-            startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class).putExtra("Playground", playground));
+            startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
         } else {
-            playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich),highestStitches);
+            Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich),highestStitches);
             try {
                 Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
             } catch (WhatTheFuckHowException e) {
                 e.printStackTrace();
             }
-            startActivity(new Intent(PopupStichansage.this, Popup_atout.class).putExtra("Playground", playground));
+            startActivity(new Intent(PopupStichansage.this, Popup_atout.class));
         }
         finish();
     }
@@ -140,9 +137,9 @@ public class PopupStichansage extends AppCompatActivity {
             public void onClick(View view) {
                 countStitches = 5;
                 Collections.rotate(players, howMuch);
-                playground.angesagteSticheAnzeigen(players.get(0),countStitches);
+                Playground.angesagteSticheAnzeigen(players.get(0),countStitches);
                 //Atout wählen
-                startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class).putExtra("Playground", playground));
+                startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
                 finish();
             }
         });

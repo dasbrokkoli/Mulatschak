@@ -63,7 +63,7 @@ public class Popup_atout extends AppCompatActivity {
             public void onClick(View view) {
                 alreadyLeft = false;
                 //Zu Kartentausch weiterleiten
-                startActivity(new Intent(Popup_atout.this, Popup_kartentausch.class).putExtra("Playground", getIntent().getSerializableExtra("Playground")));
+                startActivity(new Intent(Popup_atout.this, Popup_kartentausch.class));
                 //Popup schließen
                 finish();
             }

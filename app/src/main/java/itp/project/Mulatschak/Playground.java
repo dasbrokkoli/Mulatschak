@@ -54,6 +54,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     private static final BiMap<Integer,Card> cardsOnFloor = HashBiMap.create();
     private static int playerCardNumber;
 
+    public static Thread playThread;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,6 +169,21 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         //Das Atout wird angezeigt
         showAtout();
         anzeigen();
+
+        playThread = new Thread(()-> {
+            while (true) {
+                try {
+                    synchronized (playThread) {
+                        playThread.wait();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName() + " is calling play()");
+                play();
+            }
+        });
+        playThread.start();
     }
 
     /**
@@ -185,7 +202,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public void neuAusteilen(){
         austeilen();
         anzeigen();
-        startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", this));
+        startActivity(new Intent(Playground.this, PopupStichansage.class));
     }
 
     /**
@@ -292,7 +309,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * @param player - Spieler der Siche ansagt
      * @param stiche - angesagte der Stiche
      */
-    public void angesagteSticheAnzeigen(Algorithm player, int stiche){
+    public static void angesagteSticheAnzeigen(Algorithm player, int stiche){
         if (players[0].equals(player)) {
             beginner = 0;
             pl1_announced.setText(String.valueOf(stiche));
