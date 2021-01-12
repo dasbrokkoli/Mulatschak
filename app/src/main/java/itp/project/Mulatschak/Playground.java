@@ -347,7 +347,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         try {
             int tempInt = Integer.parseInt(pl1_announced.getText().toString());
             if (tempInt > Collections.max(tempMap.values())) {
-                tempMap.clear();
+                if(!tempMap.isEmpty()) tempMap.clear();
                 tempMap.put(0, tempInt);
             }
         } catch (NumberFormatException e) {
@@ -356,7 +356,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         try {
             int tempInt = Integer.parseInt(pl2_announced.getText().toString());
             if (tempInt > Collections.max(tempMap.values())) {
-                tempMap.clear();
+                if(!tempMap.isEmpty()) tempMap.clear();
                 tempMap.put(1, tempInt);
             }
         } catch (NumberFormatException e) {
@@ -365,7 +365,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         try {
             int tempInt = Integer.parseInt(pl3_announced.getText().toString());
             if (tempInt > Collections.max(tempMap.values())) {
-                tempMap.clear();
+                if(!tempMap.isEmpty()) tempMap.clear();
                 tempMap.put(2, tempInt);
             }
         } catch (NumberFormatException e) {
@@ -374,7 +374,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         try {
             int tempInt = Integer.parseInt(pl4_announced.getText().toString());
             if (tempInt > Collections.max(tempMap.values())) {
-                tempMap.clear();
+                if(!tempMap.isEmpty()) tempMap.clear();
                 tempMap.put(3, tempInt);
             }
         } catch (NumberFormatException e) {
