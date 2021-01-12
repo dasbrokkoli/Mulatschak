@@ -21,14 +21,16 @@ import itp.project.Popups.PopupStichansage;
 import itp.project.Popups.Popup_atout;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable{
+public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable {
 //    public static boolean alreadyLeft;
-    
+
     ImageView atout;
 
     //LogPopup
@@ -38,12 +40,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ConstraintLayout constraintLayout;
 
     //Cards
-    ImageView card4, card1, card2, card3,card5, destination, card_pl2, card_pl3, card_pl4;
-            static ImageView move;
+    ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4;
+    static ImageView move;
     //Gemachte Stiche
     //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
     public static TextView[] stitches = new TextView[4];
-    private static TextView pl1_announced,pl2_announced,pl3_announced,pl4_announced;
+    private static TextView pl1_announced, pl2_announced, pl3_announced, pl4_announced;
 
     //Liste für die Karten
 
@@ -54,7 +56,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     //View diffView = findViewById(R.layout.popup_difficulty);
 
-    private static final BiMap<Integer,Card> cardsOnFloor = HashBiMap.create();
+    private static final BiMap<Integer, Card> cardsOnFloor = HashBiMap.create();
     private static int playerCardNumber;
 
     public static Thread playThread;
@@ -144,22 +146,27 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * Im dafür vorgesehenen Feld wird das geählte Atout angezeigt.
      * Das Atout ist in der Konstante gespeichert welches angezeigt werden soll.
      */
-    private void showAtout(){
+    private void showAtout() {
         //Wenn noch kein Atout gespeichert ist wird ein leeres Feld angezeigt
-        if(Algorithm.getAtout() == null){
+        if (Algorithm.getAtout() == null) {
             atout.setImageResource(R.drawable.empty);
-        }else{
+        } else {
             //Das gespeicherte Atout wird angezeigt
-            switch(Algorithm.getAtout()){
-                case HERZ: atout.setImageResource(R.drawable.herz);
+            switch (Algorithm.getAtout()) {
+                case HERZ:
+                    atout.setImageResource(R.drawable.herz);
                     break;
-                case BLATT: atout.setImageResource(R.drawable.blatt);
+                case BLATT:
+                    atout.setImageResource(R.drawable.blatt);
                     break;
-                case EICHEL: atout.setImageResource(R.drawable.eiche);
+                case EICHEL:
+                    atout.setImageResource(R.drawable.eiche);
                     break;
-                case SCHELLE: atout.setImageResource(R.drawable.schelle);
+                case SCHELLE:
+                    atout.setImageResource(R.drawable.schelle);
                     break;
-                default: atout.setImageResource(R.drawable.empty);
+                default:
+                    atout.setImageResource(R.drawable.empty);
             }
         }
     }
@@ -168,15 +175,15 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     protected void onResume() {
         super.onResume();
         //Neu austeilen wenn ausgestiegen
-        if(Popup_atout.alreadyLeft) {
-           neuAusteilen();
+        if (Popup_atout.alreadyLeft) {
+            neuAusteilen();
         }
 
         //Das Atout wird angezeigt
         showAtout();
         anzeigen();
 
-        playThread = new Thread(()-> {
+        playThread = new Thread(() -> {
             while (true) {
                 try {
                     synchronized (playThread) {
@@ -196,7 +203,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * Neue runde die Karten werden neu ausgeteilt.
      * Jeder Spieler bekommt einen neuen Algorithmus
      */
-    public static void austeilen(){
+    public static void austeilen() {
         HoldingCards.setAllCards(MainActivity.getCards());
         players[0] = new Algorithm(MainActivity.getCards(), 1);
         playerCardNumber = 5;
@@ -205,7 +212,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         players[3] = new Algorithm(MainActivity.getCards(), 4);
     }
 
-    public void neuAusteilen(){
+    public void neuAusteilen() {
         reset();
         austeilen();
         anzeigen();
@@ -215,7 +222,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     /**
      * Die Karten des Spielers anzeigen.
      */
-    public void anzeigen(){
+    public void anzeigen() {
         card1.setImageDrawable(players[0].getHoldingCards().get(0).getPicture());
         card2.setImageDrawable(players[0].getHoldingCards().get(1).getPicture());
         card3.setImageDrawable(players[0].getHoldingCards().get(2).getPicture());
@@ -225,16 +232,17 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     /**
      * Spieler zurückgeben
+     *
      * @return - Player
      */
-    public static Algorithm getPlayer(int playernumber){
-        return players[playernumber-1];
+    public static Algorithm getPlayer(int playernumber) {
+        return players[playernumber - 1];
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if(beginner != 0){
-            Toast.makeText(this,R.string.playerNotDran, Toast.LENGTH_SHORT).show();
+        if (beginner != 0) {
+            Toast.makeText(this, R.string.playerNotDran, Toast.LENGTH_SHORT).show();
             return false;
         }
         move = (ImageView) v;
@@ -276,25 +284,26 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     /**
      * Die gemachten Stiche sollen im Playground angezeigt werden.
      * Dazu wird bei dem Spieler der gestochen hat die neue Stichanzahl angezeigt.
+     *
      * @param player - Spieler der den Zug gewonnen hat
-     * @param count - neue Stichanzahl des Spielers
+     * @param count  - neue Stichanzahl des Spielers
      */
-    public static void stitchesMade(int player, int count){
-        switch(player){
+    public static void stitchesMade(int player, int count) {
+        switch (player) {
             case 1:
-                stitches[0].setText(""+count);
+                stitches[0].setText("" + count);
                 System.out.println("Player 1 won: " + count);
                 break;
             case 2:
-                stitches[1].setText(""+count);
+                stitches[1].setText("" + count);
                 System.out.println("Player 2 won: " + count);
                 break;
             case 3:
-                stitches[2].setText(""+count);
+                stitches[2].setText("" + count);
                 System.out.println("Player 3 won: " + count);
                 break;
             case 4:
-                stitches[3].setText(""+count);
+                stitches[3].setText("" + count);
                 System.out.println("Player 4 won: " + count);
                 break;
         }
@@ -308,15 +317,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         beginner = winnerIndex;
         players[winnerIndex].wonThisCard();
         assert winner != null;
-        System.out.println("Winning Card: " + winner.getColor()+winner.getValue() + " von Spieler " + (winnerIndex + 1));
+        System.out.println("Winning Card: " + winner.getColor() + winner.getValue() + " von Spieler " + (winnerIndex + 1));
     }
 
     /**
      * Die angesagten Stiche werden angezeigt
+     *
      * @param player - Spieler der Siche ansagt
      * @param stiche - angesagte der Stiche
      */
-    public static void angesagteSticheAnzeigen(Algorithm player, int stiche){
+    public static void angesagteSticheAnzeigen(Algorithm player, int stiche) {
         if (players[0].equals(player)) {
             beginner = 0;
             pl1_announced.setText(String.valueOf(stiche));
@@ -332,25 +342,41 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
     }
 
-    public static Map<Integer, Integer> getHighestStich(){
-        Map<Integer,Integer> tempMap = new HashMap<>();
+    public static Map<Integer, Integer> getHighestStich() {
+        Map<Integer, Integer> tempMap = new HashMap<>();
         try {
-            tempMap.put(0,Integer.parseInt(pl1_announced.getText().toString()));
+            int tempInt = Integer.parseInt(pl1_announced.getText().toString());
+            if (tempInt > Collections.max(tempMap.values())) {
+                tempMap.clear();
+                tempMap.put(0, tempInt);
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         try {
-            tempMap.put(1,Integer.parseInt(pl2_announced.getText().toString()));
+            int tempInt = Integer.parseInt(pl2_announced.getText().toString());
+            if (tempInt > Collections.max(tempMap.values())) {
+                tempMap.clear();
+                tempMap.put(1, tempInt);
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         try {
-            tempMap.put(2,Integer.parseInt(pl3_announced.getText().toString()));
+            int tempInt = Integer.parseInt(pl3_announced.getText().toString());
+            if (tempInt > Collections.max(tempMap.values())) {
+                tempMap.clear();
+                tempMap.put(2, tempInt);
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         try {
-            tempMap.put(3,Integer.parseInt(pl4_announced.getText().toString()));
+            int tempInt = Integer.parseInt(pl4_announced.getText().toString());
+            if (tempInt > Collections.max(tempMap.values())) {
+                tempMap.clear();
+                tempMap.put(3, tempInt);
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -405,16 +431,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     private void rotateBeginner() {
-        if(beginner < 3){
+        if (beginner < 3) {
             beginner++;
-        }else {
+        } else {
             beginner = 0;
         }
     }
 
-    public static Card getCardfromView(ImageView v){
+    public static Card getCardfromView(ImageView v) {
         Card change;//Die zu tauschende Karte
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.card1:
                 change = Playground.getPlayer(1).getHoldingCards().get(0);
                 break;
@@ -475,7 +501,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         stitches[2].setText("0");
         stitches[3].setText("0");
 
-        for (Algorithm player:players){
+        for (Algorithm player : players) {
             player.setTrick(0);
         }
 
@@ -483,8 +509,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         atout.setImageResource(R.drawable.empty);
     }
 
-    public void win(int playerNumber){
+    public void win(int playerNumber) {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("PlayerNames", Context.MODE_PRIVATE);
-        Toast.makeText(this, sharedPreferences.getString("PlayerName"+playerNumber,"Player " + (playerNumber + 1)) + " " + getString(R.string.winMessage),Toast.LENGTH_LONG ).show();
+        Toast.makeText(this, sharedPreferences.getString("PlayerName" + playerNumber, "Player " + (playerNumber + 1)) + " " + getString(R.string.winMessage), Toast.LENGTH_LONG).show();
     }
 }

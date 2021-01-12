@@ -393,23 +393,30 @@ public class Algorithm {
             int madeStitches = Integer.parseInt(tmp2);
 
             if(highestStitches.containsKey(i)) {
+                System.out.println("Player " + i + " hat die höchsten Stiche");
                 int saidStitches = highestStitches.get(i);
                 if (saidStitches > madeStitches) {
+                    System.out.println("Stiche nicht erreicht " + madeStitches + " < " + saidStitches);
                     newPoints += 10; //Wenn mehr angesagt wurden als gemacht
                 } else {
+                    System.out.println("Stiche erreicht " + madeStitches + " > " + saidStitches);
                     newPoints -= madeStitches;
                 }
             } else if(i==0 && Popup_atout.alreadyLeft) {
+                System.out.println("Spieler ist heimgegangen");
                 newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
 
             } else if(madeStitches == 0) {
+                System.out.println("Spieler " + i + " hat keine Stiche gemacht");
                 newPoints += 5; //Wenn keine angesagt und keine gemacht wurden
 
             } else {
+                System.out.println("Spieler " + i + " hat " + madeStitches + " Punkte runtergeschrieben");
                 newPoints -= madeStitches; //Sonst schreibt man die gemachten Stiche runter
 
             }
             if (atout == Colors.HERZ) {
+                System.out.println("Doppelte Runde");
                 newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
             }
 
