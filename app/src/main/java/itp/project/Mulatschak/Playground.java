@@ -15,10 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import itp.project.Exceptions.WinException;
-import itp.project.Popups.PopupLog;
-import itp.project.Popups.PopupName;
-import itp.project.Popups.PopupStichansage;
-import itp.project.Popups.Popup_atout;
+import itp.project.Popups.*;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -47,10 +44,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public static TextView[] stitches = new TextView[4];
     private static TextView pl1_announced, pl2_announced, pl3_announced, pl4_announced;
 
-    //Liste für die Karten
 
     //Algorithmen für Spieler
     static Algorithm[] players = new Algorithm[4];
+
+    //Gemachte Stiche Popup
+    Button gemachteStiche;
 
     private static int beginner;
 
@@ -101,6 +100,15 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Playground.this, PopupLog.class));
+            }
+        });
+
+        //Gemachte Stiche ansehen
+        gemachteStiche = findViewById(R.id.gemachteStiche);
+        gemachteStiche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Playground.this, GemachteStiche.class));
             }
         });
 

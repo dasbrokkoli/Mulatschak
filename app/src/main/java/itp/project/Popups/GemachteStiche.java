@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
 /**
@@ -50,8 +51,7 @@ public class GemachteStiche extends AppCompatActivity {
         });
 
         //Anzahl wird die Anzahl der gemachten Stiche angezeigt
-        //TODO: Aus dem Playground gemachten stichte auslesen
-        max = 5;
+        max = Integer.parseInt((String) Playground.stitches[0].getText());
 
         //TODO:Stiche in einer Liste speichern
 

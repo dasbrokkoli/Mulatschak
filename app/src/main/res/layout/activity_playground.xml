@@ -201,4 +201,10 @@
             app:layout_constraintStart_toStartOf="@+id/pl1_announced" android:textAlignment="center"
             android:background="@drawable/empty" android:paddingTop="15dp"
             android:textColor="@android:color/background_dark"/>
+    <Button
+            android:text="Stiche"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/gemachteStiche"
+            app:layout_constraintStart_toEndOf="@+id/player2" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="16dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
