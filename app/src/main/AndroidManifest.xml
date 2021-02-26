@@ -11,9 +11,14 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="AllowBackup">
-        <activity android:name="itp.project.Popups.PopupTutorialVideo"
-                  android:screenOrientation="landscape"
-                  android:theme="@style/AppTheme.Popup">
+        <activity android:name="itp.project.Popups.GemachteStiche"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.Popup">
+        </activity>
+        <activity
+                android:name="itp.project.Popups.PopupTutorialVideo"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.Popups.PopupDesign"
@@ -30,9 +35,10 @@
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
-        <activity android:name="itp.project.Popups.Popup_kartentausch"
-                  android:screenOrientation="landscape"
-                  android:theme="@style/AppTheme.Popup">
+        <activity
+                android:name="itp.project.Popups.Popup_kartentausch"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.Popups.Popup_selectAtout"
@@ -68,10 +74,12 @@
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
-        <!-- <activity
+        <!--
+ <activity
                  android:name=".LogActivity"
                  android:screenOrientation="landscape">
-         </activity>-->
+         </activity>
+        -->
         <activity
                 android:name=".TutorialActivity"
                 android:parentActivityName=".MainActivity"
