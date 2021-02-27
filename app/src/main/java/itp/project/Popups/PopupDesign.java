@@ -1,10 +1,10 @@
 package itp.project.Popups;
 
-import android.util.DisplayMetrics;
-import android.view.View;
-import android.widget.*;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.R;
 

@@ -1,15 +1,14 @@
 package itp.project.Popups;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import itp.project.Enums.Colors;
 import itp.project.Mulatschak.Algorithm;
-import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
 public class Popup_selectAtout extends AppCompatActivity {
@@ -31,20 +30,20 @@ public class Popup_selectAtout extends AppCompatActivity {
         final int width = dm.widthPixels;
         final int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8), (int)(height*.8));//80% der höhe und Breite des Bildschirms
+        getWindow().setLayout((int) (width * .8), (int) (height * .8));//80% der höhe und Breite des Bildschirms
 
         eyeBtn = findViewById(R.id.eyeBtn);
         eyeBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 view.performClick();
-                switch (motionEvent.getAction()){
+                switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        getWindow().setLayout(0,0);
+                        getWindow().setLayout(0, 0);
                         System.out.println("Down");
                         return true;
                     case MotionEvent.ACTION_UP:
-                        getWindow().setLayout((int)(width*.8),(int)(height*.8));
+                        getWindow().setLayout((int) (width * .8), (int) (height * .8));
                         System.out.println("Up");
                         return true;
                 }
@@ -108,7 +107,7 @@ public class Popup_selectAtout extends AppCompatActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!selected.equals("")){
+                if (!selected.equals("")) {
                     startActivity(new Intent(Popup_selectAtout.this, Popup_kartentausch.class));
                     //Popup schließen
                     finish();

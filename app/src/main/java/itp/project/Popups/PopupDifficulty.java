@@ -20,6 +20,7 @@ public class PopupDifficulty extends AppCompatActivity {
      * Ersellt ein Window.
      * Leitet bei Button Click auf "next" zum PopUpName weiter.
      * Leitet aber nur weiter, wenn ein RadiButton ausgewaeht wurde, ansosnten passiert nichts.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -30,7 +31,7 @@ public class PopupDifficulty extends AppCompatActivity {
         Listeners.newListener(this);
 
         //Weiterleitung zu PopUpName
-        Button showNamePopup = (Button) findViewById(R.id.showNamePopup);
+        Button showNamePopup = findViewById(R.id.showNamePopup);
         showNamePopup.setOnClickListener(new View.OnClickListener() {
             @Override
             //Klick auf den "next"-Button

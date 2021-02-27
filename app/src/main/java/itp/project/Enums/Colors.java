@@ -5,5 +5,5 @@ public enum Colors {
     SCHELLE,
     BLATT,
     EICHEL,
-    WELI;
+    WELI
 }

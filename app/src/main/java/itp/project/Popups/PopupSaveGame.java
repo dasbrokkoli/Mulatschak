@@ -1,8 +1,7 @@
 package itp.project.Popups;
 
-import android.util.DisplayMetrics;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.R;
 

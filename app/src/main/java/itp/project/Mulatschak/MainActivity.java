@@ -1,20 +1,16 @@
 package itp.project.Mulatschak;
 
-import android.content.Context;
 import android.content.Intent;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import itp.project.Enums.Colors;
 import itp.project.Enums.Values;
 import itp.project.Popups.PopupDifficulty;
-import itp.project.Mulatschak.R;
 import itp.project.Popups.PopupLog;
 
 import java.util.ArrayList;
@@ -36,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     ImageButton closeLogView;
     PopupWindow logWindow;
 
+    public static List<Card> getCards() {
+        return cards;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             }
-       });
+        });
 
         View help = findViewById(R.id.help);
         help.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //PopUp
-        showPopupBtn = (Button) findViewById(R.id.showPopupBtn);
+        showPopupBtn = findViewById(R.id.showPopupBtn);
         showPopupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //LogPopup
-        showLogBtn = (Button) findViewById(R.id.log);
+        showLogBtn = findViewById(R.id.log);
         showLogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,10 +137,6 @@ public class MainActivity extends AppCompatActivity {
         cards.add(new Card(getResources().getDrawable(R.drawable.card_standard_schelle_koenig, null), Colors.SCHELLE, Values.KOENIG));
         cards.add(new Card(getResources().getDrawable(R.drawable.card_standard_schelle_ass, null), Colors.SCHELLE, Values.DAUS));
 
-        cards.add(new Card(getResources().getDrawable(R.drawable.card_standard_weli,null),Colors.WELI,Values.WELI));
-    }
-
-    public static List<Card> getCards(){
-        return cards;
+        cards.add(new Card(getResources().getDrawable(R.drawable.card_standard_weli, null), Colors.WELI, Values.WELI));
     }
 }

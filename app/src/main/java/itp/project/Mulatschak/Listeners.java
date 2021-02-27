@@ -7,14 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Listeners {
 
-    public static View.OnTouchListener newListener(final AppCompatActivity activity){
+    public static View.OnTouchListener newListener(final AppCompatActivity activity) {
         //Popup größe
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
         final int width = dm.widthPixels;
         final int height = dm.heightPixels;
 
-        activity.getWindow().setLayout((int)(width*.8), (int)(height*.8));//80% der höhe und Breite des Bildschirms
+        activity.getWindow().setLayout((int) (width * .8), (int) (height * .8));//80% der höhe und Breite des Bildschirms
 
         return new View.OnTouchListener() {
             @Override

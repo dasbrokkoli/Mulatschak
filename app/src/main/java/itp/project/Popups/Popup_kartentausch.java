@@ -1,16 +1,19 @@
 package itp.project.Popups;
 
 import android.content.ClipData;
+import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import itp.project.Mulatschak.*;
+import itp.project.Mulatschak.Card;
+import itp.project.Mulatschak.Listeners;
+import itp.project.Mulatschak.Playground;
+import itp.project.Mulatschak.R;
 
-public class Popup_kartentausch extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener{
+public class Popup_kartentausch extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener {
 
     ImageView card1, card2, card3, card4, card5, delete, move, eyeBtn;
     ImageButton change;
@@ -60,9 +63,9 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
             @Override
             public void onClick(View view) {
                 //Es können nicht 4 Karten getauscht werden
-                if(count != 4) {
+                if (count != 4) {
 //                    startActivity(new Intent(Popup_kartentausch.this, Playground.class));
-                    synchronized (Playground.playThread){
+                    synchronized (Playground.playThread) {
                         Playground.playThread.notify();
                     }
                     finish();
@@ -74,6 +77,7 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
         delete = findViewById(R.id.delete);
         delete.setOnDragListener(this);
     }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         move = (ImageView) v;
@@ -111,11 +115,12 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
     /**
      * Die ImageView der Karte, die getauscht werden soll wird übergeben.
      * Dann im Algorithmus die Karte  tauschen
+     *
      * @param v - Karte
      */
-    public void changeCard(ImageView v){
+    public void changeCard(ImageView v) {
         Card change = Playground.getCardfromView(v);
-        Playground.getPlayer(1).changeCard(change,5);
+        Playground.getPlayer(1).changeCard(change, 5);
     }
 
 }
