@@ -2,18 +2,11 @@ package itp.project.Popups;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import com.google.android.flexbox.FlexboxItemDecoration;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.flexbox.JustifyContent;
 import itp.project.Mulatschak.Algorithm;
@@ -42,12 +35,12 @@ public class PopupLog extends AppCompatActivity {
         outerLayout.addView(pointLayout);
         popName = new PopupName();
 
-        for(int i = 0; i < tvNames.length; i++){
+        for (int i = 0; i < tvNames.length; i++) {
             tvNames[i] = new TextView(this);
             nameLayout.addView(tvNames[i]);
         }
 
-        for (int i = 0; i < tvPoints.length; i++){
+        for (int i = 0; i < tvPoints.length; i++) {
             tvPoints[i] = new TextView(this);
             pointLayout.addView(tvPoints[i]);
         }
@@ -68,7 +61,7 @@ public class PopupLog extends AppCompatActivity {
      */
     public void setScoring() {
         List<Integer> points = Algorithm.getPoints();
-        for(int i = 0; i < points.size(); i++) {
+        for (int i = 0; i < points.size(); i++) {
             System.out.println("Spieler " + i + " hat " + points.get(i) + " Punkte");
             tvPoints[i].setText(String.valueOf(points.get(i)));
         }
@@ -80,10 +73,10 @@ public class PopupLog extends AppCompatActivity {
     public void setNames() {
         SharedPreferences sp = getApplicationContext().getSharedPreferences("PlayerNames", Context.MODE_PRIVATE);
         List<String> names = new ArrayList<>();
-        for(int i = 0; i < 4; i++){
-            names.add(sp.getString("PlayerName"+i,"Player " + (i+1)));
+        for (int i = 0; i < 4; i++) {
+            names.add(sp.getString("PlayerName" + i, "Player " + (i + 1)));
         }
-        for(int i = 0; i < names.size(); i++) {
+        for (int i = 0; i < names.size(); i++) {
 //            if(names.get(i) == null) { //Wenn keine Namen eingegeben wurden, dann wird eine ID gesetzt
 //                System.out.println("No Value");
 //                names.set(i,String.valueOf(i));
@@ -92,7 +85,13 @@ public class PopupLog extends AppCompatActivity {
         }
     }
 
-    public void closeLog(View view){
-        this.finish();
+    /**
+     * Schließt das Popup wieder und informiert Playground, dass das Popup geschlossen wurde
+     *
+     * @param view View
+     */
+    public void closeLog(View view) {
+        setResult(RESULT_OK);
+        finish();
     }
 }
