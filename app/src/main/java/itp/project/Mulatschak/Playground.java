@@ -433,7 +433,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 win(Integer.parseInt(e.getMessage()));
             }
             // Popup bei Gewinner anzeigen und Punkte anzeigen
-            startActivityForResult(new Intent(Playground.this, PopupLog.class), RESULT_OK); // zeigt PopupLog an, wartet auf Result (schließen)
+            startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
             return;
         }
         play();
@@ -443,7 +443,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // teilt die Karten aus, nachdem das PopupLog geschlossen wurde
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_CANCELED) {
             neuAusteilen();
         }
     }

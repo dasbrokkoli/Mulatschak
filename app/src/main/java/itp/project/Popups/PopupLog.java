@@ -91,7 +91,7 @@ public class PopupLog extends AppCompatActivity {
      * @param view View
      */
     public void closeLog(View view) {
-        setResult(RESULT_OK);
+        setResult(RESULT_CANCELED);
         finish();
     }
 }
