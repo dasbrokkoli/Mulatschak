@@ -16,6 +16,7 @@ import itp.project.Enums.Values;
 import itp.project.Popups.PopupDifficulty;
 import itp.project.Mulatschak.R;
 import itp.project.Popups.PopupLog;
+import itp.project.Popups.PopupTutorialVideo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,13 @@ public class MainActivity extends AppCompatActivity {
         View help = findViewById(R.id.help);
         help.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+                Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+                intent.putExtra("start", true);
+                System.out.println("Main:" + intent.getExtras());
+                System.out.println("Main-ID:" + intent);
+                startActivity(intent);
+
+                //startActivity(new Intent(MainActivity.this, TutorialActivity.class));
             }
         });
 
