@@ -12,84 +12,84 @@
             android:theme="@style/AppTheme"
             tools:ignore="AllowBackup">
         <activity android:name="itp.project.Popups.PopupTutorialVideo"
-                  android:screenOrientation="landscape"
+                  android:screenOrientation="sensorLandscape"
                   android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.Popups.PopupDesign"
-                android:screenOrientation="landscape"
+                android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name=".DesignPackActivity"
                 android:parentActivityName=".SettingsActivity"
-                android:screenOrientation="landscape">
+                android:screenOrientation="sensorLandscape">
         </activity>
         <activity
                 android:name="itp.project.Popups.PopupName"
-                android:screenOrientation="landscape"
+                android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity android:name="itp.project.Popups.Popup_kartentausch"
-                  android:screenOrientation="landscape"
+                  android:screenOrientation="sensorLandscape"
                   android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.Popups.Popup_selectAtout"
-                android:screenOrientation="landscape"
+                android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.Popups.Popup_atout"
-                android:screenOrientation="landscape"
+                android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.Popups.PopupStichansage"
-                android:screenOrientation="landscape"
+                android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.Popups.PopupSaveGame"
-                android:screenOrientation="landscape">
+                android:screenOrientation="sensorLandscape">
         </activity>
         <activity
                 android:name="itp.project.Popups.PopupDifficulty"
-                android:screenOrientation="landscape"
+                android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.Popups.PopupLog"
-                android:screenOrientation="landscape"
+                android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.Popups.PopupWeli"
-                android:screenOrientation="landscape"
+                android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <!-- <activity
                  android:name=".LogActivity"
-                 android:screenOrientation="landscape">
+                 android:screenOrientation="sensorLandscape">
          </activity>-->
         <activity
                 android:name=".TutorialActivity"
                 android:parentActivityName=".MainActivity"
-                android:screenOrientation="landscape">
+                android:screenOrientation="sensorLandscape">
         </activity>
         <activity
                 android:name=".Playground"
-                android:screenOrientation="landscape"
+                android:screenOrientation="sensorLandscape"
                 android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
                 android:name=".SettingsActivity"
                 android:parentActivityName=".MainActivity"
-                android:screenOrientation="landscape">
+                android:screenOrientation="sensorLandscape">
         </activity>
         <activity
                 android:name=".MainActivity"
-                android:screenOrientation="landscape"
+                android:screenOrientation="sensorLandscape"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
