@@ -10,6 +10,7 @@ import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
@@ -352,12 +353,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
         try {
             int tempInt = Integer.parseInt(pl2_announced.getText().toString());
-            if(!tempMap.isEmpty()) {
+            if (!tempMap.isEmpty()) {
                 if (tempInt > Collections.max(tempMap.values())) {
                     if (!tempMap.isEmpty()) tempMap.clear();
                     tempMap.put(1, tempInt);
                 }
-            }else{
+            } else {
                 tempMap.put(1, tempInt);
             }
         } catch (NumberFormatException e) {
@@ -365,12 +366,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
         try {
             int tempInt = Integer.parseInt(pl3_announced.getText().toString());
-            if(!tempMap.isEmpty()) {
+            if (!tempMap.isEmpty()) {
                 if (tempInt > Collections.max(tempMap.values())) {
                     if (!tempMap.isEmpty()) tempMap.clear();
                     tempMap.put(2, tempInt);
                 }
-            }else{
+            } else {
                 tempMap.put(2, tempInt);
             }
         } catch (NumberFormatException e) {
@@ -378,12 +379,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
         try {
             int tempInt = Integer.parseInt(pl4_announced.getText().toString());
-            if(!tempMap.isEmpty()) {
+            if (!tempMap.isEmpty()) {
                 if (tempInt > Collections.max(tempMap.values())) {
                     if (!tempMap.isEmpty()) tempMap.clear();
                     tempMap.put(3, tempInt);
                 }
-            }else{
+            } else {
                 tempMap.put(3, tempInt);
             }
         } catch (NumberFormatException e) {
@@ -431,12 +432,20 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             } catch (WinException e) {
                 win(Integer.parseInt(e.getMessage()));
             }
-            neuAusteilen();
+            // Popup bei Gewinner anzeigen und Punkte anzeigen
+            startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
             return;
         }
-
-
         play();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // teilt die Karten aus, nachdem das PopupLog geschlossen wurde
+        if (resultCode == RESULT_CANCELED) {
+            neuAusteilen();
+        }
     }
 
     private void rotateBeginner() {
