@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Random;
 
 /**
- *
- *
  * @author Maria
  * @version 7-12-2020
  */
@@ -22,9 +20,14 @@ public class HoldingCards {
         player = new ArrayList<>();
     }
 
+    public static List<Card> getAllCards() {
+        return HoldingCards.allCards;
+    }
+
     /**
      * Weißt allCards die Karten zu
      * Wird nur beim Start einer neuen Runde aufgerufen
+     *
      * @param all
      */
     public static void setAllCards(List<Card> all) {
@@ -32,8 +35,8 @@ public class HoldingCards {
         HoldingCards.allCards.addAll(all);
     }
 
-    public static List<Card> getAllCards(){
-        return HoldingCards.allCards;
+    public boolean getWeliStatus() {
+        return HoldingCards.weliOccured;
     }
 
     /**
@@ -41,10 +44,6 @@ public class HoldingCards {
      */
     public static void setWeliStatus(boolean status) {
         HoldingCards.weliOccured = status;
-    }
-
-    public boolean getWeliStatus() {
-        return HoldingCards.weliOccured;
     }
 
     /**
@@ -83,12 +82,12 @@ public class HoldingCards {
     /**
      * Methode für den Kartentausch
      * löscht die übergebene Card un weißt dem Spieler eine neue zu
-     *
+     * <p>
      * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
      */
     public void changeCard(Card oldCard, int anzNew) {
         //Card wird entfernt
-            deleteHoldingCard(oldCard);
+        deleteHoldingCard(oldCard);
 
         //und eine neue hinzugefügt
         initPlayer(anzNew);
@@ -113,10 +112,9 @@ public class HoldingCards {
 
     /**
      * fügt eine Card hinzu z.B. Weli
-     *
      */
     public void addHoldingCard() {
-        int index = HoldingCards.allCards.size()-1;
+        int index = HoldingCards.allCards.size() - 1;
         Card card = HoldingCards.allCards.get(index);
         this.player.add(card);
         deleteAllCard(card);
@@ -124,7 +122,7 @@ public class HoldingCards {
 
     public int[] getValue() {
         int[] arr = new int[this.player.size()];
-        for(int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             arr[i] = this.player.get(i).getValue();
         }
 
@@ -133,7 +131,7 @@ public class HoldingCards {
 
     public Colors[] getColors() {
         Colors[] arr = new Colors[this.player.size()];
-        for(int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             arr[i] = this.player.get(i).getColor();
         }
 

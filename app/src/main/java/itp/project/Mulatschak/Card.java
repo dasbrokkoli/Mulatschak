@@ -3,13 +3,13 @@ package itp.project.Mulatschak;
 import android.graphics.drawable.Drawable;
 import itp.project.Enums.Colors;
 
-public class Card{
+public class Card {
     private final Drawable picture;
+    private final Colors color;
+    private final int value;
     private int tempValue;
-    private Colors color;
-    private int value;
 
-    public Card(Drawable picture, Colors color, int value){
+    public Card(Drawable picture, Colors color, int value) {
         this.picture = picture;
         this.color = color;
         this.value = value;
@@ -21,7 +21,7 @@ public class Card{
         this.value = value;
     }*/
 
-    public Drawable getPicture(){
+    public Drawable getPicture() {
         return picture;
     }
 
@@ -29,15 +29,16 @@ public class Card{
         return value;
     }
 
-    public Colors getColor(){
+    public Colors getColor() {
         return color;
+    }
+
+    public int getTempValue() {
+        return tempValue;
     }
 
     public void setTempValue(int tempValue) {
         this.tempValue = tempValue;
-    }
-    public int getTempValue() {
-        return tempValue;
     }
 
 }

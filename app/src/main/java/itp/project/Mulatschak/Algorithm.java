@@ -1,54 +1,32 @@
 package itp.project.Mulatschak;
 
-import android.view.View;
 import itp.project.Enums.Colors;
 import itp.project.Enums.Difficulty;
 import itp.project.Enums.Values;
 import itp.project.Exceptions.TwoSameHighestTricksException;
 import itp.project.Exceptions.WhatTheFuckHowException;
 import itp.project.Exceptions.WinException;
-import itp.project.Popups.PopupDifficulty;
-import itp.project.Mulatschak.R;
 import itp.project.Popups.Popup_atout;
 
-
 import javax.annotation.Nullable;
-import java.sql.SQLOutput;
 import java.util.*;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 
 public class Algorithm {
 
     private static final Integer MAX_POINTS = 21;
-    private static int dealer;
     private static final int[] tricks = new int[4];
+    private static int dealer;
     private static List<Card> cards;
     private static int winChance;
+    private static Colors atout;
+    private static final List<Integer> points = new ArrayList<>(); //fuer die Punktestaende der Spieler
+    private static Difficulty difficulty;
     private final int player;
     //Attribut für die Kartenzuweisung
-    private HoldingCards playerCards;
-    private static Colors atout;
-    private static List<Integer> points = new ArrayList<>(); //fuer die Punktestaende der Spieler
+    private final HoldingCards playerCards;
     private boolean ausgestiegen;
     private int stiche;
-    private static Difficulty difficulty;
-
-    public boolean isKi() {
-        return ki;
-    }
-
-    public void setKi(boolean ki) {
-        this.ki = ki;
-    }
-
     private boolean ki;
-
-    public static Colors getAtout() {
-        return atout;
-    }
 
     public Algorithm(List<Card> cards, int player) {
         Algorithm.cards = cards;
@@ -56,22 +34,30 @@ public class Algorithm {
         this.playerCards = new HoldingCards();
         this.playerCards.initPlayer(5);
         this.player = player;
-        if(points.size() < 4){
+        if (points.size() < 4) {
             try {
-                points.set(player - 1,MAX_POINTS);
+                points.set(player - 1, MAX_POINTS);
                 System.out.println("Punkte für Spieler " + (player - 1) + " wurden gesetzt");
             } catch (IndexOutOfBoundsException e) {
-                points.add(player - 1,MAX_POINTS);
+                points.add(player - 1, MAX_POINTS);
             }
         }
         setAusgestiegen(false);
         setKi(true);
     }
 
+    public static Colors getAtout() {
+        return atout;
+    }
+
+    public synchronized static void setAtout(Colors atout) {
+        Algorithm.atout = atout;
+    }
+
     /**
      * @return the Index of the highest trick in tricks-Array (equals player - 1)
      */
-    public static int getHighestTrickIndex() {
+    public synchronized static int getHighestTrickIndex() {
         int largest = Integer.MIN_VALUE;
         int largestIndex = -1;
 
@@ -90,37 +76,6 @@ public class Algorithm {
         return largestIndex;
     }
 
-    /**
-     * @param inputCard the highest Card currently laying on the floor
-     * @return the best {@link Card} the Computer could play in this move
-     */
-    public Card getResponseCard(@Nullable Card inputCard) {
-        this.setValues();
-        this.setHoldingValues();
-        this.setWinChance();
-
-        boolean winMove = new Random().nextInt(101) < winChance;
-
-        //TODO make Algorithms play better cards if they're first
-        if(inputCard == null){
-            winMove = false;
-        }
-
-        if (!winMove) {
-            System.out.println("Random");
-            int random = new Random().nextInt(playerCards.getCards().size());
-            Card card = playerCards.getCards().get(random);
-            playerCards.deleteHoldingCard(card);
-            return card;
-        }
-        Card lowestCard = lowestCardValue(inputCard.getTempValue());
-        if (lowestCard != null) {
-            return lowestCard;
-        } else {
-            return lowestCardValue();
-        }
-    }
-
     public static Difficulty getDifficulty() {
         return difficulty;
     }
@@ -134,112 +89,27 @@ public class Algorithm {
      * @return the highest Card currently laying on the floor (could be used as parameter for {@link
      * Algorithm#getResponseCard}
      */
-    public static Card getWinnerFromCards(Card... cardsOnFloor) {
+    public synchronized static Card getWinnerFromCards(Card... cardsOnFloor) {
         List<Card> cardsOnFloorList = Arrays.asList(cardsOnFloor.clone());
         List<Integer> valueList = new ArrayList<>();
-        System.out.println("Auswahl der Gewinnerkarte aus " + cardsOnFloor.length + " Karten");
-        for (Card floorCard : cardsOnFloor) {
-            for (Card card : cards) {
-                if (card.getValue() == floorCard.getValue() && card.getColor() == floorCard.getColor()) {
-                    floorCard.setTempValue(card.getTempValue());
+        synchronized (cardsOnFloorList) {
+            synchronized (valueList) {
+                System.out.println("Auswahl der Gewinnerkarte aus " + cardsOnFloor.length + " Karten");
+                for (Card floorCard : cardsOnFloor) {
+                    for (Card card : cards) {
+                        if (card.getValue() == floorCard.getValue() && card.getColor() == floorCard.getColor()) {
+                            floorCard.setTempValue(card.getTempValue());
+                        }
+                    }
+                    valueList.add(floorCard.getTempValue());
                 }
             }
-            valueList.add(floorCard.getTempValue());
         }
-        if(valueList.isEmpty()){
+        if (valueList.isEmpty()) {
             return null;
         }
         int highestIndex = valueList.indexOf(Collections.max(valueList));
         return cardsOnFloorList.get(highestIndex);
-    }
-
-    public void wonThisCard(){
-        Playground.stitchesMade(this.player,++tricks[player-1]);
-    }
-
-    private Card lowestCardValue() {
-        return lowestCardValue(-1);
-    }
-
-    private Card lowestCardValue(int moreThan) {
-        Card lowestValue = null;
-        for (Card card : playerCards.getCards()) {
-            if (lowestValue == null) lowestValue = card;
-            if (card.getTempValue() < lowestValue.getTempValue()) {
-                if (card.getTempValue() > moreThan) {
-                    lowestValue = card;
-                }
-            }
-        }
-        assert lowestValue != null;
-        if (lowestValue.getTempValue() < moreThan) {
-            return null;
-        }
-        playerCards.deleteHoldingCard(lowestValue);
-        return lowestValue;
-    }
-
-    public static void setAtout(Colors atout) {
-        Algorithm.atout = atout;
-    }
-
-    private void setValues() {
-        for (Card card : cards) {
-            if (card.getColor() == Algorithm.getAtout()) {
-                card.setTempValue(card.getValue() + 10);
-            } else {
-                card.setTempValue(card.getValue());
-            }
-        }
-    }
-
-    private void setHoldingValues() {
-        for (Card holdCard : playerCards.getCards()) {
-            for (Card card : cards) {
-                if (card.getValue() == holdCard.getValue() && card.getColor() == holdCard.getColor()) {
-                    holdCard.setTempValue(card.getTempValue());
-                }
-            }
-        }
-    }
-
-    /**
-     * Setzt die Change zu gewinnen, bei jeder Schwierigkeit anders. Dabei wird die Gewinnchance für die KIs festgelegt
-     * (NICHT fuer Benutzer)
-     */
-    private void setWinChance() {
-
-        switch (difficulty) {
-            case EASY:
-                winChance = 25;
-                break;
-            case MEDIUM:
-                winChance = 50;
-                break;
-            case HARD:
-                winChance = 85;
-                break;
-            case UNBEATABLE:
-                winChance = 100;
-                break;
-        }
-    }
-
-    public boolean hasAdoutPermission() throws TwoSameHighestTricksException {
-        if (getHighestTrickIndex() == player) {
-            return true;
-        } else if (getHighestTrickIndex() == -1) {
-            throw new TwoSameHighestTricksException();
-        }
-        return false;
-    }
-
-    public void setHoldingCards(List<Card> holdingCards) {
-        playerCards.setCards(holdingCards);
-    }
-
-    public List<Card> getHoldingCards() {
-        return playerCards.getCards();
     }
 
     /**
@@ -247,7 +117,7 @@ public class Algorithm {
      *
      * @return ob der Spieler den Weli ziehen darf
      */
-    public static boolean WeliZiehen() {
+    public synchronized static boolean WeliZiehen() {
         if (dealer < 4) {
             dealer += 1;
         } else {
@@ -276,18 +146,210 @@ public class Algorithm {
      * zugeschrieben. Zu Rundenbeginn wird die Zufallszahl für den aktuellen Dealer (der, der den Weli abheben darf)
      * ermittelt.
      */
-    public static void rundenbeginn() {
+    public synchronized static void rundenbeginn() {
         Random r = new Random();
         dealer = 1 + r.nextInt(4);
         Arrays.fill(tricks, 0);
     }
 
+    /**
+     * Berechnet die Punkte nach jeder fertigen Runde:
+     * speichert sie in der Attribut Liste points ab
+     *
+     * @param algo
+     * @return scores -> Eine ArrayList mit all den Punkteständen
+     */
+    public synchronized static void scoring(Algorithm... algo) throws WinException {
+        int newPoints;
+        //Angesagte Stiche
+        Map<Integer, Integer> highestStitches = Playground.getHighestStich();
+
+        for (int i = 0; i < algo.length; i++) {
+            newPoints = points.get(i); //Die Punktestaende von davor aufrufen und abspeichern
+            algo[i].getTrick();     //Die Stiche holen
+
+            //Gemachte stiche
+            CharSequence tmp = (Playground.stitches[i].getText());
+            String tmp2 = tmp.toString();
+            int madeStitches = Integer.parseInt(tmp2);
+
+            if (highestStitches.containsKey(i)) {
+                System.out.println("Player " + i + " hat die höchsten Stiche");
+                int saidStitches = highestStitches.get(i);
+                if (saidStitches > madeStitches) {
+                    System.out.println("Stiche nicht erreicht " + madeStitches + " < " + saidStitches);
+                    newPoints += 10; //Wenn mehr angesagt wurden als gemacht
+                } else {
+                    System.out.println("Stiche erreicht " + madeStitches + " > " + saidStitches);
+                    newPoints -= madeStitches;
+                }
+            } else if (i == 0 && Popup_atout.alreadyLeft) {
+                System.out.println("Spieler ist heimgegangen");
+                newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
+
+            } else if (madeStitches == 0) {
+                System.out.println("Spieler " + i + " hat keine Stiche gemacht");
+                newPoints += 5; //Wenn keine angesagt und keine gemacht wurden
+
+            } else {
+                System.out.println("Spieler " + i + " hat " + madeStitches + " Punkte runtergeschrieben");
+                newPoints -= madeStitches; //Sonst schreibt man die gemachten Stiche runter
+
+            }
+            if (atout == Colors.HERZ) {
+                System.out.println("Doppelte Runde");
+                newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
+            }
+
+            System.out.println("Neue Punkte für Spieler " + i + ": " + newPoints);
+            points.set(i, newPoints);
+        }
+        for (int i = 0; i < points.size(); i++) {
+            if (points.get(i) <= 0) {
+                throw new WinException(i);
+            }
+        }
+    }
+
+    public static List<Integer> getPoints() {
+        return points;
+    }
+
+    public static int getDealer() {
+        return dealer;
+    }
+
+    public boolean isKi() {
+        return ki;
+    }
+
+    public void setKi(boolean ki) {
+        this.ki = ki;
+    }
+
+    /**
+     * @param inputCard the highest Card currently laying on the floor
+     * @return the best {@link Card} the Computer could play in this move
+     */
+    public synchronized Card getResponseCard(@Nullable Card inputCard) {
+        this.setValues();
+        this.setHoldingValues();
+        this.setWinChance();
+
+        boolean winMove = new Random().nextInt(101) < winChance;
+
+        //TODO make Algorithms play better cards if they're first
+        if (inputCard == null) {
+            winMove = false;
+        }
+
+        if (!winMove) {
+            System.out.println("Random");
+            int random = new Random().nextInt(playerCards.getCards().size());
+            Card card = playerCards.getCards().get(random);
+            playerCards.deleteHoldingCard(card);
+            return card;
+        }
+
+        Card lowestCard = lowestCardValue(inputCard.getTempValue());
+        if (lowestCard != null) {
+            return lowestCard;
+        } else {
+            return lowestCardValue();
+        }
+    }
+
+    public synchronized void wonThisCard() {
+        Playground.stitchesMade(this.player, ++tricks[player - 1]);
+    }
+
+    private synchronized Card lowestCardValue() {
+        return lowestCardValue(-1);
+    }
+
+    private synchronized Card lowestCardValue(int moreThan) {
+        Card lowestValue = null;
+        for (Card card : playerCards.getCards()) {
+            if (lowestValue == null) lowestValue = card;
+            if (card.getTempValue() < lowestValue.getTempValue()) {
+                if (card.getTempValue() > moreThan) {
+                    lowestValue = card;
+                }
+            }
+        }
+        assert lowestValue != null;
+        if (lowestValue.getTempValue() < moreThan) {
+            return null;
+        }
+        playerCards.deleteHoldingCard(lowestValue);
+        return lowestValue;
+    }
+
+    private synchronized void setValues() {
+        for (Card card : cards) {
+            if (card.getColor() == Algorithm.getAtout()) {
+                card.setTempValue(card.getValue() + 10);
+            } else {
+                card.setTempValue(card.getValue());
+            }
+        }
+    }
+
+    private synchronized void setHoldingValues() {
+        for (Card holdCard : playerCards.getCards()) {
+            for (Card card : cards) {
+                if (card.getValue() == holdCard.getValue() && card.getColor() == holdCard.getColor()) {
+                    holdCard.setTempValue(card.getTempValue());
+                }
+            }
+        }
+    }
+
+    /**
+     * Setzt die Change zu gewinnen, bei jeder Schwierigkeit anders. Dabei wird die Gewinnchance für die KIs festgelegt
+     * (NICHT fuer Benutzer)
+     */
+    private synchronized void setWinChance() {
+
+        switch (difficulty) {
+            case EASY:
+                winChance = 25;
+                break;
+            case MEDIUM:
+                winChance = 50;
+                break;
+            case HARD:
+                winChance = 85;
+                break;
+            case UNBEATABLE:
+                winChance = 100;
+                break;
+        }
+    }
+
+    public synchronized boolean hasAdoutPermission() throws TwoSameHighestTricksException {
+        if (getHighestTrickIndex() == player) {
+            return true;
+        } else if (getHighestTrickIndex() == -1) {
+            throw new TwoSameHighestTricksException();
+        }
+        return false;
+    }
+
+    public List<Card> getHoldingCards() {
+        return playerCards.getCards();
+    }
+
+    public void setHoldingCards(List<Card> holdingCards) {
+        playerCards.setCards(holdingCards);
+    }
+
     public int getTrick() {
-        return tricks[player-1];
+        return tricks[player - 1];
     }
 
     public void setTrick(int i) {
-        tricks[player-1] = i;
+        tricks[player - 1] = i;
     }
 
     /**
@@ -297,7 +359,7 @@ public class Algorithm {
      *
      * @return Atoutfarbe
      */
-    public Colors getAtoutFromPlayers() throws WhatTheFuckHowException {
+    public synchronized Colors getAtoutFromPlayers() throws WhatTheFuckHowException {
         int anzahlHerz = 0;
         int anzahlSchelle = 0;
         int anzahlBlatt = 0;
@@ -372,69 +434,7 @@ public class Algorithm {
     }
 
     /**
-     * Berechnet die Punkte nach jeder fertigen Runde:
-     * speichert sie in der Attribut Liste points ab
-     *
-     * @param algo
-     * @return scores -> Eine ArrayList mit all den Punkteständen
-     */
-    public static void scoring(Algorithm... algo) throws WinException {
-        int newPoints;
-        //Angesagte Stiche
-        Map<Integer, Integer> highestStitches = Playground.getHighestStich();
-
-        for (int i = 0; i < algo.length; i++) {
-            newPoints = points.get(i); //Die Punktestaende von davor aufrufen und abspeichern
-            algo[i].getTrick();     //Die Stiche holen
-
-            //Gemachte stiche
-            CharSequence tmp = (Playground.stitches[i].getText());
-            String tmp2 = tmp.toString();
-            int madeStitches = Integer.parseInt(tmp2);
-
-            if(highestStitches.containsKey(i)) {
-                System.out.println("Player " + i + " hat die höchsten Stiche");
-                int saidStitches = highestStitches.get(i);
-                if (saidStitches > madeStitches) {
-                    System.out.println("Stiche nicht erreicht " + madeStitches + " < " + saidStitches);
-                    newPoints += 10; //Wenn mehr angesagt wurden als gemacht
-                } else {
-                    System.out.println("Stiche erreicht " + madeStitches + " > " + saidStitches);
-                    newPoints -= madeStitches;
-                }
-            } else if(i==0 && Popup_atout.alreadyLeft) {
-                System.out.println("Spieler ist heimgegangen");
-                newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
-
-            } else if(madeStitches == 0) {
-                System.out.println("Spieler " + i + " hat keine Stiche gemacht");
-                newPoints += 5; //Wenn keine angesagt und keine gemacht wurden
-
-            } else {
-                System.out.println("Spieler " + i + " hat " + madeStitches + " Punkte runtergeschrieben");
-                newPoints -= madeStitches; //Sonst schreibt man die gemachten Stiche runter
-
-            }
-            if (atout == Colors.HERZ) {
-                System.out.println("Doppelte Runde");
-                newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
-            }
-
-            System.out.println("Neue Punkte für Spieler " + i + ": " + newPoints);
-            points.set(i, newPoints);
-        }
-        for(int i = 0; i<points.size(); i++){
-            if(points.get(i) <= 0){
-                throw new WinException(i);
-            }
-        }
-    }
-
-
-
-    /**
      * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
-     *
      */
     public void changeCard(Card oldCard, int anzNew) {
         this.playerCards.changeCard(oldCard, anzNew);
@@ -448,15 +448,13 @@ public class Algorithm {
         return this.playerCards.getCards();
     }
 
-
-
     /**
      * Gibt die Gesamtstichansage basierend der Spielkarten eines Spielers zurück. Die Stiche beziehen sich dabei auf: -
      * Weli - Daus (Atoutfarbe), Daus - König (Atoutfarbe)
      *
      * @return Gesamtstichansage
      */
-    public int getStiche() {
+    public synchronized int getStiche() {
         int stiche = 0;
         for (Card card : this.playerCards.getCards()) {
             if (card.getColor() == Colors.WELI) stiche++;
@@ -470,14 +468,6 @@ public class Algorithm {
 
     }
 
-    public static List<Integer> getPoints(){
-        return points;
-    }
-
-    public static int getDealer() {
-        return dealer;
-    }
-
     public boolean istAusgestiegen() {
         return ausgestiegen;
     }
@@ -486,9 +476,9 @@ public class Algorithm {
         this.ausgestiegen = ausgestiegen;
     }
 
-    public String getHoldingCardsString() {
-        StringBuilder sb = new StringBuilder("");
-        for(Card card : playerCards.getCards()){
+    public synchronized String getHoldingCardsString() {
+        StringBuilder sb = new StringBuilder();
+        for (Card card : playerCards.getCards()) {
             sb.append(card.getColor()).append(card.getValue()).append(" ");
         }
         return sb.toString();

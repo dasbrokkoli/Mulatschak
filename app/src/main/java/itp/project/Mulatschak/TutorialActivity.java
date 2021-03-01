@@ -2,6 +2,7 @@ package itp.project.Mulatschak;
 
 import android.content.Intent;
 import android.view.MenuItem;
+import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -10,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import itp.project.Popups.PopupTutorialVideo;
-import itp.project.Mulatschak.R;
 
 public class TutorialActivity extends AppCompatActivity {
     Bundle extras;

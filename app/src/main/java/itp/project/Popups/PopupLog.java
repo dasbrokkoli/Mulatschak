@@ -20,8 +20,8 @@ public class PopupLog extends AppCompatActivity {
     private LinearLayout outerLayout;
     private FlexboxLayout nameLayout;
     private FlexboxLayout pointLayout;
-    private TextView tvNames[] = new TextView[4];
-    private TextView tvPoints[] = new TextView[4];
+    private final TextView[] tvNames = new TextView[4];
+    private final TextView[] tvPoints = new TextView[4];
     private PopupName popName;
 
     @Override

@@ -1,23 +1,21 @@
 package itp.project.Popups;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import itp.project.Enums.Colors;
 import itp.project.Mulatschak.Algorithm;
-import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
 public class Popup_atout extends AppCompatActivity {
+    public static boolean alreadyLeft = false;
     ImageView atout, eyeBtn;
     Button mit, aus;
-    public static boolean alreadyLeft = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +28,20 @@ public class Popup_atout extends AppCompatActivity {
         final int width = dm.widthPixels;
         final int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8), (int)(height*.8));//80% der höhe und Breite des Bildschirms
+        getWindow().setLayout((int) (width * .8), (int) (height * .8));//80% der höhe und Breite des Bildschirms
 
         eyeBtn = findViewById(R.id.eyeBtn);
         eyeBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 view.performClick();
-                switch (motionEvent.getAction()){
+                switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        getWindow().setLayout(0,0);
+                        getWindow().setLayout(0, 0);
                         System.out.println("Down");
                         return true;
                     case MotionEvent.ACTION_UP:
-                        getWindow().setLayout((int)(width*.8),(int)(height*.8));
+                        getWindow().setLayout((int) (width * .8), (int) (height * .8));
                         System.out.println("Up");
                         return true;
                 }
@@ -83,7 +81,7 @@ public class Popup_atout extends AppCompatActivity {
 
 
         //Der Benutzer kann nicht aussteigen wenn er in der Runde davor ausgestiegen ist
-        if(alreadyLeft || Algorithm.getAtout()==Colors.SCHELLE){
+        if (alreadyLeft || Algorithm.getAtout() == Colors.SCHELLE) {
             aus.setClickable(false);//Button kann nicht gedrückt werden
             aus.setBackgroundColor(R.color.grey);//Button ist heller um zu zeigen, dass er nichz gedrückt werden kann
         }
@@ -93,17 +91,22 @@ public class Popup_atout extends AppCompatActivity {
      * Das Atout wird in dem dafür vorgesehenen Feld angezeigt.
      * Dafür wird das gespeicherte Atout der Klasse Playground verwendet.
      */
-    private void showAtout(){
-        switch(Algorithm.getAtout()){
-            case HERZ: atout.setImageResource(R.drawable.herz);
+    private void showAtout() {
+        switch (Algorithm.getAtout()) {
+            case HERZ:
+                atout.setImageResource(R.drawable.herz);
                 break;
-            case BLATT: atout.setImageResource(R.drawable.blatt);
+            case BLATT:
+                atout.setImageResource(R.drawable.blatt);
                 break;
-            case EICHEL: atout.setImageResource(R.drawable.eiche);
+            case EICHEL:
+                atout.setImageResource(R.drawable.eiche);
                 break;
-            case SCHELLE: atout.setImageResource(R.drawable.schelle);
+            case SCHELLE:
+                atout.setImageResource(R.drawable.schelle);
                 break;
-            default: atout.setImageResource(R.drawable.empty);
+            default:
+                atout.setImageResource(R.drawable.empty);
         }
     }
 }

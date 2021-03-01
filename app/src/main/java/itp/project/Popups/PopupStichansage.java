@@ -2,8 +2,6 @@ package itp.project.Popups;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,7 +9,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import itp.project.Exceptions.WhatTheFuckHowException;
 import itp.project.Mulatschak.Algorithm;
-import android.os.Bundle;
 import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
@@ -49,12 +46,12 @@ public class PopupStichansage extends AppCompatActivity {
      */
     private void nextPopup() {
         if (countStitches > said) {
-            Collections.rotate(players,howMuch);
-            Playground.angesagteSticheAnzeigen(players.get(0),countStitches);
+            Collections.rotate(players, howMuch);
+            Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
             //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
             startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
         } else {
-            Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich),highestStitches);
+            Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich), highestStitches);
             try {
                 Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
             } catch (WhatTheFuckHowException e) {
@@ -137,7 +134,7 @@ public class PopupStichansage extends AppCompatActivity {
             public void onClick(View view) {
                 countStitches = 5;
                 Collections.rotate(players, howMuch);
-                Playground.angesagteSticheAnzeigen(players.get(0),countStitches);
+                Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
                 //Atout wählen
                 startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
                 finish();
@@ -240,6 +237,7 @@ public class PopupStichansage extends AppCompatActivity {
 
     /**
      * Gibt an, ob drei Spieler ausgestiegen sind
+     *
      * @param players alle Spieler
      * @return ob drei Spieler ausgestiegen sind
      */
@@ -253,6 +251,7 @@ public class PopupStichansage extends AppCompatActivity {
 
     /**
      * Gibt den Spieler, der keine KI ist zurück und setzt das jeweilige Attribut auf true oder false
+     *
      * @param dealer der Dealer
      * @return Nicht-KI Spieler
      */
