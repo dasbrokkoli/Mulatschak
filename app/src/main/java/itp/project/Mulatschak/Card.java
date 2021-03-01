@@ -21,16 +21,12 @@ public class Card {
         this.value = value;
     }*/
 
-    public Drawable getPicture() {
-        return picture;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
     public Colors getColor() {
         return color;
+    }
+
+    public Drawable getPicture() {
+        return picture;
     }
 
     public int getTempValue() {
@@ -39,6 +35,10 @@ public class Card {
 
     public void setTempValue(int tempValue) {
         this.tempValue = tempValue;
+    }
+
+    public int getValue() {
+        return value;
     }
 
 }

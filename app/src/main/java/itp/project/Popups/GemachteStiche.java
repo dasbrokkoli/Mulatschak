@@ -81,13 +81,6 @@ public class GemachteStiche extends AppCompatActivity {
     }
 
     /**
-     * Zeigt an welcher der bereits gemachten Stiche angezeig wird.
-     */
-    public void seiteAnzeiigen() {
-        akt.setText(seite + "/" + max);
-    }
-
-    /**
      * Den vorherigen Stich anzeigen
      */
     public void back() {
@@ -98,5 +91,12 @@ public class GemachteStiche extends AppCompatActivity {
 
             seiteAnzeiigen();
         }
+    }
+
+    /**
+     * Zeigt an welcher der bereits gemachten Stiche angezeig wird.
+     */
+    public void seiteAnzeiigen() {
+        akt.setText(seite + "/" + max);
     }
 }

@@ -126,64 +126,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }).start();
     }
 
-    public synchronized static Map<Integer, Integer> getHighestStich() {
-        Map<Integer, Integer> tempMap = new HashMap<>();
-        synchronized (pl1_announced) {
-            synchronized (pl2_announced) {
-                synchronized (pl3_announced) {
-                    synchronized (pl4_announced) {
-                        try {
-                            int tempInt = Integer.parseInt(pl1_announced.getText().toString());
-                            tempMap.put(0, tempInt);
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            int tempInt = Integer.parseInt(pl2_announced.getText().toString());
-                            if (!tempMap.isEmpty()) {
-                                if (tempInt > Collections.max(tempMap.values())) {
-                                    if (!tempMap.isEmpty()) tempMap.clear();
-                                    tempMap.put(1, tempInt);
-                                }
-                            } else {
-                                tempMap.put(1, tempInt);
-                            }
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            int tempInt = Integer.parseInt(pl3_announced.getText().toString());
-                            if (!tempMap.isEmpty()) {
-                                if (tempInt > Collections.max(tempMap.values())) {
-                                    if (!tempMap.isEmpty()) tempMap.clear();
-                                    tempMap.put(2, tempInt);
-                                }
-                            } else {
-                                tempMap.put(2, tempInt);
-                            }
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            int tempInt = Integer.parseInt(pl4_announced.getText().toString());
-                            if (!tempMap.isEmpty()) {
-                                if (tempInt > Collections.max(tempMap.values())) {
-                                    if (!tempMap.isEmpty()) tempMap.clear();
-                                    tempMap.put(3, tempInt);
-                                }
-                            } else {
-                                tempMap.put(3, tempInt);
-                            }
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }
-        return tempMap;
-    }
-
     public synchronized static Card getCardfromView(ImageView v) {
         Card change;//Die zu tauschende Karte
         switch (v.getId()) {
@@ -306,32 +248,21 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //Neu austeilen wenn ausgestiegen
-        if (Popup_atout.alreadyLeft) {
-            neuAusteilen();
-        }
-
-        //Das Atout wird angezeigt
-        showAtout();
-        anzeigen();
-
-        playThread = new Thread(() -> {
-            while (true) {
-                try {
-                    synchronized (playThread) {
-                        playThread.wait();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(Thread.currentThread().getName() + " is calling play()");
-                play();
+    /**
+     * Neue runde die Karten werden neu ausgeteilt.
+     * Jeder Spieler bekommt einen neuen Algorithmus
+     */
+    public synchronized static void austeilen() {
+        new Thread(() -> {
+            synchronized (MainActivity.getCards()) {
+                HoldingCards.setAllCards(MainActivity.getCards());
+                players[0] = new Algorithm(MainActivity.getCards(), 1);
+                playerCardNumber = 5;
+                players[1] = new Algorithm(MainActivity.getCards(), 2);
+                players[2] = new Algorithm(MainActivity.getCards(), 3);
+                players[3] = new Algorithm(MainActivity.getCards(), 4);
             }
-        });
-        playThread.start();
+        }).start();
     }
 
     /**
@@ -471,28 +402,39 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Neu austeilen wenn ausgestiegen
+        if (Popup_atout.alreadyLeft) {
+            neuAusteilen();
+        }
+
+        //Das Atout wird angezeigt
+        showAtout();
+        anzeigen();
+
+        playThread = new Thread(() -> {
+            while (true) {
+                try {
+                    synchronized (playThread) {
+                        playThread.wait();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName() + " is calling play()");
+                play();
+            }
+        });
+        playThread.start();
+    }
+
     public void neuAusteilen() {
         reset();
         austeilen();
         anzeigen();
         startActivity(new Intent(Playground.this, PopupStichansage.class));
-    }
-
-    /**
-     * Neue runde die Karten werden neu ausgeteilt.
-     * Jeder Spieler bekommt einen neuen Algorithmus
-     */
-    public synchronized static void austeilen() {
-        new Thread(() -> {
-            synchronized (MainActivity.getCards()) {
-                HoldingCards.setAllCards(MainActivity.getCards());
-                players[0] = new Algorithm(MainActivity.getCards(), 1);
-                playerCardNumber = 5;
-                players[1] = new Algorithm(MainActivity.getCards(), 2);
-                players[2] = new Algorithm(MainActivity.getCards(), 3);
-                players[3] = new Algorithm(MainActivity.getCards(), 4);
-            }
-        }).start();
     }
 
     /**
@@ -570,5 +512,63 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public void win(int playerNumber) {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("PlayerNames", Context.MODE_PRIVATE);
         Toast.makeText(this, sharedPreferences.getString("PlayerName" + playerNumber, "Player " + (playerNumber + 1)) + " " + getString(R.string.winMessage), Toast.LENGTH_LONG).show();
+    }
+
+    public synchronized static Map<Integer, Integer> getHighestStich() {
+        Map<Integer, Integer> tempMap = new HashMap<>();
+        synchronized (pl1_announced) {
+            synchronized (pl2_announced) {
+                synchronized (pl3_announced) {
+                    synchronized (pl4_announced) {
+                        try {
+                            int tempInt = Integer.parseInt(pl1_announced.getText().toString());
+                            tempMap.put(0, tempInt);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            int tempInt = Integer.parseInt(pl2_announced.getText().toString());
+                            if (!tempMap.isEmpty()) {
+                                if (tempInt > Collections.max(tempMap.values())) {
+                                    if (!tempMap.isEmpty()) tempMap.clear();
+                                    tempMap.put(1, tempInt);
+                                }
+                            } else {
+                                tempMap.put(1, tempInt);
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            int tempInt = Integer.parseInt(pl3_announced.getText().toString());
+                            if (!tempMap.isEmpty()) {
+                                if (tempInt > Collections.max(tempMap.values())) {
+                                    if (!tempMap.isEmpty()) tempMap.clear();
+                                    tempMap.put(2, tempInt);
+                                }
+                            } else {
+                                tempMap.put(2, tempInt);
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            int tempInt = Integer.parseInt(pl4_announced.getText().toString());
+                            if (!tempMap.isEmpty()) {
+                                if (tempInt > Collections.max(tempMap.values())) {
+                                    if (!tempMap.isEmpty()) tempMap.clear();
+                                    tempMap.put(3, tempInt);
+                                }
+                            } else {
+                                tempMap.put(3, tempInt);
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        return tempMap;
     }
 }

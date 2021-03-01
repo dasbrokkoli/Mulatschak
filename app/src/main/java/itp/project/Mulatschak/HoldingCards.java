@@ -20,32 +20,6 @@ public class HoldingCards {
         player = new ArrayList<>();
     }
 
-    public static List<Card> getAllCards() {
-        return HoldingCards.allCards;
-    }
-
-    /**
-     * Weißt allCards die Karten zu
-     * Wird nur beim Start einer neuen Runde aufgerufen
-     *
-     * @param all
-     */
-    public static void setAllCards(List<Card> all) {
-        HoldingCards.allCards = new ArrayList<>();
-        HoldingCards.allCards.addAll(all);
-    }
-
-    public boolean getWeliStatus() {
-        return HoldingCards.weliOccured;
-    }
-
-    /**
-     * Verändert den Weli Status
-     */
-    public static void setWeliStatus(boolean status) {
-        HoldingCards.weliOccured = status;
-    }
-
     /**
      * Methode für den Kartentausch
      * löscht die übergebene Card un weißt dem Spieler eine neue zu
@@ -120,13 +94,27 @@ public class HoldingCards {
         deleteAllCard(card);
     }
 
-    public int[] getValue() {
-        int[] arr = new int[this.player.size()];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = this.player.get(i).getValue();
-        }
+    public static List<Card> getAllCards() {
+        return HoldingCards.allCards;
+    }
 
-        return arr;
+    /**
+     * Weißt allCards die Karten zu
+     * Wird nur beim Start einer neuen Runde aufgerufen
+     *
+     * @param all
+     */
+    public static void setAllCards(List<Card> all) {
+        HoldingCards.allCards = new ArrayList<>();
+        HoldingCards.allCards.addAll(all);
+    }
+
+    public List<Card> getCards() {
+        return this.player;
+    }
+
+    public void setCards(List<Card> holdingCards) {
+        this.player = holdingCards;
     }
 
     public Colors[] getColors() {
@@ -138,12 +126,24 @@ public class HoldingCards {
         return arr;
     }
 
-    public List<Card> getCards() {
-        return this.player;
+    public int[] getValue() {
+        int[] arr = new int[this.player.size()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = this.player.get(i).getValue();
+        }
+
+        return arr;
     }
 
-    public void setCards(List<Card> holdingCards) {
-        this.player = holdingCards;
+    public boolean getWeliStatus() {
+        return HoldingCards.weliOccured;
+    }
+
+    /**
+     * Verändert den Weli Status
+     */
+    public static void setWeliStatus(boolean status) {
+        HoldingCards.weliOccured = status;
     }
 
 

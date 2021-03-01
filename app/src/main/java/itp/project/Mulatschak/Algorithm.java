@@ -46,16 +46,8 @@ public class Algorithm {
         setKi(true);
     }
 
-    public static Colors getAtout() {
-        return atout;
-    }
-
-    public static Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public static void setDifficulty(Difficulty difficulty) {
-        Algorithm.difficulty = difficulty;
+    public void setAusgestiegen(boolean ausgestiegen) {
+        this.ausgestiegen = ausgestiegen;
     }
 
     /**
@@ -185,46 +177,15 @@ public class Algorithm {
         }
     }
 
-    public synchronized static void setAtout(Colors atout) {
-        Algorithm.atout = atout;
-    }
-
     /**
-     * @return the Index of the highest trick in tricks-Array (equals player - 1)
+     * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
      */
-    public synchronized static int getHighestTrickIndex() {
-        int largest = Integer.MIN_VALUE;
-        int largestIndex = -1;
-
-        for (int i = 0; i < tricks.length; i++) {
-            if (tricks[i] > largest) {
-                largest = tricks[i];
-                largestIndex = i;
-            } else if (tricks[i] == largest) {
-                if (i == dealer) {
-                    largestIndex = i;
-                } else {
-                    return -1;
-                }
-            }
-        }
-        return largestIndex;
+    public void changeCard(Card oldCard, int anzNew) {
+        this.playerCards.changeCard(oldCard, anzNew);
     }
 
-    public static List<Integer> getPoints() {
-        return points;
-    }
-
-    public static int getDealer() {
-        return dealer;
-    }
-
-    public boolean isKi() {
-        return ki;
-    }
-
-    public void setKi(boolean ki) {
-        this.ki = ki;
+    public static Colors getAtout() {
+        return atout;
     }
 
     /**
@@ -291,12 +252,12 @@ public class Algorithm {
         }
     }
 
-    public void setAusgestiegen(boolean ausgestiegen) {
-        this.ausgestiegen = ausgestiegen;
+    public synchronized static void setAtout(Colors atout) {
+        Algorithm.atout = atout;
     }
 
-    public int getTrick() {
-        return tricks[player - 1];
+    public static int getDealer() {
+        return dealer;
     }
 
     private synchronized void setHoldingValues() {
@@ -331,10 +292,6 @@ public class Algorithm {
         }
     }
 
-    public void setTrick(int i) {
-        tricks[player - 1] = i;
-    }
-
     public synchronized boolean hasAdoutPermission() throws TwoSameHighestTricksException {
         if (getHighestTrickIndex() == player) {
             return true;
@@ -344,16 +301,16 @@ public class Algorithm {
         return false;
     }
 
+    public static Difficulty getDifficulty() {
+        return difficulty;
+    }
+
     public synchronized void wonThisCard() {
         Playground.stitchesMade(this.player, ++tricks[player - 1]);
     }
 
-    public List<Card> getHoldingCards() {
-        return playerCards.getCards();
-    }
-
-    public void setHoldingCards(List<Card> holdingCards) {
-        playerCards.setCards(holdingCards);
+    public static void setDifficulty(Difficulty difficulty) {
+        Algorithm.difficulty = difficulty;
     }
 
     /**
@@ -438,10 +395,57 @@ public class Algorithm {
     }
 
     /**
-     * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
+     * @return the Index of the highest trick in tricks-Array (equals player - 1)
      */
-    public void changeCard(Card oldCard, int anzNew) {
-        this.playerCards.changeCard(oldCard, anzNew);
+    public synchronized static int getHighestTrickIndex() {
+        int largest = Integer.MIN_VALUE;
+        int largestIndex = -1;
+
+        for (int i = 0; i < tricks.length; i++) {
+            if (tricks[i] > largest) {
+                largest = tricks[i];
+                largestIndex = i;
+            } else if (tricks[i] == largest) {
+                if (i == dealer) {
+                    largestIndex = i;
+                } else {
+                    return -1;
+                }
+            }
+        }
+        return largestIndex;
+    }
+
+    public List<Card> getHoldingCards() {
+        return playerCards.getCards();
+    }
+
+    public void setHoldingCards(List<Card> holdingCards) {
+        playerCards.setCards(holdingCards);
+    }
+
+    public synchronized String getHoldingCardsString() {
+        StringBuilder sb = new StringBuilder();
+        for (Card card : playerCards.getCards()) {
+            sb.append(card.getColor()).append(card.getValue()).append(" ");
+        }
+        return sb.toString();
+    }
+
+    public HoldingCards getHoldingClass() {
+        return playerCards;
+    }
+
+    public String getName() {
+        return String.valueOf(player);
+    }
+
+    public static List<Integer> getPoints() {
+        return points;
+    }
+
+    public int getTrick() {
+        return tricks[player - 1];
     }
 
     /**
@@ -450,6 +454,10 @@ public class Algorithm {
 
     public List<Card> getPlayerCards() {
         return this.playerCards.getCards();
+    }
+
+    public void setTrick(int i) {
+        tricks[player - 1] = i;
     }
 
     /**
@@ -472,23 +480,15 @@ public class Algorithm {
 
     }
 
+    public boolean isKi() {
+        return ki;
+    }
+
+    public void setKi(boolean ki) {
+        this.ki = ki;
+    }
+
     public boolean istAusgestiegen() {
         return ausgestiegen;
-    }
-
-    public synchronized String getHoldingCardsString() {
-        StringBuilder sb = new StringBuilder();
-        for (Card card : playerCards.getCards()) {
-            sb.append(card.getColor()).append(card.getValue()).append(" ");
-        }
-        return sb.toString();
-    }
-
-    public String getName() {
-        return String.valueOf(player);
-    }
-
-    public HoldingCards getHoldingClass() {
-        return playerCards;
     }
 }

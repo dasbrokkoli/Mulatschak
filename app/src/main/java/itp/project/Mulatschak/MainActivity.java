@@ -32,10 +32,6 @@ public class MainActivity extends AppCompatActivity {
     ImageButton closeLogView;
     PopupWindow logWindow;
 
-    public static List<Card> getCards() {
-        return cards;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,5 +140,9 @@ public class MainActivity extends AppCompatActivity {
         cards.add(new Card(getResources().getDrawable(R.drawable.card_standard_schelle_ass, null), Colors.SCHELLE, Values.DAUS));
 
         cards.add(new Card(getResources().getDrawable(R.drawable.card_standard_weli, null), Colors.WELI, Values.WELI));
+    }
+
+    public static List<Card> getCards() {
+        return cards;
     }
 }
