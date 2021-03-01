@@ -16,10 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import itp.project.Exceptions.WinException;
-import itp.project.Popups.GemachteStiche;
-import itp.project.Popups.PopupLog;
-import itp.project.Popups.PopupStichansage;
-import itp.project.Popups.Popup_atout;
+import itp.project.Popups.*;
 
 import java.io.Serializable;
 import java.util.*;
@@ -49,7 +46,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     PopupWindow logWindow;
     ConstraintLayout constraintLayout;
     //Cards
-    ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4;
+    ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4, pl2,pl3,pl4;
     //Gemachte Stiche Popup
     Button gemachteStiche;
     public static List<Card> gewonnene;
@@ -246,6 +243,44 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         stitches[3] = findViewById(R.id.pl3_stitches);
 
         gewonnene = new ArrayList<>();
+
+        //Spielernamen anzeigen wenn auf die Katren gedrückt wird
+        pl2 = findViewById(R.id.imageView7);
+        pl2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPlayersName(2);
+
+            }
+        });
+        pl3 = findViewById(R.id.player2);
+        pl3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPlayersName(3);
+            }
+        });
+        pl4 = findViewById(R.id.player3);
+        pl4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPlayersName(4);
+            }
+        });
+    }
+
+    /**
+     * der Name des spielers wird ausgegebn.
+     * @param pl - Spielerid
+     */
+    public synchronized void showPlayersName(int pl){
+        //Wenn kein Spielername gepeichert ist
+        if(PopupName.namen.get(pl-1).equals("")){
+            Toast.makeText(this, "Player"+pl,Toast.LENGTH_SHORT).show();
+        //Wenn ein Spielername gespeichert ist
+        }else{
+            Toast.makeText(this, PopupName.namen.get(pl-1),Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

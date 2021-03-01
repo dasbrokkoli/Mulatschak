@@ -24,6 +24,7 @@ import java.util.List;
 public class PopupName extends AppCompatActivity {
 
     Button play;
+    public static List<String> namen;
 
     /**
      * Estellt ein Window.
@@ -43,7 +44,7 @@ public class PopupName extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getNames();
+                namen = getNames();
                 startActivity(new Intent(PopupName.this, Playground.class));
             }
         });
