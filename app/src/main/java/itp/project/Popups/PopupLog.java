@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PopupLog extends AppCompatActivity {
+    private final TextView[] tvNames = new TextView[4];
+    private final TextView[] tvPoints = new TextView[4];
     private LinearLayout outerLayout;
     private FlexboxLayout nameLayout;
     private FlexboxLayout pointLayout;
-    private final TextView[] tvNames = new TextView[4];
-    private final TextView[] tvPoints = new TextView[4];
     private PopupName popName;
 
     @Override

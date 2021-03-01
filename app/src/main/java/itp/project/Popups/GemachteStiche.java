@@ -1,11 +1,11 @@
 package itp.project.Popups;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
@@ -16,9 +16,9 @@ import itp.project.Mulatschak.R;
 public class GemachteStiche extends AppCompatActivity {
 
     TextView akt;
-    int max,seite;
+    int max, seite;
     Button back, next;
-    ImageView card1, card2, card3,card4;
+    ImageView card1, card2, card3, card4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,17 +68,10 @@ public class GemachteStiche extends AppCompatActivity {
     }
 
     /**
-     * Zeigt an welcher der bereits gemachten Stiche angezeig wird.
-     */
-    public void seiteAnzeiigen(){
-        akt.setText(seite+"/"+max);
-    }
-
-    /**
      * Den nächsten Stich anzeigen
      */
-    public void next(){
-        if(seite<max) {
+    public void next() {
+        if (seite < max) {
             seite++;
             //TODO: die neuen Karten anzeigen
 
@@ -88,10 +81,17 @@ public class GemachteStiche extends AppCompatActivity {
     }
 
     /**
+     * Zeigt an welcher der bereits gemachten Stiche angezeig wird.
+     */
+    public void seiteAnzeiigen() {
+        akt.setText(seite + "/" + max);
+    }
+
+    /**
      * Den vorherigen Stich anzeigen
      */
-    public void back(){
-        if(seite>1) {
+    public void back() {
+        if (seite > 1) {
             seite--;
             //TODO: die neuen Karten anzeigen
 

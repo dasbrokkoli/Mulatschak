@@ -16,7 +16,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import itp.project.Exceptions.WinException;
-import itp.project.Popups.*;
+import itp.project.Popups.GemachteStiche;
+import itp.project.Popups.PopupLog;
+import itp.project.Popups.PopupStichansage;
+import itp.project.Popups.Popup_atout;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -49,23 +52,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ConstraintLayout constraintLayout;
     //Cards
     ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4;
-
-    /**
-     * Neue runde die Karten werden neu ausgeteilt.
-     * Jeder Spieler bekommt einen neuen Algorithmus
-     */
-    public synchronized static void austeilen() {
-        new Thread(() -> {
-            synchronized (MainActivity.getCards()) {
-                HoldingCards.setAllCards(MainActivity.getCards());
-                players[0] = new Algorithm(MainActivity.getCards(), 1);
-                playerCardNumber = 5;
-                players[1] = new Algorithm(MainActivity.getCards(), 2);
-                players[2] = new Algorithm(MainActivity.getCards(), 3);
-                players[3] = new Algorithm(MainActivity.getCards(), 4);
-            }
-        }).start();
-    }
+    //Gemachte Stiche Popup
+    Button gemachteStiche;
 
     /**
      * Spieler zurückgeben
@@ -76,10 +64,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         return players[playernumber - 1];
     }
 
-    //Gemachte Stiche Popup
-    Button gemachteStiche;
-
-    private static int beginner;
     /**
      * Die gemachten Stiche sollen im Playground angezeigt werden.
      * Dazu wird bei dem Spieler der gestochen hat die neue Stichanzahl angezeigt.
@@ -322,35 +306,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     }
 
-    /**
-     * Im dafür vorgesehenen Feld wird das geählte Atout angezeigt.
-     * Das Atout ist in der Konstante gespeichert welches angezeigt werden soll.
-     */
-    private synchronized void showAtout() {
-        //Wenn noch kein Atout gespeichert ist wird ein leeres Feld angezeigt
-        if (Algorithm.getAtout() == null) {
-            atout.setImageResource(R.drawable.empty);
-        } else {
-            //Das gespeicherte Atout wird angezeigt
-            switch (Algorithm.getAtout()) {
-                case HERZ:
-                    atout.setImageResource(R.drawable.herz);
-                    break;
-                case BLATT:
-                    atout.setImageResource(R.drawable.blatt);
-                    break;
-                case EICHEL:
-                    atout.setImageResource(R.drawable.eiche);
-                    break;
-                case SCHELLE:
-                    atout.setImageResource(R.drawable.schelle);
-                    break;
-                default:
-                    atout.setImageResource(R.drawable.empty);
-            }
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -379,24 +334,33 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         playThread.start();
     }
 
-    public void neuAusteilen() {
-        reset();
-        austeilen();
-        anzeigen();
-        startActivity(new Intent(Playground.this, PopupStichansage.class));
-    }
-
     /**
-     * Die Karten des Spielers anzeigen.
+     * Im dafür vorgesehenen Feld wird das geählte Atout angezeigt.
+     * Das Atout ist in der Konstante gespeichert welches angezeigt werden soll.
      */
-    public synchronized void anzeigen() {
-        new Thread(() -> {
-            card1.setImageDrawable(players[0].getHoldingCards().get(0).getPicture());
-            card2.setImageDrawable(players[0].getHoldingCards().get(1).getPicture());
-            card3.setImageDrawable(players[0].getHoldingCards().get(2).getPicture());
-            card4.setImageDrawable(players[0].getHoldingCards().get(3).getPicture());
-            card5.setImageDrawable(players[0].getHoldingCards().get(4).getPicture());
-        }).start();
+    private synchronized void showAtout() {
+        //Wenn noch kein Atout gespeichert ist wird ein leeres Feld angezeigt
+        if (Algorithm.getAtout() == null) {
+            atout.setImageResource(R.drawable.empty);
+        } else {
+            //Das gespeicherte Atout wird angezeigt
+            switch (Algorithm.getAtout()) {
+                case HERZ:
+                    atout.setImageResource(R.drawable.herz);
+                    break;
+                case BLATT:
+                    atout.setImageResource(R.drawable.blatt);
+                    break;
+                case EICHEL:
+                    atout.setImageResource(R.drawable.eiche);
+                    break;
+                case SCHELLE:
+                    atout.setImageResource(R.drawable.schelle);
+                    break;
+                default:
+                    atout.setImageResource(R.drawable.empty);
+            }
+        }
     }
 
     @Override
@@ -453,78 +417,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     /**
-     * Die angesagten Stiche werden angezeigt
-     *
-     * @param player - Spieler der Siche ansagt
-     * @param stiche - angesagte der Stiche
-     */
-    public static void angesagteSticheAnzeigen(Algorithm player, int stiche) {
-        if (players[0].equals(player)) {
-            beginner = 0;
-            pl1_announced.setText(String.valueOf(stiche));
-        } else if (players[1].equals(player)) {
-            beginner = 1;
-            pl2_announced.setText(String.valueOf(stiche));
-        } else if (players[2].equals(player)) {
-            beginner = 2;
-            pl3_announced.setText(String.valueOf(stiche));
-        } else if (players[3].equals(player)) {
-            beginner = 3;
-            pl4_announced.setText(String.valueOf(stiche));
-        }
-    }
-
-    public static Map<Integer, Integer> getHighestStich() {
-        Map<Integer, Integer> tempMap = new HashMap<>();
-        try {
-            int tempInt = Integer.parseInt(pl1_announced.getText().toString());
-            tempMap.put(0, tempInt);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        try {
-            int tempInt = Integer.parseInt(pl2_announced.getText().toString());
-            if (!tempMap.isEmpty()) {
-                if (tempInt > Collections.max(tempMap.values())) {
-                    if (!tempMap.isEmpty()) tempMap.clear();
-                    tempMap.put(1, tempInt);
-                }
-            } else {
-                tempMap.put(1, tempInt);
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        try {
-            int tempInt = Integer.parseInt(pl3_announced.getText().toString());
-            if (!tempMap.isEmpty()) {
-                if (tempInt > Collections.max(tempMap.values())) {
-                    if (!tempMap.isEmpty()) tempMap.clear();
-                    tempMap.put(2, tempInt);
-                }
-            } else {
-                tempMap.put(2, tempInt);
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        try {
-            int tempInt = Integer.parseInt(pl4_announced.getText().toString());
-            if (!tempMap.isEmpty()) {
-                if (tempInt > Collections.max(tempMap.values())) {
-                    if (!tempMap.isEmpty()) tempMap.clear();
-                    tempMap.put(3, tempInt);
-                }
-            } else {
-                tempMap.put(3, tempInt);
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        return tempMap;
-    }
-
-    /**
      * Jeder Spieler spielt eine Karte.
      * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
      */
@@ -570,7 +462,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         play();
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -580,29 +471,40 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
     }
 
-    private synchronized void rotateBeginner() {
-        if (beginner < 3) {
-            beginner++;
-        } else {
-            beginner = 0;
-        }
+    public void neuAusteilen() {
+        reset();
+        austeilen();
+        anzeigen();
+        startActivity(new Intent(Playground.this, PopupStichansage.class));
     }
 
-    public synchronized void kartenAnzeigen(int spieler, Drawable card) {
+    /**
+     * Neue runde die Karten werden neu ausgeteilt.
+     * Jeder Spieler bekommt einen neuen Algorithmus
+     */
+    public synchronized static void austeilen() {
         new Thread(() -> {
-            switch (spieler) {
-                case 0:
-                    runOnUiThread(() -> destination.setImageDrawable(null));
-                case 1:
-                    runOnUiThread(() -> card_pl2.setImageDrawable(card));
-                    break;
-                case 2:
-                    runOnUiThread(() -> card_pl3.setImageDrawable(card));
-                    break;
-                case 3:
-                    runOnUiThread(() -> card_pl4.setImageDrawable(card));
-                    break;
+            synchronized (MainActivity.getCards()) {
+                HoldingCards.setAllCards(MainActivity.getCards());
+                players[0] = new Algorithm(MainActivity.getCards(), 1);
+                playerCardNumber = 5;
+                players[1] = new Algorithm(MainActivity.getCards(), 2);
+                players[2] = new Algorithm(MainActivity.getCards(), 3);
+                players[3] = new Algorithm(MainActivity.getCards(), 4);
             }
+        }).start();
+    }
+
+    /**
+     * Die Karten des Spielers anzeigen.
+     */
+    public synchronized void anzeigen() {
+        new Thread(() -> {
+            card1.setImageDrawable(players[0].getHoldingCards().get(0).getPicture());
+            card2.setImageDrawable(players[0].getHoldingCards().get(1).getPicture());
+            card3.setImageDrawable(players[0].getHoldingCards().get(2).getPicture());
+            card4.setImageDrawable(players[0].getHoldingCards().get(3).getPicture());
+            card5.setImageDrawable(players[0].getHoldingCards().get(4).getPicture());
         }).start();
     }
 
@@ -637,6 +539,32 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             //Atout zurücksetzen
             atout.setImageResource(R.drawable.empty);
         });
+    }
+
+    private synchronized void rotateBeginner() {
+        if (beginner < 3) {
+            beginner++;
+        } else {
+            beginner = 0;
+        }
+    }
+
+    public synchronized void kartenAnzeigen(int spieler, Drawable card) {
+        new Thread(() -> {
+            switch (spieler) {
+                case 0:
+                    runOnUiThread(() -> destination.setImageDrawable(null));
+                case 1:
+                    runOnUiThread(() -> card_pl2.setImageDrawable(card));
+                    break;
+                case 2:
+                    runOnUiThread(() -> card_pl3.setImageDrawable(card));
+                    break;
+                case 3:
+                    runOnUiThread(() -> card_pl4.setImageDrawable(card));
+                    break;
+            }
+        }).start();
     }
 
     public void win(int playerNumber) {

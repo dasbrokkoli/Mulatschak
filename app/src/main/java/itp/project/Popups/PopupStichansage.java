@@ -40,28 +40,6 @@ public class PopupStichansage extends AppCompatActivity {
         rundenStichansage();
     }
 
-    /**
-     * Es wird geprüft ob die angegeben Stiche höher sind als die bereits angesagten. Je nachdem kann man dem Popup
-     * Atout oder Atout wählen kommen.
-     */
-    private void nextPopup() {
-        if (countStitches > said) {
-            Collections.rotate(players, howMuch);
-            Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
-            //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
-            startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
-        } else {
-            Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich), highestStitches);
-            try {
-                Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
-            } catch (WhatTheFuckHowException e) {
-                e.printStackTrace();
-            }
-            startActivity(new Intent(PopupStichansage.this, Popup_atout.class));
-        }
-        finish();
-    }
-
     public void rundenStichansage() {
         // Reihenfolge
         this.players = order(dealer);
@@ -200,6 +178,28 @@ public class PopupStichansage extends AppCompatActivity {
                 nextPopup();
             }
         });
+    }
+
+    /**
+     * Es wird geprüft ob die angegeben Stiche höher sind als die bereits angesagten. Je nachdem kann man dem Popup
+     * Atout oder Atout wählen kommen.
+     */
+    private void nextPopup() {
+        if (countStitches > said) {
+            Collections.rotate(players, howMuch);
+            Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
+            //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
+            startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
+        } else {
+            Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich), highestStitches);
+            try {
+                Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
+            } catch (WhatTheFuckHowException e) {
+                e.printStackTrace();
+            }
+            startActivity(new Intent(PopupStichansage.this, Popup_atout.class));
+        }
+        finish();
     }
 
     /**

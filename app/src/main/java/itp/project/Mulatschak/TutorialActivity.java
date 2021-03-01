@@ -1,21 +1,17 @@
 package itp.project.Mulatschak;
 
 import android.content.Intent;
-import android.view.MenuItem;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import itp.project.Popups.PopupTutorialVideo;
 
 public class TutorialActivity extends AppCompatActivity {
     Bundle extras;
     boolean startseite;
-
 
 
     @Override
@@ -41,7 +37,6 @@ public class TutorialActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Button zurueck = findViewById(android.R.id.home);
-
 
 
     }
@@ -70,6 +65,7 @@ public class TutorialActivity extends AppCompatActivity {
     /**
      * Je nachdem ob die startseite true oder false ist, wird ueber den zurueck-Button auf
      * der toolbar ein anderer Intent gestartet, welcher wieder dorthin zurueck fuehrt
+     *
      * @param item
      * @return
      */
@@ -77,10 +73,10 @@ public class TutorialActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if(startseite) {
+                if (startseite) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     Intent intent = new Intent(getApplicationContext(), Playground.class);
                     startActivity(intent);
                 }

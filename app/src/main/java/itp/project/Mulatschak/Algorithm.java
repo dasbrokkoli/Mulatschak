@@ -15,11 +15,11 @@ public class Algorithm {
 
     private static final Integer MAX_POINTS = 21;
     private static final int[] tricks = new int[4];
+    private static final List<Integer> points = new ArrayList<>(); //fuer die Punktestaende der Spieler
     private static int dealer;
     private static List<Card> cards;
     private static int winChance;
     private static Colors atout;
-    private static final List<Integer> points = new ArrayList<>(); //fuer die Punktestaende der Spieler
     private static Difficulty difficulty;
     private final int player;
     //Attribut für die Kartenzuweisung
@@ -48,32 +48,6 @@ public class Algorithm {
 
     public static Colors getAtout() {
         return atout;
-    }
-
-    public synchronized static void setAtout(Colors atout) {
-        Algorithm.atout = atout;
-    }
-
-    /**
-     * @return the Index of the highest trick in tricks-Array (equals player - 1)
-     */
-    public synchronized static int getHighestTrickIndex() {
-        int largest = Integer.MIN_VALUE;
-        int largestIndex = -1;
-
-        for (int i = 0; i < tricks.length; i++) {
-            if (tricks[i] > largest) {
-                largest = tricks[i];
-                largestIndex = i;
-            } else if (tricks[i] == largest) {
-                if (i == dealer) {
-                    largestIndex = i;
-                } else {
-                    return -1;
-                }
-            }
-        }
-        return largestIndex;
     }
 
     public static Difficulty getDifficulty() {
@@ -211,6 +185,32 @@ public class Algorithm {
         }
     }
 
+    public synchronized static void setAtout(Colors atout) {
+        Algorithm.atout = atout;
+    }
+
+    /**
+     * @return the Index of the highest trick in tricks-Array (equals player - 1)
+     */
+    public synchronized static int getHighestTrickIndex() {
+        int largest = Integer.MIN_VALUE;
+        int largestIndex = -1;
+
+        for (int i = 0; i < tricks.length; i++) {
+            if (tricks[i] > largest) {
+                largest = tricks[i];
+                largestIndex = i;
+            } else if (tricks[i] == largest) {
+                if (i == dealer) {
+                    largestIndex = i;
+                } else {
+                    return -1;
+                }
+            }
+        }
+        return largestIndex;
+    }
+
     public static List<Integer> getPoints() {
         return points;
     }
@@ -259,10 +259,6 @@ public class Algorithm {
         }
     }
 
-    public synchronized void wonThisCard() {
-        Playground.stitchesMade(this.player, ++tricks[player - 1]);
-    }
-
     private synchronized Card lowestCardValue() {
         return lowestCardValue(-1);
     }
@@ -293,6 +289,14 @@ public class Algorithm {
                 card.setTempValue(card.getValue());
             }
         }
+    }
+
+    public void setAusgestiegen(boolean ausgestiegen) {
+        this.ausgestiegen = ausgestiegen;
+    }
+
+    public int getTrick() {
+        return tricks[player - 1];
     }
 
     private synchronized void setHoldingValues() {
@@ -327,6 +331,10 @@ public class Algorithm {
         }
     }
 
+    public void setTrick(int i) {
+        tricks[player - 1] = i;
+    }
+
     public synchronized boolean hasAdoutPermission() throws TwoSameHighestTricksException {
         if (getHighestTrickIndex() == player) {
             return true;
@@ -336,20 +344,16 @@ public class Algorithm {
         return false;
     }
 
+    public synchronized void wonThisCard() {
+        Playground.stitchesMade(this.player, ++tricks[player - 1]);
+    }
+
     public List<Card> getHoldingCards() {
         return playerCards.getCards();
     }
 
     public void setHoldingCards(List<Card> holdingCards) {
         playerCards.setCards(holdingCards);
-    }
-
-    public int getTrick() {
-        return tricks[player - 1];
-    }
-
-    public void setTrick(int i) {
-        tricks[player - 1] = i;
     }
 
     /**
@@ -470,10 +474,6 @@ public class Algorithm {
 
     public boolean istAusgestiegen() {
         return ausgestiegen;
-    }
-
-    public void setAusgestiegen(boolean ausgestiegen) {
-        this.ausgestiegen = ausgestiegen;
     }
 
     public synchronized String getHoldingCardsString() {

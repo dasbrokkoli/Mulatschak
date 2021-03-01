@@ -12,7 +12,6 @@ import itp.project.Enums.Colors;
 import itp.project.Enums.Values;
 import itp.project.Popups.PopupDifficulty;
 import itp.project.Popups.PopupLog;
-import itp.project.Popups.PopupTutorialVideo;
 
 import java.util.ArrayList;
 import java.util.List;
