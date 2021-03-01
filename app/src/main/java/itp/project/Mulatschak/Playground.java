@@ -180,8 +180,10 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 String start = "start";
                 Intent intent = new Intent(Playground.this, TutorialActivity.class);
                 intent.putExtra(start, false);
-                startActivity(intent);
+                startActivityForResult(intent,0);
                 //startActivity(new Intent(Playground.this, TutorialActivity.class));
+                //startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
+                return;
             }
         });
 
@@ -399,6 +401,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         // teilt die Karten aus, nachdem das PopupLog geschlossen wurde
         if (resultCode == RESULT_CANCELED) {
             neuAusteilen();
+        }else if(resultCode == RESULT_OK) {
+            System.out.println("RESULT_OK bei Tutorial");
         }
     }
 

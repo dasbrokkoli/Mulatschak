@@ -77,12 +77,22 @@ public class TutorialActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(getApplicationContext(), Playground.class);
-                    startActivity(intent);
+                    closeLog();
+                    //Intent intent = new Intent(getApplicationContext(), Playground.class);
+                    //startActivity(intent);
                 }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Schließt das Popup wieder und informiert Playground, dass das Popup geschlossen wurde
+     *
+     */
+    public void closeLog() {
+        setResult(RESULT_OK);
+        finish();
     }
 }
