@@ -85,7 +85,11 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         View help = findViewById(R.id.help);
         help.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(Playground.this, TutorialActivity.class));
+                String start = "start";
+                Intent intent = new Intent(Playground.this, TutorialActivity.class);
+                intent.putExtra(start, false);
+                startActivity(intent);
+                //startActivity(new Intent(Playground.this, TutorialActivity.class));
             }
         });
 
