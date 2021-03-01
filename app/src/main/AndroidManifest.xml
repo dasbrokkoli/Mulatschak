@@ -11,6 +11,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="AllowBackup">
+        <activity android:name="itp.project.Popups.GemachteStiche"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.Popup">
+        </activity>
         <activity android:name="itp.project.Popups.PopupTutorialVideo"
                   android:screenOrientation="sensorLandscape"
                   android:theme="@style/AppTheme.Popup">
@@ -68,10 +72,6 @@
                 android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
-        <!-- <activity
-                 android:name=".LogActivity"
-                 android:screenOrientation="sensorLandscape">
-         </activity>-->
         <activity
                 android:name=".TutorialActivity"
                 android:parentActivityName=".MainActivity"

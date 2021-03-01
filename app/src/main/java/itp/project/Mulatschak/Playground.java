@@ -16,9 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import itp.project.Exceptions.WinException;
-import itp.project.Popups.PopupLog;
-import itp.project.Popups.PopupStichansage;
-import itp.project.Popups.Popup_atout;
+import itp.project.Popups.*;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -78,6 +76,10 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         return players[playernumber - 1];
     }
 
+    //Gemachte Stiche Popup
+    Button gemachteStiche;
+
+    private static int beginner;
     /**
      * Die gemachten Stiche sollen im Playground angezeigt werden.
      * Dazu wird bei dem Spieler der gestochen hat die neue Stichanzahl angezeigt.
@@ -270,6 +272,15 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Playground.this, PopupLog.class));
+            }
+        });
+
+        //Gemachte Stiche ansehen
+        gemachteStiche = findViewById(R.id.gemachteStiche);
+        gemachteStiche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Playground.this, GemachteStiche.class));
             }
         });
 
