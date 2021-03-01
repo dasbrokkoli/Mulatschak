@@ -40,7 +40,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     private static TextView pl1_announced, pl2_announced, pl3_announced, pl4_announced;
     private static int beginner;
     private static int playerCardNumber;
-    ImageView atout;
+    static ImageView atout;
 
     //Liste für die Karten
     //LogPopup
@@ -269,7 +269,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * Im dafür vorgesehenen Feld wird das geählte Atout angezeigt.
      * Das Atout ist in der Konstante gespeichert welches angezeigt werden soll.
      */
-    private synchronized void showAtout() {
+    public synchronized static void showAtout() {
         //Wenn noch kein Atout gespeichert ist wird ein leeres Feld angezeigt
         if (Algorithm.getAtout() == null) {
             atout.setImageResource(R.drawable.empty);
@@ -402,6 +402,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -410,8 +411,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             neuAusteilen();
         }
 
-        //Das Atout wird angezeigt
-        showAtout();
+        //Das Atout wird angezeigt -> wird im Popup_kartentausch schon angezeigt
+        //showAtout();
         anzeigen();
 
         playThread = new Thread(() -> {
@@ -571,4 +572,5 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
         return tempMap;
     }
+
 }
