@@ -1,11 +1,12 @@
 package itp.project.Popups;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
@@ -16,9 +17,9 @@ import itp.project.Mulatschak.R;
 public class GemachteStiche extends AppCompatActivity {
 
     TextView akt;
-    int max,seite;
+    int max, seite;
     Button back, next;
-    ImageView card1, card2, card3,card4;
+    ImageView card1, card2, card3, card4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,39 +51,46 @@ public class GemachteStiche extends AppCompatActivity {
             }
         });
 
+
+
         //Anzahl wird die Anzahl der gemachten Stiche angezeigt
         max = Integer.parseInt((String) Playground.stitches[0].getText());
 
-        //TODO:Stiche in einer Liste speichern
+        //Wenn kein Stich vorhanden
+        if(Playground.gewonnene.isEmpty()||max ==0){
+            Toast.makeText(this, "Noch keine gemachten Stiche", Toast.LENGTH_SHORT).show();
+
+            //Wenn bereits Stiche vorhanden sind
+        }else {
+
+            //Die Karten sind im Playground in einer Liste gespeichert die erste Seite
+
+            card1.setImageDrawable(Playground.gewonnene.get(0).getPicture());
+            card2.setImageDrawable(Playground.gewonnene.get(1).getPicture());
+            card3.setImageDrawable(Playground.gewonnene.get(2).getPicture());
+            card4.setImageDrawable(Playground.gewonnene.get(3).getPicture());
+
+            //Akt Zeigt den Stich an der gezeigt wird.
+            //Beginnt bei 1
+            seite = 1;
 
 
-        //Akt Zeigt den Stich an der gezeigt wird.
-        //Beginnt bei 1
-        seite = 1;
-
-        //TODO: wenn kein Stich vorhanden
-
-
-        seiteAnzeiigen();
-
-    }
-
-    /**
-     * Zeigt an welcher der bereits gemachten Stiche angezeig wird.
-     */
-    public void seiteAnzeiigen(){
-        akt.setText(seite+"/"+max);
+            seiteAnzeiigen();
+        }
     }
 
     /**
      * Den nächsten Stich anzeigen
      */
-    public void next(){
-        if(seite<max) {
+    public void next() {
+        if (seite < max) {
             seite++;
-            //TODO: die neuen Karten anzeigen
-
-
+            //Die neuen Karten anzeigen
+            int beginn = (seite-1)*4;
+            card1.setImageDrawable(Playground.gewonnene.get(beginn).getPicture());
+            card2.setImageDrawable(Playground.gewonnene.get(beginn+1).getPicture());
+            card3.setImageDrawable(Playground.gewonnene.get(beginn+2).getPicture());
+            card4.setImageDrawable(Playground.gewonnene.get(beginn+3).getPicture());
             seiteAnzeiigen();
         }
     }
@@ -90,13 +98,23 @@ public class GemachteStiche extends AppCompatActivity {
     /**
      * Den vorherigen Stich anzeigen
      */
-    public void back(){
-        if(seite>1) {
+    public void back() {
+        if (seite > 1) {
             seite--;
-            //TODO: die neuen Karten anzeigen
-
-
+            //Die neuen Karten anzeigen
+            int beginn = (seite-1)*4;
+            card1.setImageDrawable(Playground.gewonnene.get(beginn).getPicture());
+            card2.setImageDrawable(Playground.gewonnene.get(beginn+1).getPicture());
+            card3.setImageDrawable(Playground.gewonnene.get(beginn+2).getPicture());
+            card4.setImageDrawable(Playground.gewonnene.get(beginn+3).getPicture());
             seiteAnzeiigen();
         }
+    }
+
+    /**
+     * Zeigt an welcher der bereits gemachten Stiche angezeig wird.
+     */
+    public void seiteAnzeiigen() {
+        akt.setText(seite + "/" + max);
     }
 }
