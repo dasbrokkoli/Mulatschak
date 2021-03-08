@@ -116,6 +116,7 @@ public class Algorithm {
         Random r = new Random();
         dealer = 1 + r.nextInt(4);
         Arrays.fill(tricks, 0);
+        Collections.fill(points, MAX_POINTS);
     }
 
     /**
@@ -126,13 +127,14 @@ public class Algorithm {
      * @return scores -> Eine ArrayList mit all den Punkteständen
      */
     public synchronized static void scoring(Algorithm... algo) throws WinException {
-        int newPoints;
+        int oldPoints;
+        int diffPoints;
         //Angesagte Stiche
         Map<Integer, Integer> highestStitches = Playground.getHighestStich();
 
         for (int i = 0; i < algo.length; i++) {
-            newPoints = points.get(i); //Die Punktestaende von davor aufrufen und abspeichern
-            algo[i].getTrick();     //Die Stiche holen
+            oldPoints = points.get(i); //Die Punktestaende von davor aufrufen und abspeichern
+            diffPoints = 0;
 
             //Gemachte stiche
             CharSequence tmp = (Playground.stitches[i].getText());
@@ -144,31 +146,34 @@ public class Algorithm {
                 int saidStitches = highestStitches.get(i);
                 if (saidStitches > madeStitches) {
                     System.out.println("Stiche nicht erreicht " + madeStitches + " < " + saidStitches);
-                    newPoints += 10; //Wenn mehr angesagt wurden als gemacht
+                    diffPoints -= 10; //Wenn mehr angesagt wurden als gemacht
                 } else {
-                    System.out.println("Stiche erreicht " + madeStitches + " > " + saidStitches);
-                    newPoints -= madeStitches;
+                    System.out.println("Stiche erreicht " + madeStitches + " => " + saidStitches);
+                    diffPoints += madeStitches;
                 }
             } else if (i == 0 && Popup_atout.alreadyLeft) {
                 System.out.println("Spieler ist heimgegangen");
-                newPoints = newPoints + 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
+                diffPoints -= 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
 
             } else if (madeStitches == 0) {
                 System.out.println("Spieler " + i + " hat keine Stiche gemacht");
-                newPoints += 5; //Wenn keine angesagt und keine gemacht wurden
+                diffPoints -= 5; //Wenn keine angesagt und keine gemacht wurden
 
             } else {
                 System.out.println("Spieler " + i + " hat " + madeStitches + " Punkte runtergeschrieben");
-                newPoints -= madeStitches; //Sonst schreibt man die gemachten Stiche runter
+                diffPoints += madeStitches; //Sonst schreibt man die gemachten Stiche runter
 
             }
             if (atout == Colors.HERZ) {
                 System.out.println("Doppelte Runde");
-                newPoints = newPoints * 2; //Wenn Atout Herz zählt die Runde doppelt
+                diffPoints *= 2; //Wenn Atout Herz zählt die Runde doppelt
             }
 
-            System.out.println("Neue Punkte für Spieler " + i + ": " + newPoints);
-            points.set(i, newPoints);
+            System.out.println("Alte Punkte: " + oldPoints);
+            System.out.println("Punktedifferenz für Spieler " + i + ": " + diffPoints);
+            oldPoints -= diffPoints;
+            System.out.println("Neue Punkte für Spieler " + i + ": " + oldPoints);
+            points.set(i, oldPoints);
         }
         for (int i = 0; i < points.size(); i++) {
             if (points.get(i) <= 0) {
@@ -177,15 +182,19 @@ public class Algorithm {
         }
     }
 
+    public static Colors getAtout() {
+        return atout;
+    }
+
+    public static int getDealer() {
+        return dealer;
+    }
+
     /**
      * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
      */
     public void changeCard(Card oldCard, int anzNew) {
         this.playerCards.changeCard(oldCard, anzNew);
-    }
-
-    public static Colors getAtout() {
-        return atout;
     }
 
     /**
@@ -252,12 +261,12 @@ public class Algorithm {
         }
     }
 
-    public synchronized static void setAtout(Colors atout) {
-        Algorithm.atout = atout;
+    public static Difficulty getDifficulty() {
+        return difficulty;
     }
 
-    public static int getDealer() {
-        return dealer;
+    public synchronized static void setAtout(Colors atout) {
+        Algorithm.atout = atout;
     }
 
     private synchronized void setHoldingValues() {
@@ -301,16 +310,12 @@ public class Algorithm {
         return false;
     }
 
-    public static Difficulty getDifficulty() {
-        return difficulty;
+    public static void setDifficulty(Difficulty difficulty) {
+        Algorithm.difficulty = difficulty;
     }
 
     public synchronized void wonThisCard() {
         Playground.stitchesMade(this.player, ++tricks[player - 1]);
-    }
-
-    public static void setDifficulty(Difficulty difficulty) {
-        Algorithm.difficulty = difficulty;
     }
 
     /**
@@ -416,6 +421,14 @@ public class Algorithm {
         return largestIndex;
     }
 
+    public static List<Integer> getPoints() {
+        return points;
+    }
+
+    public int getTrick() {
+        return tricks[player - 1];
+    }
+
     public List<Card> getHoldingCards() {
         return playerCards.getCards();
     }
@@ -438,14 +451,6 @@ public class Algorithm {
 
     public String getName() {
         return String.valueOf(player);
-    }
-
-    public static List<Integer> getPoints() {
-        return points;
-    }
-
-    public int getTrick() {
-        return tricks[player - 1];
     }
 
     /**
