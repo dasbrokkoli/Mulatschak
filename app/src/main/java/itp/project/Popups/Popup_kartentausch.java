@@ -19,12 +19,16 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
     ImageButton change;
     int count;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_kartentausch);
 
         count = 0;
+        //zeigt das Atout an
+        Playground.showAtout();
 
         eyeBtn = findViewById(R.id.eyeBtn);
         eyeBtn.setOnTouchListener(Listeners.newListener(this));
