@@ -185,11 +185,24 @@ public class PopupStichansage extends AppCompatActivity {
      * Atout oder Atout wählen kommen.
      */
     private void nextPopup() {
-        if (countStitches > said) {
-            Collections.rotate(players, howMuch);
-            Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
-            //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
-            startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
+        int userPoints = Algorithm.getPoints().get(0);
+
+        if(userPoints > 5) {
+            if (countStitches > said) {
+                Collections.rotate(players, howMuch);
+                Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
+                //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
+                startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
+            }else{
+                Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich), highestStitches);
+                try {
+                    Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
+                } catch (WhatTheFuckHowException e) {
+                    e.printStackTrace();
+                }
+                startActivity(new Intent(PopupStichansage.this, Popup_atout.class));
+            }
+            //Wenn der Spieler weniger od gleich als 5 Punkte hat, kann er keine Stiche mehr ansagen
         } else {
             Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich), highestStitches);
             try {
