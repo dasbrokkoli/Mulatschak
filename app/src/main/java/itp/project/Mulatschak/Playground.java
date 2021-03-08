@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.*;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable {
 //    public static boolean alreadyLeft;
@@ -52,8 +53,19 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ConstraintLayout constraintLayout;
     //Cards
     ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4;
+    static ImageView move;
+    //Gemachte Stiche
+    //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
+    public static TextView[] stitches = new TextView[4];
+    private static TextView pl1_announced, pl2_announced, pl3_announced, pl4_announced;
+
+
+    //Algorithmen für Spieler
+    static Algorithm[] players = new Algorithm[4];
+
     //Gemachte Stiche Popup
     Button gemachteStiche;
+    public static List<Card> gewonnene;
 
     /**
      * Spieler zurückgeben
@@ -238,6 +250,62 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         stitches[2] = findViewById(R.id.pl2_stitches);
         stitches[3] = findViewById(R.id.pl3_stitches);
 
+        gewonnene = new ArrayList<>();
+
+        //Spielernamen anzeigen wenn auf die Katren gedrückt wird
+        pl2 = findViewById(R.id.imageView7);
+        pl2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPlayersName(2);
+
+            }
+        });
+        pl3 = findViewById(R.id.player2);
+        pl3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPlayersName(3);
+            }
+        });
+        pl4 = findViewById(R.id.player3);
+        pl4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPlayersName(4);
+            }
+        });
+    }
+
+    /**
+     * der Name des spielers wird ausgegebn.
+     * @param pl - Spielerid
+     */
+    public synchronized void showPlayersName(int pl){
+        //Wenn kein Spielername gepeichert ist
+        if(PopupName.namen.get(pl-1).equals("")){
+            Toast.makeText(this, "Player"+pl,Toast.LENGTH_SHORT).show();
+        //Wenn ein Spielername gespeichert ist
+        }else{
+            Toast.makeText(this, PopupName.namen.get(pl-1),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Neue runde die Karten werden neu ausgeteilt.
+     * Jeder Spieler bekommt einen neuen Algorithmus
+     */
+    public synchronized static void austeilen() {
+        new Thread(() -> {
+            synchronized (MainActivity.getCards()) {
+                HoldingCards.setAllCards(MainActivity.getCards());
+                players[0] = new Algorithm(MainActivity.getCards(), 1);
+                playerCardNumber = 5;
+                players[1] = new Algorithm(MainActivity.getCards(), 2);
+                players[2] = new Algorithm(MainActivity.getCards(), 3);
+                players[3] = new Algorithm(MainActivity.getCards(), 4);
+            }
+        }).start();
     }
 
     /**
@@ -333,6 +401,10 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         Card[] cards = cardsOnFloor.values().toArray(new Card[0]);
         Card winner = Algorithm.getWinnerFromCards(cards);
         int winnerIndex = cardsOnFloor.inverse().get(winner);
+        //Wenn Spieler 0 gewonnen hat werden die Karten gespeichert um sie später ansehen zu können
+        if(winnerIndex == 0){
+            gewonnene.addAll(Arrays.asList(cards));
+        }
         beginner = winnerIndex;
         players[winnerIndex].wonThisCard();
         assert winner != null;
@@ -373,6 +445,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         System.out.println("Playerkarten: " + playerCardNumber);
         if (playerCardNumber == 0) {
             System.out.println("Runde fertig");
+            //Gemachten Stiche löschen
+            gewonnene.clear();
             try {
                 Algorithm.scoring(players);
             } catch (WinException e) {
