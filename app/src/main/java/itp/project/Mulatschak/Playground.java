@@ -194,21 +194,11 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         constraintLayout = findViewById(R.id.playgroundConstraintLayout);
         //LogPopup
         showLogBtn = findViewById(R.id.logButton);
-        showLogBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Playground.this, PopupLog.class));
-            }
-        });
+        showLogBtn.setOnClickListener(view -> startActivity(new Intent(Playground.this, PopupLog.class)));
 
         //Gemachte Stiche ansehen
         gemachteStiche = findViewById(R.id.gemachteStiche);
-        gemachteStiche.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Playground.this, GemachteStiche.class));
-            }
-        });
+        gemachteStiche.setOnClickListener(view -> startActivity(new Intent(Playground.this, GemachteStiche.class)));
 
         //Karten aus dem Algorithmus
 
@@ -441,13 +431,13 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * Die Karten des Spielers anzeigen.
      */
     public synchronized void anzeigen() {
-        new Thread(() -> {
+        runOnUiThread(() -> {
             card1.setImageDrawable(players[0].getHoldingCards().get(0).getPicture());
             card2.setImageDrawable(players[0].getHoldingCards().get(1).getPicture());
             card3.setImageDrawable(players[0].getHoldingCards().get(2).getPicture());
             card4.setImageDrawable(players[0].getHoldingCards().get(3).getPicture());
             card5.setImageDrawable(players[0].getHoldingCards().get(4).getPicture());
-        }).start();
+        });
     }
 
     /**
