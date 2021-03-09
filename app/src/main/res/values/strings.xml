@@ -115,4 +115,5 @@
     <string name="winMessage">has won!</string>
     <string name="back">&lt;Back</string>
     <string name="next1">Next&gt;</string>
+    <string name="yourcards">Your Cards</string>
 </resources>
