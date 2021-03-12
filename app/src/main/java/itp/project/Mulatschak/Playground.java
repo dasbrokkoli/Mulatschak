@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +48,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ConstraintLayout constraintLayout;
     //Cards
     ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
+    ImageView anim2, anim3, anim4;
 
     //Gemachte Stiche Popup
     Button gemachteStiche;
@@ -214,11 +216,17 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         card5 = findViewById(R.id.card5);
         card5.setOnTouchListener(this);
 
+        //Destination
         destination = findViewById(R.id.card_pl1);
         destination.setOnDragListener(this);
         card_pl2 = findViewById(R.id.card_pl2);
         card_pl3 = findViewById(R.id.card_pl3);
         card_pl4 = findViewById(R.id.card_pl4);
+
+        //Animation Views
+        anim2 = findViewById(R.id.animation_p2);
+        anim3 = findViewById(R.id.animation_p3);
+        anim4 = findViewById(R.id.animation_p4);
 
         //Stiche gemacht
         pl1_announced = findViewById(R.id.player_announced);
@@ -238,7 +246,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         gewonnene = new ArrayList<>();
 
         //Spielernamen anzeigen wenn auf die Katren gedrückt wird
-        pl2 = findViewById(R.id.imageView7);
+        pl2 = findViewById(R.id.player4);
         pl2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -393,6 +401,13 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             Card[] cArray = new Card[cardsOnFloor.size()];
             cardsOnFloor.values().toArray(cArray);
             cardsOnFloor.put(beginner, players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
+
+            /* hier kommt die Animation hin */
+
+            animation(2,null);
+            animation(3,null);
+            animation(4,null);
+
             kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
             System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
             rotateBeginner();
@@ -403,6 +418,9 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         this.whichCardWon();
 
         //Spielfeldkarten löschen
+
+        /* Hier wird die Animation zurück gesetzt*/
+
         cardsOnFloor.clear();
         kartenAnzeigen(0, null);
         kartenAnzeigen(1, null);
@@ -425,6 +443,42 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             return;
         }
         play();
+    }
+
+    public synchronized void animation(int spieler, Card card) {
+        // Card card4, card1, card2, card3, card5
+        // Destination destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
+        TranslateAnimation animation = null;
+        //Mit Switch Case
+        switch(spieler) {
+            case 1:
+                System.out.println("No Animation needed");
+                break;
+
+            case 2:
+                animation = new TranslateAnimation(0, card_pl2.getX()-anim2.getX(),0 , card_pl2.getY()-anim2.getY());
+                animation.setRepeatMode(0);
+                animation.setDuration(3000);
+                animation.setFillAfter(true);
+                anim2.startAnimation(animation);
+                break;
+
+            case 3:
+                animation = new TranslateAnimation(0, card_pl3.getX()-anim3.getX(),0 , card_pl3.getY()-anim3.getY());
+                animation.setRepeatMode(0);
+                animation.setDuration(3000);
+                animation.setFillAfter(true);
+                anim3.startAnimation(animation);
+                break;
+
+            case 4:
+                animation = new TranslateAnimation(0, card_pl4.getX()-anim4.getX(),0 , card_pl4.getY()-anim4.getY());
+                animation.setRepeatMode(0);
+                animation.setDuration(3000);
+                animation.setFillAfter(true);
+                anim4.startAnimation(animation);
+                break;
+        }
     }
 
     @Override
