@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,6 +50,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     //Cards
     ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
     ImageView anim2, anim3, anim4;
+    //View anim2, anim3, anim4;
 
     //Gemachte Stiche Popup
     Button gemachteStiche;
@@ -404,9 +406,9 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
             /* hier kommt die Animation hin */
 
-            animation(2,null);
-            animation(3,null);
-            animation(4,null);
+            //animation(2,null);
+           // animation(3,null);
+            //animation(4,null);
 
             kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
             System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
@@ -445,17 +447,21 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         play();
     }
 
-    public synchronized void animation(int spieler, Card card) {
+    public synchronized void animation(int spieler, Drawable card) {
         // Card card4, card1, card2, card3, card5
         // Destination destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
-        TranslateAnimation animation = null;
+
+        TranslateAnimation animation;
+        //runOnUiThread();
+        //TranslateAnimation animation = null;
         //Mit Switch Case
         switch(spieler) {
-            case 1:
+            case 0:
                 System.out.println("No Animation needed");
                 break;
 
-            case 2:
+            case 1:
+                anim2.setImageDrawable(card);
                 animation = new TranslateAnimation(0, card_pl2.getX()-anim2.getX(),0 , card_pl2.getY()-anim2.getY());
                 animation.setRepeatMode(0);
                 animation.setDuration(3000);
@@ -463,7 +469,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 anim2.startAnimation(animation);
                 break;
 
-            case 3:
+            case 2:
+                anim3.setImageDrawable(card);
                 animation = new TranslateAnimation(0, card_pl3.getX()-anim3.getX(),0 , card_pl3.getY()-anim3.getY());
                 animation.setRepeatMode(0);
                 animation.setDuration(3000);
@@ -471,7 +478,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 anim3.startAnimation(animation);
                 break;
 
-            case 4:
+            case 3:
+                anim4.setImageDrawable(card);
                 animation = new TranslateAnimation(0, card_pl4.getX()-anim4.getX(),0 , card_pl4.getY()-anim4.getY());
                 animation.setRepeatMode(0);
                 animation.setDuration(3000);
@@ -479,6 +487,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 anim4.startAnimation(animation);
                 break;
         }
+        //anim2.setBackground(null);
+       // anim3.setBackground(null);
+        //anim4.setBackground(null);
+//        anim2.setVisibility(View.INVISIBLE);
+//        anim3.setVisibility(View.INVISIBLE);
+//        anim4.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -588,13 +602,21 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 case 0:
                     runOnUiThread(() -> destination.setImageDrawable(null));
                 case 1:
-                    runOnUiThread(() -> card_pl2.setImageDrawable(card));
+                    //runOnUiThread(() -> card_pl2.setImageDrawable(card));
+                    runOnUiThread(() -> {
+                        if(card != null) {animation(1,card);}
+                        //System.out.println("Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+                    });
                     break;
                 case 2:
-                    runOnUiThread(() -> card_pl3.setImageDrawable(card));
+                    runOnUiThread(() -> {
+                        if(card != null) {animation(2,card);}
+                    });
                     break;
                 case 3:
-                    runOnUiThread(() -> card_pl4.setImageDrawable(card));
+                    runOnUiThread(() -> {
+                        if(card != null) {animation(3,card);}
+                    });
                     break;
             }
         }).start();
