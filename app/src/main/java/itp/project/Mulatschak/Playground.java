@@ -462,7 +462,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
             case 1:
                 anim2.setImageDrawable(card);
-                animation = new TranslateAnimation(0, card_pl2.getX()-anim2.getX(),0 , card_pl2.getY()-anim2.getY());
+                animation = new TranslateAnimation(0, (card_pl2.getX()-anim2.getX())+7,0 , card_pl2.getY()-anim2.getY());
                 animation.setRepeatMode(0);
                 animation.setDuration(3000);
                 animation.setFillAfter(true);
@@ -471,7 +471,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
             case 2:
                 anim3.setImageDrawable(card);
-                animation = new TranslateAnimation(0, card_pl3.getX()-anim3.getX(),0 , card_pl3.getY()-anim3.getY());
+                animation = new TranslateAnimation(0, (card_pl3.getX()-anim3.getX())+7,0 , card_pl3.getY()-anim3.getY());
                 animation.setRepeatMode(0);
                 animation.setDuration(3000);
                 animation.setFillAfter(true);
@@ -480,7 +480,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
             case 3:
                 anim4.setImageDrawable(card);
-                animation = new TranslateAnimation(0, card_pl4.getX()-anim4.getX(),0 , card_pl4.getY()-anim4.getY());
+                animation = new TranslateAnimation(0, (card_pl4.getX()-anim4.getX())+7,0 , card_pl4.getY()-anim4.getY());
                 animation.setRepeatMode(0);
                 animation.setDuration(3000);
                 animation.setFillAfter(true);
