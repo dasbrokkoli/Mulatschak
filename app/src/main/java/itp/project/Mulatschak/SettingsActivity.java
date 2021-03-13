@@ -15,10 +15,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         // wechseln zu Design-Activity aus Button
         View design = findViewById(R.id.design_button);
-        design.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(SettingsActivity.this, DesignPackActivity.class));
-            }
-        });
+        design.setOnClickListener(v -> startActivity(new Intent(SettingsActivity.this, DesignPackActivity.class)));
     }
 }
