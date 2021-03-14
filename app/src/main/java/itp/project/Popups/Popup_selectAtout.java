@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import itp.project.Enums.Colors;
 import itp.project.Mulatschak.Algorithm;
+import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.R;
 
 public class Popup_selectAtout extends AppCompatActivity {
@@ -24,32 +25,9 @@ public class Popup_selectAtout extends AppCompatActivity {
 
         selected = "";
 
-        //Popup größe
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        final int width = dm.widthPixels;
-        final int height = dm.heightPixels;
-
-        getWindow().setLayout((int) (width * .8), (int) (height * .8));//80% der höhe und Breite des Bildschirms
 
         eyeBtn = findViewById(R.id.eyeBtn);
-        eyeBtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.performClick();
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        getWindow().setLayout(0, 0);
-                        System.out.println("Down");
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        getWindow().setLayout((int) (width * .8), (int) (height * .8));
-                        System.out.println("Up");
-                        return true;
-                }
-                return false;
-            }
-        });
+        eyeBtn.setOnClickListener(Listeners.newOnClickListener(this));
         //Herz
         herz = findViewById(R.id.herz);
         herz.setOnClickListener(new View.OnClickListener() {

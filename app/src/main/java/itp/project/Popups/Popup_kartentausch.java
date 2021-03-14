@@ -32,7 +32,8 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
         Playground.showAtout();
 
         eyeBtn = findViewById(R.id.eyeBtn);
-        eyeBtn.setOnTouchListener(Listeners.newListener(this));
+//        eyeBtn.setOnTouchListener(Listeners.newListener(this));
+        eyeBtn.setOnClickListener(Listeners.newOnClickListener(this));
 
 
         //Karten des Spielers anzeigen

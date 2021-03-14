@@ -102,9 +102,8 @@ public class PopupStichansage extends AppCompatActivity {
 
     public void popup() {
         eyeBtn = findViewById(R.id.eyeBtn);
-        eyeBtn.setOnTouchListener(Listeners.newListener(this));
-
-
+//        eyeBtn.setOnTouchListener(Listeners.newListener(this));
+        eyeBtn.setOnClickListener(Listeners.newOnClickListener(this));
         //Button Muli
         muli = findViewById(R.id.muli);
         muli.setOnClickListener(new View.OnClickListener() {
