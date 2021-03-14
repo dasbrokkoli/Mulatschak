@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import itp.project.Enums.Colors;
 import itp.project.Mulatschak.Algorithm;
@@ -72,10 +73,22 @@ public class Popup_atout extends AppCompatActivity {
         aus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Neues Spiel (fängt mit stichansage an)
-                alreadyLeft = true;
-//                startActivity(new Intent(Popup_atout.this, Playground.class));
-                finish();
+                //die Punkte des Spielers
+                int userPoints = Algorithm.getPoints().get(0);
+
+                //Unter 4 Punkten darf der Spieler nicht aussteigen
+                if(userPoints < 4) {
+                    Toast t = Toast.makeText
+                            (getApplicationContext(),
+                                    "Sie haben unter 3 Punkte und dürfen nicht aussteigen!",
+                                    Toast.LENGTH_LONG);
+                    t.show();
+                }else {
+                    //Neues Spiel (fängt mit stichansage an)
+                    alreadyLeft = true;
+                   //startActivity(new Intent(Popup_atout.this, Playground.class));
+                    finish();
+                }
             }
         });
 

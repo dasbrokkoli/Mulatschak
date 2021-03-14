@@ -7,11 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import itp.project.Mulatschak.Card;
-import itp.project.Mulatschak.Listeners;
-import itp.project.Mulatschak.Playground;
-import itp.project.Mulatschak.R;
+import itp.project.Mulatschak.*;
 
 public class Popup_kartentausch extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener {
 
@@ -94,26 +92,39 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
 
     @Override
     public boolean onDrag(View v, DragEvent event) {
-        switch (event.getAction()) {
-            case DragEvent.ACTION_DRAG_STARTED:
-                break;
-            case DragEvent.ACTION_DRAG_ENTERED:
-                break;
-            case DragEvent.ACTION_DRAG_EXITED:
-                break;
-            case DragEvent.ACTION_DROP:
-                break;
-            case DragEvent.ACTION_DRAG_ENDED:
-                //Karte in den Mistkübel gezogen
-                if (event.getResult()) {
-                    move.setVisibility(View.INVISIBLE);//unsichtbar setzten
-                    changeCard(move);//Karte tauschen
-                    count++;
-                }
-            default:
-                break;
+        //Punkte des Spielers
+        int userPoints = Algorithm.getPoints().get(0);
+
+        //Unter 4 Punkten darf der Spieler keine Karten tauschen
+        if(userPoints < 4) {
+            Toast t = Toast.makeText
+                    (getApplicationContext(),
+                            "Sie haben unter 3 Punkte und dürfen keinen Karten mehr tauschen!",
+                            Toast.LENGTH_LONG);
+            t.show();
+        }else{
+            switch (event.getAction()) {
+                case DragEvent.ACTION_DRAG_STARTED:
+                    break;
+                case DragEvent.ACTION_DRAG_ENTERED:
+                    break;
+                case DragEvent.ACTION_DRAG_EXITED:
+                    break;
+                case DragEvent.ACTION_DROP:
+                    break;
+                case DragEvent.ACTION_DRAG_ENDED:
+                    //Karte in den Mistkübel gezogen
+                    if (event.getResult()) {
+                        move.setVisibility(View.INVISIBLE);//unsichtbar setzten
+                        changeCard(move);//Karte tauschen
+                        count++;
+                    }
+                default:
+                    break;
+            }
         }
         return true;
+
     }
 
     /**
