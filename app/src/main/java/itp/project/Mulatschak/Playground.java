@@ -74,19 +74,19 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 synchronized (stitches) {
                     switch (player) {
                         case 1:
-                            stitches[0].setText("" + count);
+                            stitches[0].setText(String.valueOf(count));
                             System.out.println("Player 1 won: " + count);
                             break;
                         case 2:
-                            stitches[1].setText("" + count);
+                            stitches[1].setText(String.valueOf(count));
                             System.out.println("Player 2 won: " + count);
                             break;
                         case 3:
-                            stitches[2].setText("" + count);
+                            stitches[2].setText(String.valueOf(count));
                             System.out.println("Player 3 won: " + count);
                             break;
                         case 4:
-                            stitches[3].setText("" + count);
+                            stitches[3].setText(String.valueOf(count));
                             System.out.println("Player 4 won: " + count);
                             break;
                     }
@@ -162,13 +162,9 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
         startActivity(new Intent(Playground.this, PopupStichansage.class).putExtra("Playground", this));
 
-        //Settings Button
-        View settings = findViewById(R.id.settings);
-        settings.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(Playground.this, SettingsActivity.class));
-            }
-        });
+        // open Pause Menu
+        View menu = findViewById(R.id.settings);
+        menu.setOnClickListener(v -> startActivity(new Intent(Playground.this, PopupPauseMenu.class)));
 
         //Tutorial Button
         View help = findViewById(R.id.help);
@@ -177,7 +173,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 String start = "start";
                 Intent intent = new Intent(Playground.this, TutorialActivity.class);
                 intent.putExtra(start, false);
-                startActivityForResult(intent,0);
+                startActivityForResult(intent, 0);
                 //startActivity(new Intent(Playground.this, TutorialActivity.class));
                 //startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
                 return;
