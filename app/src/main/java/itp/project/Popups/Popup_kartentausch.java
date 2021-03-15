@@ -1,6 +1,7 @@
 package itp.project.Popups;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -29,7 +30,8 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
         Playground.showAtout();
 
         eyeBtn = findViewById(R.id.eyeBtn);
-        eyeBtn.setOnTouchListener(Listeners.newListener(this));
+//        eyeBtn.setOnTouchListener(Listeners.newListener(this));
+        eyeBtn.setOnClickListener(Listeners.newOnClickListener(this));
 
 
         //Karten des Spielers anzeigen
