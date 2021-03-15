@@ -389,11 +389,13 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * Jeder Spieler spielt eine Karte.
      * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
      */
+    public long TIME_TO_WAIT_AFTER_CARD = 1000;
     public synchronized void play() {
         while (cardsOnFloor.size() < 4) {
             System.out.println("While: " + cardsOnFloor.size());
             if (beginner == 0) {
                 System.out.println("Spieler ist dran");
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.playerDran, Toast.LENGTH_SHORT).show());
                 return;
             }
             Card[] cArray = new Card[cardsOnFloor.size()];
@@ -409,6 +411,11 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
             System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
             rotateBeginner();
+            try {
+                Thread.sleep(TIME_TO_WAIT_AFTER_CARD);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         //Gewinner ermitteln
