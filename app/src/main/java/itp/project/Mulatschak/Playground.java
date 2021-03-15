@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,28 +32,32 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     static final Algorithm[] players = new Algorithm[4];
     private static final BiMap<Integer, Card> cardsOnFloor = HashBiMap.create();
     public static Thread playThread;
+    public static List<Card> gewonnene;
     static ImageView move;
+    static ImageView atout;
     private static TextView pl1_announced, pl2_announced, pl3_announced, pl4_announced;
     private static int beginner;
     private static int playerCardNumber;
-    static ImageView atout;
-
+    final long ANIMATION_DURATION = 3000;
     //Liste für die Karten
     //LogPopup
     Button showLogBtn;
     ImageButton closeLogView;
-
     //View diffView = findViewById(R.layout.popup_difficulty);
     PopupWindow logWindow;
     ConstraintLayout constraintLayout;
-    //Cards
-    ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
+    /**
+     * Jeder Spieler spielt eine Karte.
+     * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
+     */
+    public long TIME_TO_WAIT_AFTER_CARD = 1000;
     ImageView anim2, anim3, anim4;
-    //View anim2, anim3, anim4;
-
     //Gemachte Stiche Popup
     Button gemachteStiche;
-    public static List<Card> gewonnene;
+    //View anim2, anim3, anim4;
+    //Cards
+    ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
+    long animationOffset = 0;
 
     /**
      * Spieler zurückgeben
@@ -149,6 +152,35 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
         return change;
+    }
+
+    /**
+     * Im dafür vorgesehenen Feld wird das geählte Atout angezeigt.
+     * Das Atout ist in der Konstante gespeichert welches angezeigt werden soll.
+     */
+    public synchronized static void showAtout() {
+        //Wenn noch kein Atout gespeichert ist wird ein leeres Feld angezeigt
+        if (Algorithm.getAtout() == null) {
+            atout.setImageResource(R.drawable.empty);
+        } else {
+            //Das gespeicherte Atout wird angezeigt
+            switch (Algorithm.getAtout()) {
+                case HERZ:
+                    atout.setImageResource(R.drawable.herz);
+                    break;
+                case BLATT:
+                    atout.setImageResource(R.drawable.blatt);
+                    break;
+                case EICHEL:
+                    atout.setImageResource(R.drawable.eiche);
+                    break;
+                case SCHELLE:
+                    atout.setImageResource(R.drawable.schelle);
+                    break;
+                default:
+                    atout.setImageResource(R.drawable.empty);
+            }
+        }
     }
 
     @Override
@@ -270,15 +302,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     /**
      * der Name des spielers wird ausgegebn.
+     *
      * @param pl - Spielerid
      */
-    public synchronized void showPlayersName(int pl){
+    public synchronized void showPlayersName(int pl) {
         //Wenn kein Spielername gepeichert ist
-        if(PopupName.namen.get(pl-1).equals("")){
-            Toast.makeText(this, "Player"+pl,Toast.LENGTH_SHORT).show();
-        //Wenn ein Spielername gespeichert ist
-        }else{
-            Toast.makeText(this, PopupName.namen.get(pl-1),Toast.LENGTH_SHORT).show();
+        if (PopupName.namen.get(pl - 1).equals("")) {
+            Toast.makeText(this, "Player" + pl, Toast.LENGTH_SHORT).show();
+            //Wenn ein Spielername gespeichert ist
+        } else {
+            Toast.makeText(this, PopupName.namen.get(pl - 1), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -297,35 +330,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 players[3] = new Algorithm(MainActivity.getCards(), 4);
             }
         }).start();
-    }
-
-    /**
-     * Im dafür vorgesehenen Feld wird das geählte Atout angezeigt.
-     * Das Atout ist in der Konstante gespeichert welches angezeigt werden soll.
-     */
-    public synchronized static void showAtout() {
-        //Wenn noch kein Atout gespeichert ist wird ein leeres Feld angezeigt
-        if (Algorithm.getAtout() == null) {
-            atout.setImageResource(R.drawable.empty);
-        } else {
-            //Das gespeicherte Atout wird angezeigt
-            switch (Algorithm.getAtout()) {
-                case HERZ:
-                    atout.setImageResource(R.drawable.herz);
-                    break;
-                case BLATT:
-                    atout.setImageResource(R.drawable.blatt);
-                    break;
-                case EICHEL:
-                    atout.setImageResource(R.drawable.eiche);
-                    break;
-                case SCHELLE:
-                    atout.setImageResource(R.drawable.schelle);
-                    break;
-                default:
-                    atout.setImageResource(R.drawable.empty);
-            }
-        }
     }
 
     @Override
@@ -376,7 +380,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         Card winner = Algorithm.getWinnerFromCards(cards);
         int winnerIndex = cardsOnFloor.inverse().get(winner);
         //Wenn Spieler 0 gewonnen hat werden die Karten gespeichert um sie später ansehen zu können
-        if(winnerIndex == 0){
+        if (winnerIndex == 0) {
             gewonnene.addAll(Arrays.asList(cards));
         }
         beginner = winnerIndex;
@@ -385,12 +389,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         System.out.println("Winning Card: " + winner.getColor() + winner.getValue() + " von Spieler " + (winnerIndex + 1));
     }
 
-    /**
-     * Jeder Spieler spielt eine Karte.
-     * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
-     */
-    public long TIME_TO_WAIT_AFTER_CARD = 1000;
     public synchronized void play() {
+        System.out.println("Play started");
         while (cardsOnFloor.size() < 4) {
             System.out.println("While: " + cardsOnFloor.size());
             if (beginner == 0) {
@@ -405,14 +405,14 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             /* hier kommt die Animation hin */
 
             //animation(2,null);
-           // animation(3,null);
+            // animation(3,null);
             //animation(4,null);
 
             kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
             System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
             rotateBeginner();
             try {
-                Thread.sleep(TIME_TO_WAIT_AFTER_CARD);
+                Thread.sleep(0);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -431,6 +431,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         kartenAnzeigen(1, null);
         kartenAnzeigen(2, null);
         kartenAnzeigen(3, null);
+
+        animationOffset = 0;
 
         //Noch Karten vorhanden?
         System.out.println("Playerkarten: " + playerCardNumber);
@@ -458,40 +460,46 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         //runOnUiThread();
         //TranslateAnimation animation = null;
         //Mit Switch Case
-        switch(spieler) {
+        switch (spieler) {
             case 0:
                 System.out.println("No Animation needed");
                 break;
 
             case 1:
                 anim2.setImageDrawable(card);
-                animation = new TranslateAnimation(0, (card_pl2.getX()-anim2.getX())+7,0 , card_pl2.getY()-anim2.getY());
+                animation = new TranslateAnimation(0, (card_pl2.getX() - anim2.getX()) + 7, 0, card_pl2.getY() - anim2.getY());
                 animation.setRepeatMode(0);
-                animation.setDuration(3000);
+                animation.setDuration(ANIMATION_DURATION);
+                animation.setStartOffset(animationOffset);
+                animationOffset += ANIMATION_DURATION;
                 animation.setFillAfter(true);
                 anim2.startAnimation(animation);
                 break;
 
             case 2:
                 anim3.setImageDrawable(card);
-                animation = new TranslateAnimation(0, (card_pl3.getX()-anim3.getX())+7,0 , card_pl3.getY()-anim3.getY());
+                animation = new TranslateAnimation(0, (card_pl3.getX() - anim3.getX()) + 7, 0, card_pl3.getY() - anim3.getY());
                 animation.setRepeatMode(0);
-                animation.setDuration(3000);
+                animation.setDuration(ANIMATION_DURATION);
+                animation.setStartOffset(animationOffset);
+                animationOffset += ANIMATION_DURATION;
                 animation.setFillAfter(true);
                 anim3.startAnimation(animation);
                 break;
 
             case 3:
                 anim4.setImageDrawable(card);
-                animation = new TranslateAnimation(0, (card_pl4.getX()-anim4.getX())+7,0 , card_pl4.getY()-anim4.getY());
+                animation = new TranslateAnimation(0, (card_pl4.getX() - anim4.getX()) + 7, 0, card_pl4.getY() - anim4.getY());
                 animation.setRepeatMode(0);
-                animation.setDuration(3000);
+                animation.setDuration(ANIMATION_DURATION);
+                animation.setStartOffset(animationOffset);
+                animationOffset += ANIMATION_DURATION;
                 animation.setFillAfter(true);
                 anim4.startAnimation(animation);
                 break;
         }
         //anim2.setBackground(null);
-       // anim3.setBackground(null);
+        // anim3.setBackground(null);
         //anim4.setBackground(null);
 //        anim2.setVisibility(View.INVISIBLE);
 //        anim3.setVisibility(View.INVISIBLE);
@@ -504,7 +512,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         // teilt die Karten aus, nachdem das PopupLog geschlossen wurde
         if (resultCode == RESULT_CANCELED) {
             neuAusteilen();
-        }else if(resultCode == RESULT_OK) {
+        } else if (resultCode == RESULT_OK) {
             System.out.println("RESULT_OK bei Tutorial");
         }
     }
@@ -588,6 +596,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
             //Atout zurücksetzen
             atout.setImageResource(R.drawable.empty);
+
+            animationOffset = 0;
         });
     }
 
@@ -600,29 +610,28 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     public synchronized void kartenAnzeigen(int spieler, Drawable card) {
-        new Thread(() -> {
-            switch (spieler) {
-                case 0:
-                    runOnUiThread(() -> destination.setImageDrawable(null));
-                case 1:
-                    //runOnUiThread(() -> card_pl2.setImageDrawable(card));
-                    runOnUiThread(() -> {
-                        if(card != null) {animation(1,card);}
-                        //System.out.println("Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-                    });
-                    break;
-                case 2:
-                    runOnUiThread(() -> {
-                        if(card != null) {animation(2,card);}
-                    });
-                    break;
-                case 3:
-                    runOnUiThread(() -> {
-                        if(card != null) {animation(3,card);}
-                    });
-                    break;
+        System.out.println("Ahhhhhhhhhhhhhhhhhhhhhh");
+        System.out.println("Card: " + card);
+        System.out.println("Spieler: " + spieler);
+        if (spieler == 0) {
+            runOnUiThread(() -> destination.setImageDrawable(null));
+        } else {
+            if (card != null) {
+                runOnUiThread(() -> animation(spieler, card));
+            } else {
+                switch (spieler) {
+                    case 1:
+                        card_pl2.setImageDrawable(null);
+                        break;
+                    case 2:
+                        card_pl3.setImageDrawable(null);
+                        break;
+                    case 3:
+                        card_pl4.setImageDrawable(null);
+                        break;
+                }
             }
-        }).start();
+        }
     }
 
     public void win(int playerNumber) {
