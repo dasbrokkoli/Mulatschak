@@ -74,9 +74,10 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
                 //Es können nicht 4 Karten getauscht werden
                 if (count != 4) {
 //                    startActivity(new Intent(Popup_kartentausch.this, Playground.class));
+
                     for(int i = 0; i < cardsToChange.size(); i++) {
                         changeCard(cardsToChange.get(i));
-                        cardsToChange.get(i).setVisibility(View.INVISIBLE);
+                        //cardsToChange.get(i).setVisibility(View.INVISIBLE);
                     }
                     synchronized (Playground.playThread) {
                         Playground.playThread.notify();
@@ -95,8 +96,14 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cardsToChange.get(count).setVisibility(View.VISIBLE);
-                cardsToChange.remove(count);
+                //Die Letzte Karte wird wieder sichtbar gemacht
+                System.out.println("******************************************************************************************************");
+                System.out.println("COUNT im On Klick Listener: " +count);
+                System.out.println("Listsize: " +cardsToChange.size());
+                System.out.println("******************************************************************************************************");
+                cardsToChange.get(count-1).setVisibility(View.VISIBLE);
+                //Und aus dem Array gelöscht
+                cardsToChange.remove(count-1);
                 count--;
                 //finish();
             }

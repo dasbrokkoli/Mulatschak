@@ -27,7 +27,7 @@
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@android:drawable/checkbox_on_background"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="188dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="148dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="28dp" android:id="@+id/undo"/>
     <ImageButton
             android:layout_width="wrap_content"
