@@ -20,7 +20,8 @@ public class PopupPauseMenu extends AppCompatActivity {
         cancelButton.setOnClickListener(v -> finish());
 
         Button quitButton = findViewById(R.id.quit_button);
-        quitButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), MainActivity.class)));
-
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        quitButton.setOnClickListener(v -> startActivity(intent));
     }
 }

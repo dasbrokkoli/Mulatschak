@@ -188,13 +188,13 @@ public class PopupStichansage extends AppCompatActivity {
         int userPoints = Algorithm.getPoints().get(0);
 
 
-        if(userPoints > 5) {
+        if (userPoints > 5) {
             if (countStitches > said) {
                 Collections.rotate(players, howMuch);
                 Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
                 //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
                 startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
-            }else{
+            } else {
                 //Unter 6 Punkten, darf der Spieler keine Stiche ansagen
                 Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich), highestStitches);
                 try {
@@ -268,24 +268,25 @@ public class PopupStichansage extends AppCompatActivity {
      * Gibt den Spieler, der keine KI ist zurück und setzt das jeweilige Attribut auf true oder false
      *
      * @param dealer der Dealer
-     * @return Nicht-KI Spieler
      */
-    private int getSpieler1(int dealer) {
+    private void getSpieler1(int dealer) {
         switch (dealer) {
             case 1:
                 players.get(0).setKi(false);
-                return 1;
+                return;
             case 2:
                 players.get(3).setKi(false);
-                return 4;
+                return;
             case 3:
                 players.get(2).setKi(false);
-                return 3;
+                return;
             case 4:
                 players.get(1).setKi(false);
-                return 2;
         }
-        return 0;
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
 }

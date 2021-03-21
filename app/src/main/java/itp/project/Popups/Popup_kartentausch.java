@@ -1,7 +1,6 @@
 package itp.project.Popups;
 
 import android.content.ClipData;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -140,4 +139,8 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
         Playground.getPlayer(1).changeCard(change, 5);
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
 }

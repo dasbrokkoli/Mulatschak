@@ -18,4 +18,9 @@ public class PopupWeli extends AppCompatActivity {
         eyeBtn = findViewById(R.id.eyeBtn);
         eyeBtn.setOnTouchListener(Listeners.newListener(this));
     }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
 }
