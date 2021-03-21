@@ -26,15 +26,18 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp" android:id="@+id/change"/>
     <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@android:drawable/checkbox_on_background"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="148dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="28dp" android:id="@+id/undo"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/undo" app:srcCompat="@drawable/ic_undo_24px"
+            app:layout_constraintStart_toEndOf="@+id/delete"
+            app:layout_constraintEnd_toStartOf="@+id/change" app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintBottom_toBottomOf="@+id/delete" android:layout_marginBottom="5dp"/>
     <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_menu_delete"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_delete"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
-            android:id="@+id/delete"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/delete" android:layout_marginBottom="16dp"/>
     <ImageView
             android:layout_width="100dp"
             android:layout_height="120sp"
