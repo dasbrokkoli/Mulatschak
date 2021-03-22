@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import itp.project.Enums.Colors;
 import itp.project.Mulatschak.Algorithm;
 import itp.project.Mulatschak.Listeners;
+import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
 public class Popup_atout extends AppCompatActivity {
@@ -81,22 +82,7 @@ public class Popup_atout extends AppCompatActivity {
      * Dafür wird das gespeicherte Atout der Klasse Playground verwendet.
      */
     private void showAtout() {
-        switch (Algorithm.getAtout()) {
-            case HERZ:
-                atout.setImageResource(R.drawable.herz);
-                break;
-            case BLATT:
-                atout.setImageResource(R.drawable.blatt);
-                break;
-            case EICHEL:
-                atout.setImageResource(R.drawable.eiche);
-                break;
-            case SCHELLE:
-                atout.setImageResource(R.drawable.schelle);
-                break;
-            default:
-                atout.setImageResource(R.drawable.empty);
-        }
+        Playground.setAtoutImg(atout);
     }
 
     @Override

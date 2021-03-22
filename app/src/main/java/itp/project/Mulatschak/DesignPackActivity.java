@@ -3,6 +3,7 @@ package itp.project.Mulatschak;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import itp.project.Popups.PopupDesign;
@@ -18,6 +19,9 @@ public class DesignPackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design_pack);
         setTitle(getResources().getString(R.string.design));
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         final String choosePackId = "pack";
         i1 = findViewById(R.id.pack1);

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.*;
 import androidx.annotation.Nullable;
@@ -164,22 +165,26 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             atout.setImageResource(R.drawable.empty);
         } else {
             //Das gespeicherte Atout wird angezeigt
-            switch (Algorithm.getAtout()) {
-                case HERZ:
-                    atout.setImageResource(R.drawable.herz);
-                    break;
-                case BLATT:
-                    atout.setImageResource(R.drawable.blatt);
-                    break;
-                case EICHEL:
-                    atout.setImageResource(R.drawable.eiche);
-                    break;
-                case SCHELLE:
-                    atout.setImageResource(R.drawable.schelle);
-                    break;
-                default:
-                    atout.setImageResource(R.drawable.empty);
-            }
+            setAtoutImg(atout);
+        }
+    }
+
+    public static void setAtoutImg(ImageView atout) {
+        switch (Algorithm.getAtout()) {
+            case HERZ:
+                atout.setImageResource(R.drawable.herz);
+                break;
+            case BLATT:
+                atout.setImageResource(R.drawable.blatt);
+                break;
+            case EICHEL:
+                atout.setImageResource(R.drawable.eiche);
+                break;
+            case SCHELLE:
+                atout.setImageResource(R.drawable.schelle);
+                break;
+            default:
+                atout.setImageResource(R.drawable.empty);
         }
     }
 
@@ -187,6 +192,10 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 //        alreadyLeft = false;
         //Spieler
         synchronized (this) {
