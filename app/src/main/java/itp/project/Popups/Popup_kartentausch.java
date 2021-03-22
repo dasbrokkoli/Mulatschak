@@ -11,10 +11,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import itp.project.Mulatschak.*;
 
+import java.util.ArrayList;
+
 public class Popup_kartentausch extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener {
 
     ImageView card1, card2, card3, card4, card5, delete, move, eyeBtn;
-    ImageButton change;
+    ImageButton change, undo;
+    ArrayList<ImageView> cardsToChange;
     int count;
 
 
@@ -23,6 +26,8 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_kartentausch);
+
+        cardsToChange = new ArrayList<>();
 
         count = 0;
         //zeigt das Atout an
@@ -67,7 +72,12 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
             public void onClick(View view) {
                 //Es können nicht 4 Karten getauscht werden
                 if (count != 4) {
-//                    startActivity(new Intent(Popup_kartentausch.this, Playground.class));
+                    //startActivity(new Intent(Popup_kartentausch.this, Playground.class));
+
+                    for(int i = 0; i < cardsToChange.size(); i++) {
+                        changeCard(cardsToChange.get(i));
+                        //cardsToChange.get(i).setVisibility(View.INVISIBLE);
+                    }
                     synchronized (Playground.playThread) {
                         Playground.playThread.notify();
                     }
@@ -79,6 +89,21 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
         //Löschen Button
         delete = findViewById(R.id.delete);
         delete.setOnDragListener(this);
+
+        //Zurück Button
+        undo = findViewById(R.id.undo);
+        undo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Die Letzte Karte wird wieder sichtbar gemacht
+                if(count > 0) {
+                    cardsToChange.get(count-1).setVisibility(View.VISIBLE);
+                    //Und aus dem Array gelöscht
+                    cardsToChange.remove(count-1);
+                    count--;
+                }
+            }
+        });
     }
 
     @Override
@@ -117,7 +142,8 @@ public class Popup_kartentausch extends AppCompatActivity implements View.OnTouc
                     //Karte in den Mistkübel gezogen
                     if (event.getResult()) {
                         move.setVisibility(View.INVISIBLE);//unsichtbar setzten
-                        changeCard(move);//Karte tauschen
+                        //changeCard(move);//Karte tauschen
+                        cardsToChange.add(count,move);
                         count++;
                     }
                 default:
