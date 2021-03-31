@@ -22,6 +22,9 @@ import itp.project.Popups.*;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable {
 //    public static boolean alreadyLeft;
@@ -47,6 +50,10 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     //View diffView = findViewById(R.layout.popup_difficulty);
     PopupWindow logWindow;
     ConstraintLayout constraintLayout;
+
+    //fuer play
+    final Lock lock = new ReentrantLock();
+    final Condition spielerSpielt = lock.newCondition();
     /**
      * Jeder Spieler spielt eine Karte.
      * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
@@ -344,7 +351,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     @Override
     public synchronized boolean onTouch(View v, MotionEvent event) {
         if (beginner != 0) {
-            Toast.makeText(this, R.string.playerNotDran, Toast.LENGTH_SHORT).show();
+            runOnUiThread(()->Toast.makeText(this, R.string.playerNotDran, Toast.LENGTH_SHORT).show());
             return false;
         }
         move = (ImageView) v;
@@ -367,16 +374,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 case DragEvent.ACTION_DROP:
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
+                    lock.lock();
                     //Karte in das Feld gezogen
-                    if (event.getResult()) {
-                        runOnUiThread(() -> destination.setImageDrawable(move.getDrawable()));
-                        move.setVisibility(View.INVISIBLE);
-                        cardsOnFloor.put(beginner, getCardfromView(move));
-                        playerCardNumber--;
-                        System.out.println(getCardfromView(move).getColor() + "" + getCardfromView(move).getValue());
-                        rotateBeginner();
-                        play();
-                    }
+                    runOnUiThread(() -> destination.setImageDrawable(move.getDrawable()));
+                    move.setVisibility(View.INVISIBLE);
+                    cardsOnFloor.put(beginner, getCardfromView(move));
+                    playerCardNumber--;
+                    System.out.println(getCardfromView(move).getColor() + "" + getCardfromView(move).getValue());
+                    rotateBeginner();
+                    spielerSpielt.signal();
+                    lock.unlock();
                 default:
                     break;
             }
@@ -399,66 +406,83 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     public synchronized void play() {
-        System.out.println("Play started");
-        while (cardsOnFloor.size() < 4) {
-            System.out.println("While: " + cardsOnFloor.size());
-            if (beginner == 0) {
-                System.out.println("Spieler ist dran");
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.playerDran, Toast.LENGTH_SHORT).show());
-                return;
+        System.out.println(Thread.currentThread().getName() + " handled play()");
+        new Thread(()-> {
+            System.out.println("Play started");
+            while (cardsOnFloor.size() < 4) {
+                System.out.println("While: " + cardsOnFloor.size());
+                if (beginner == 0) {
+                    lock.lock();
+                    System.out.println("Spieler ist dran");
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.playerDran, Toast.LENGTH_SHORT).show());
+                    try {
+                        System.out.println(Thread.currentThread().getName() + " is sleeping");
+                        spielerSpielt.await();
+                        System.out.println(Thread.currentThread().getName() + " is awake");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    lock.unlock();
+                    continue;
+                }
+                Card[] cArray = new Card[cardsOnFloor.size()];
+                cardsOnFloor.values().toArray(cArray);
+                cardsOnFloor.put(beginner, players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
+
+                /* hier kommt die Animation hin */
+
+                //animation(2,null);
+                // animation(3,null);
+                //animation(4,null);
+
+                kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
+                System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
+                rotateBeginner();
+                try {
+                    Thread.sleep(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            Card[] cArray = new Card[cardsOnFloor.size()];
-            cardsOnFloor.values().toArray(cArray);
-            cardsOnFloor.put(beginner, players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
-
-            /* hier kommt die Animation hin */
-
-            //animation(2,null);
-            // animation(3,null);
-            //animation(4,null);
-
-            kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
-            System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
-            rotateBeginner();
             try {
-                Thread.sleep(0);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
 
-        //Gewinner ermitteln
-        //Stich eintragen
-        this.whichCardWon();
+            //Gewinner ermitteln
+            //Stich eintragen
+            this.whichCardWon();
 
-        //Spielfeldkarten löschen
+            //Spielfeldkarten löschen
 
-        /* Hier wird die Animation zurück gesetzt*/
+            /* Hier wird die Animation zurück gesetzt*/
 
-        cardsOnFloor.clear();
-        kartenAnzeigen(0, null);
-        kartenAnzeigen(1, null);
-        kartenAnzeigen(2, null);
-        kartenAnzeigen(3, null);
+            cardsOnFloor.clear();
+            kartenAnzeigen(0, null);
+            kartenAnzeigen(1, null);
+            kartenAnzeigen(2, null);
+            kartenAnzeigen(3, null);
 
-        animationOffset = 0;
+            animationOffset = 0;
 
-        //Noch Karten vorhanden?
-        System.out.println("Playerkarten: " + playerCardNumber);
-        if (playerCardNumber == 0) {
-            System.out.println("Runde fertig");
-            //Gemachten Stiche löschen
-            gewonnene.clear();
-            try {
-                Algorithm.scoring(players);
-            } catch (WinException e) {
-                win(Integer.parseInt(e.getMessage()));
+            //Noch Karten vorhanden?
+            System.out.println("Playerkarten: " + playerCardNumber);
+            if (playerCardNumber == 0) {
+                System.out.println("Runde fertig");
+                //Gemachten Stiche löschen
+                gewonnene.clear();
+                try {
+                    Algorithm.scoring(players);
+                } catch (WinException e) {
+                    win(Integer.parseInt(e.getMessage()));
+                }
+                // Popup bei Gewinner anzeigen und Punkte anzeigen
+                startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
+                return;
             }
-            // Popup bei Gewinner anzeigen und Punkte anzeigen
-            startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
-            return;
-        }
-        play();
+            play();
+        }).start();
     }
 
     public synchronized void animation(int spieler, Drawable card) {
