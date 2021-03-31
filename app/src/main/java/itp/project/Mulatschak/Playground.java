@@ -36,6 +36,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     static final Algorithm[] players = new Algorithm[4];
     private static final BiMap<Integer, Card> cardsOnFloor = HashBiMap.create();
     public static Thread playThread;
+    public static Thread animationThread;
     public static List<Card> gewonnene;
     static ImageView move;
     static ImageView atout;
@@ -59,6 +60,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
      * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
      */
     public long TIME_TO_WAIT_AFTER_CARD = 1000;
+    public long TIME_TO_WAIT_AFTER_ROUND = 3000;
     ImageView anim2, anim3, anim4;
     //Gemachte Stiche Popup
     Button gemachteStiche;
@@ -445,7 +447,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 }
             }
             try {
-                Thread.sleep(5000);
+                animationThread.join();
+                Thread.sleep(TIME_TO_WAIT_AFTER_ROUND);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -488,55 +491,72 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public synchronized void animation(int spieler, Drawable card) {
         // Card card4, card1, card2, card3, card5
         // Destination destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
+        animationThread = new Thread(()->{
+                TranslateAnimation animation;
+                //runOnUiThread();
+                //TranslateAnimation animation = null;
+                //Mit Switch Case
+                switch (spieler) {
+                    case 0:
+                        System.out.println("No Animation needed");
+                        break;
 
-        TranslateAnimation animation;
-        //runOnUiThread();
-        //TranslateAnimation animation = null;
-        //Mit Switch Case
-        switch (spieler) {
-            case 0:
-                System.out.println("No Animation needed");
-                break;
+                    case 1:
+                        runOnUiThread(()-> anim2.setImageDrawable(card));
+                        animation = new TranslateAnimation(0, (card_pl2.getX() - anim2.getX()) + 7, 0, card_pl2.getY() - anim2.getY());
+                        animation.setRepeatMode(0);
+                        animation.setDuration(ANIMATION_DURATION);
+                        animation.setStartOffset(animationOffset);
+                        animationOffset += ANIMATION_DURATION;
+                        animation.setFillAfter(true);
+                        anim2.startAnimation(animation);
+                        try {
+                            Thread.sleep(animationOffset);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
 
-            case 1:
-                anim2.setImageDrawable(card);
-                animation = new TranslateAnimation(0, (card_pl2.getX() - anim2.getX()) + 7, 0, card_pl2.getY() - anim2.getY());
-                animation.setRepeatMode(0);
-                animation.setDuration(ANIMATION_DURATION);
-                animation.setStartOffset(animationOffset);
-                animationOffset += ANIMATION_DURATION;
-                animation.setFillAfter(true);
-                anim2.startAnimation(animation);
-                break;
+                    case 2:
+                        runOnUiThread(()-> anim3.setImageDrawable(card));
+                        animation = new TranslateAnimation(0, (card_pl3.getX() - anim3.getX()) + 7, 0, card_pl3.getY() - anim3.getY());
+                        animation.setRepeatMode(0);
+                        animation.setDuration(ANIMATION_DURATION);
+                        animation.setStartOffset(animationOffset);
+                        animationOffset += ANIMATION_DURATION;
+                        animation.setFillAfter(true);
+                        anim3.startAnimation(animation);
+                        try {
+                            Thread.sleep(animationOffset);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
 
-            case 2:
-                anim3.setImageDrawable(card);
-                animation = new TranslateAnimation(0, (card_pl3.getX() - anim3.getX()) + 7, 0, card_pl3.getY() - anim3.getY());
-                animation.setRepeatMode(0);
-                animation.setDuration(ANIMATION_DURATION);
-                animation.setStartOffset(animationOffset);
-                animationOffset += ANIMATION_DURATION;
-                animation.setFillAfter(true);
-                anim3.startAnimation(animation);
-                break;
-
-            case 3:
-                anim4.setImageDrawable(card);
-                animation = new TranslateAnimation(0, (card_pl4.getX() - anim4.getX()) + 7, 0, card_pl4.getY() - anim4.getY());
-                animation.setRepeatMode(0);
-                animation.setDuration(ANIMATION_DURATION);
-                animation.setStartOffset(animationOffset);
-                animationOffset += ANIMATION_DURATION;
-                animation.setFillAfter(true);
-                anim4.startAnimation(animation);
-                break;
-        }
-        //anim2.setBackground(null);
-        // anim3.setBackground(null);
-        //anim4.setBackground(null);
+                    case 3:
+                        runOnUiThread(()-> anim4.setImageDrawable(card));
+                        animation = new TranslateAnimation(0, (card_pl4.getX() - anim4.getX()) + 7, 0, card_pl4.getY() - anim4.getY());
+                        animation.setRepeatMode(0);
+                        animation.setDuration(ANIMATION_DURATION);
+                        animation.setStartOffset(animationOffset);
+                        animationOffset += ANIMATION_DURATION;
+                        animation.setFillAfter(true);
+                        anim4.startAnimation(animation);
+                        try {
+                            Thread.sleep(animationOffset);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+                //anim2.setBackground(null);
+                // anim3.setBackground(null);
+                //anim4.setBackground(null);
 //        anim2.setVisibility(View.INVISIBLE);
 //        anim3.setVisibility(View.INVISIBLE);
 //        anim4.setVisibility(View.INVISIBLE);
+        });
+        animationThread.start();
     }
 
     @Override
