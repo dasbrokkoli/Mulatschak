@@ -413,11 +413,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
             /* hier kommt die Animation hin */
 
-            //animation(2,null);
-            // animation(3,null);
-            //animation(4,null);
-
             kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
+            //System.out.println("Ich habe Karte: "+ cardsOnFloor.get(beginner).getPicture().toString() );
             System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
             rotateBeginner();
             try {
@@ -434,12 +431,13 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         //Spielfeldkarten löschen
 
         /* Hier wird die Animation zurück gesetzt*/
-
+        //System.out.println("Karten löschen xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         cardsOnFloor.clear();
         kartenAnzeigen(0, null);
         kartenAnzeigen(1, null);
         kartenAnzeigen(2, null);
         kartenAnzeigen(3, null);
+        //System.out.println("Karten löschen Ende xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 
         animationOffset = 0;
 
@@ -507,12 +505,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 anim4.startAnimation(animation);
                 break;
         }
-        //anim2.setBackground(null);
-        // anim3.setBackground(null);
-        //anim4.setBackground(null);
-//        anim2.setVisibility(View.INVISIBLE);
-//        anim3.setVisibility(View.INVISIBLE);
-//        anim4.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -625,21 +617,33 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         if (spieler == 0) {
             runOnUiThread(() -> destination.setImageDrawable(null));
         } else {
-            if (card != null) {
-                runOnUiThread(() -> animation(spieler, card));
-            } else {
-                switch (spieler) {
-                    case 1:
-                        card_pl2.setImageDrawable(null);
-                        break;
-                    case 2:
-                        card_pl3.setImageDrawable(null);
-                        break;
-                    case 3:
-                        card_pl4.setImageDrawable(null);
-                        break;
+            runOnUiThread (new Thread(new Runnable() {
+                public void run() {
+                    if (card != null) {
+                        animation(spieler, card);
+                        //runOnUiThread(() -> animation(spieler, card));
+                    } else {
+                        switch (spieler) {
+                            case 1:
+                                //cardsOnFloor.clear();
+                                card_pl2.setImageDrawable(null);
+                                anim2.setImageDrawable(null);
+                                break;
+                            case 2:
+                                //cardsOnFloor.clear();
+                                card_pl3.setImageDrawable(null);
+                                anim3.setImageDrawable(null);
+                                break;
+                            case 3:
+                                //cardsOnFloor.clear();
+                                card_pl4.setImageDrawable(null);
+                                anim4.setImageDrawable(null);
+                                break;
+                        }
+                    }
                 }
-            }
+            }));
+
         }
     }
 
