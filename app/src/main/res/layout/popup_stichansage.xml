@@ -26,7 +26,7 @@
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/stich2"
             app:layout_constraintHorizontal_chainStyle="packed"/>
     <TextView
-            android:text="0"
+            android:text="@string/zero"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/highest"

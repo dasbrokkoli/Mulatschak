@@ -19,21 +19,17 @@ import java.util.List;
 public class PopupLog extends AppCompatActivity {
     private final TextView[] tvNames = new TextView[4];
     private final TextView[] tvPoints = new TextView[4];
-    private LinearLayout outerLayout;
-    private FlexboxLayout nameLayout;
-    private FlexboxLayout pointLayout;
-    private PopupName popName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_log);
-        outerLayout = findViewById(R.id.linlayout);
-        nameLayout = new FlexboxLayout(outerLayout.getContext());
-        pointLayout = new FlexboxLayout(outerLayout.getContext());
+        LinearLayout outerLayout = findViewById(R.id.linlayout);
+        FlexboxLayout nameLayout = new FlexboxLayout(outerLayout.getContext());
+        FlexboxLayout pointLayout = new FlexboxLayout(outerLayout.getContext());
         outerLayout.addView(nameLayout);
         outerLayout.addView(pointLayout);
-        popName = new PopupName();
+        PopupName popName = new PopupName();
 
         for (int i = 0; i < tvNames.length; i++) {
             tvNames[i] = new TextView(this);

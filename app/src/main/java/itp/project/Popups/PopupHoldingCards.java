@@ -1,18 +1,16 @@
 package itp.project.Popups;
 
+import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
-public class Popup_holdingCards extends AppCompatActivity {
+public class PopupHoldingCards extends AppCompatActivity {
 
-    ImageView card1,card2,card3,card4,card5;
+    ImageView card1, card2, card3, card4, card5;
     ImageButton close;
 
     @Override
@@ -45,12 +43,9 @@ public class Popup_holdingCards extends AppCompatActivity {
 
         //Close Button
         close = findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Activity schließen
-                finish();
-            }
+        close.setOnClickListener(view -> {
+            //Activity schließen
+            finish();
         });
     }
 }

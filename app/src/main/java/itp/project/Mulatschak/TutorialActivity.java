@@ -3,12 +3,13 @@ package itp.project.Mulatschak;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import itp.project.Popups.PopupTutorialVideo;
+
+import java.util.Objects;
 
 public class TutorialActivity extends AppCompatActivity {
     Bundle extras;
@@ -30,15 +31,12 @@ public class TutorialActivity extends AppCompatActivity {
         setBoolean();
 
         Button tutorial = findViewById(R.id.video_button);
-        tutorial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PopupTutorialVideo.class);
-                startActivity(intent);
-            }
+        tutorial.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), PopupTutorialVideo.class);
+            startActivity(intent);
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Button zurueck = findViewById(android.R.id.home);
 
 
@@ -74,20 +72,18 @@ public class TutorialActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                if (startseite) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    closeLog();
-                    //Intent intent = new Intent(getApplicationContext(), Playground.class);
-                    //startActivity(intent);
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            if (startseite) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            } else {
+                closeLog();
+                //Intent intent = new Intent(getApplicationContext(), Playground.class);
+                //startActivity(intent);
+            }
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

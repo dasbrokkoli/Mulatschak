@@ -27,7 +27,7 @@ public class PopupDesign extends AppCompatActivity {
         switch (chosenPack) {
             case R.id.pack1:
                 textView.setText("Mulatschak");
-                card.setForeground(getDrawable(R.drawable.hintergrund));
+                card.setForeground(getDrawable(R.drawable.card_standard_backside));
                 break;
             case R.id.pack2:
                 textView.setText("Red");

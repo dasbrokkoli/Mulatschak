@@ -4,9 +4,8 @@ import itp.project.Enums.Colors;
 import itp.project.Enums.Difficulty;
 import itp.project.Enums.Values;
 import itp.project.Exceptions.TwoSameHighestTricksException;
-import itp.project.Exceptions.WhatTheFuckHowException;
 import itp.project.Exceptions.WinException;
-import itp.project.Popups.Popup_atout;
+import itp.project.Popups.PopupAtout;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -151,7 +150,7 @@ public class Algorithm {
                     System.out.println("Stiche erreicht " + madeStitches + " => " + saidStitches);
                     diffPoints += madeStitches;
                 }
-            } else if (i == 0 && Popup_atout.alreadyLeft) {
+            } else if (i == 0 && PopupAtout.alreadyLeft) {
                 System.out.println("Spieler ist heimgegangen");
                 diffPoints -= 1; //Wenn der Spieler ausgestiegen ist, erhoeht sich der Punktestand um 1
 
@@ -325,7 +324,7 @@ public class Algorithm {
      *
      * @return Atoutfarbe
      */
-    public synchronized Colors getAtoutFromPlayers() throws WhatTheFuckHowException {
+    public synchronized Colors getAtoutFromPlayers() {
         int anzahlHerz = 0;
         int anzahlSchelle = 0;
         int anzahlBlatt = 0;

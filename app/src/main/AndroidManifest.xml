@@ -21,7 +21,7 @@
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
-        <activity android:name="itp.project.Popups.Popup_holdingCards"
+        <activity android:name="itp.project.Popups.PopupHoldingCards"
                   android:screenOrientation="landscape"
                   android:theme="@style/AppTheme.Popup">
         </activity>
@@ -46,17 +46,17 @@
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name="itp.project.Popups.Popup_kartentausch"
+                android:name="itp.project.Popups.PopupKartentausch"
                 android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name="itp.project.Popups.Popup_selectAtout"
+                android:name="itp.project.Popups.PopupSelectAtout"
                 android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name="itp.project.Popups.Popup_atout"
+                android:name="itp.project.Popups.PopupAtout"
                 android:screenOrientation="sensorLandscape"
                 android:theme="@style/AppTheme.Popup">
         </activity>

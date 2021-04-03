@@ -2,7 +2,6 @@ package itp.project.Popups;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,11 +16,10 @@ import itp.project.Mulatschak.R;
 public class PopupDifficulty extends AppCompatActivity {
 
     /**
-     * Ersellt ein Window.
-     * Leitet bei Button Click auf "next" zum PopUpName weiter.
-     * Leitet aber nur weiter, wenn ein RadiButton ausgewaeht wurde, ansosnten passiert nichts.
+     * Erstellt ein Window. Leitet bei Button Click auf "next" zum PopUpName weiter. Leitet aber nur weiter, wenn ein
+     * RadioButton ausgewaeht wurde, ansosnten passiert nichts.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState saved instance state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +30,14 @@ public class PopupDifficulty extends AppCompatActivity {
 
         //Weiterleitung zu PopUpName
         Button showNamePopup = findViewById(R.id.showNamePopup);
-        showNamePopup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            //Klick auf den "next"-Button
-            public void onClick(View view) {
-                //Leitet nur weiter, wenn was ausgewaehlt wurde
-                RadioGroup group = findViewById(R.id.radioGroup2);
-                if (group.getCheckedRadioButtonId() != -1) {
-                    Algorithm.setDifficulty(getDifficulty());
-                    startActivity(new Intent(PopupDifficulty.this, PopupName.class));
+        //Klick auf den "next"-Button
+        showNamePopup.setOnClickListener(view -> {
+            //Leitet nur weiter, wenn was ausgewaehlt wurde
+            RadioGroup group = findViewById(R.id.radioGroup2);
+            if (group.getCheckedRadioButtonId() != -1) {
+                Algorithm.setDifficulty(getDifficulty());
+                startActivity(new Intent(PopupDifficulty.this, PopupName.class));
 
-                }
             }
         });
 

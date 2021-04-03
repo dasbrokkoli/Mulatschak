@@ -2,7 +2,6 @@ package itp.project.Popups;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -13,7 +12,7 @@ import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
-public class Popup_atout extends AppCompatActivity {
+public class PopupAtout extends AppCompatActivity {
     public static boolean alreadyLeft = false;
     ImageView atout, eyeBtn;
     Button mit, aus;
@@ -34,38 +33,32 @@ public class Popup_atout extends AppCompatActivity {
 
         //Button für mitgehen
         mit = findViewById(R.id.mit);
-        mit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alreadyLeft = false;
-                //Zu Kartentausch weiterleiten
-                startActivity(new Intent(Popup_atout.this, Popup_kartentausch.class));
-                //Popup schließen
-                finish();
-            }
+        mit.setOnClickListener(view -> {
+            alreadyLeft = false;
+            //Zu Kartentausch weiterleiten
+            startActivity(new Intent(PopupAtout.this, PopupKartentausch.class));
+            //Popup schließen
+            finish();
         });
 
         //Button für aussteigen - eine Neue runde wird angesagt
         aus = findViewById(R.id.aus);
-        aus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //die Punkte des Spielers
-                int userPoints = Algorithm.getPoints().get(0);
+        aus.setOnClickListener(view -> {
+            //die Punkte des Spielers
+            int userPoints = Algorithm.getPoints().get(0);
 
-                //Unter 4 Punkten darf der Spieler nicht aussteigen
-                if(userPoints < 4) {
-                    Toast t = Toast.makeText
-                            (getApplicationContext(),
-                                    "Sie haben unter 3 Punkte und dürfen nicht aussteigen!",
-                                    Toast.LENGTH_LONG);
-                    t.show();
-                }else {
-                    //Neues Spiel (fängt mit stichansage an)
-                    alreadyLeft = true;
-                   //startActivity(new Intent(Popup_atout.this, Playground.class));
-                    finish();
-                }
+            //Unter 4 Punkten darf der Spieler nicht aussteigen
+            if (userPoints < 4) {
+                Toast t = Toast.makeText
+                        (getApplicationContext(),
+                                "Sie haben unter 3 Punkte und dürfen nicht aussteigen!",
+                                Toast.LENGTH_LONG);
+                t.show();
+            } else {
+                //Neues Spiel (fängt mit stichansage an)
+                alreadyLeft = true;
+                //startActivity(new Intent(PopupAtout.this, Playground.class));
+                finish();
             }
         });
 

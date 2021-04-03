@@ -2,7 +2,6 @@ package itp.project.Mulatschak;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,31 +28,22 @@ public class DesignPackActivity extends AppCompatActivity {
         i3 = findViewById(R.id.pack3);
 
         // für das gewählte Popup wird die Id mitgegeben
-        i1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PopupDesign.class);
-                intent.putExtra(choosePackId, i1.getId());
-                startActivity(intent);
-            }
+        i1.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), PopupDesign.class);
+            intent.putExtra(choosePackId, i1.getId());
+            startActivity(intent);
         });
 
-        i2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PopupDesign.class);
-                intent.putExtra(choosePackId, i2.getId());
-                startActivity(intent);
-            }
+        i2.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), PopupDesign.class);
+            intent.putExtra(choosePackId, i2.getId());
+            startActivity(intent);
         });
 
-        i3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PopupDesign.class);
-                intent.putExtra(choosePackId, i3.getId());
-                startActivity(intent);
-            }
+        i3.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), PopupDesign.class);
+            intent.putExtra(choosePackId, i3.getId());
+            startActivity(intent);
         });
     }
 }

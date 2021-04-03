@@ -2,12 +2,10 @@ package itp.project.Popups;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import itp.project.Exceptions.WhatTheFuckHowException;
 import itp.project.Mulatschak.Algorithm;
 import itp.project.Mulatschak.Listeners;
 import itp.project.Mulatschak.Playground;
@@ -106,16 +104,13 @@ public class PopupStichansage extends AppCompatActivity {
         eyeBtn.setOnClickListener(Listeners.newOnClickListener(this));
         //Button Muli
         muli = findViewById(R.id.muli);
-        muli.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                countStitches = 5;
-                Collections.rotate(players, howMuch);
-                Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
-                //Atout wählen
-                startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
-                finish();
-            }
+        muli.setOnClickListener(view -> {
+            countStitches = 5;
+            Collections.rotate(players, howMuch);
+            Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
+            //Atout wählen
+            startActivity(new Intent(PopupStichansage.this, PopupSelectAtout.class));
+            finish();
         });
 
         //Bereits angesagte Stiche
@@ -130,52 +125,37 @@ public class PopupStichansage extends AppCompatActivity {
 
         //Skip Button
         skip = findViewById(R.id.skip);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                countStitches = 0;
-                nextPopup();
-            }
+        skip.setOnClickListener(view -> {
+            countStitches = 0;
+            nextPopup();
         });
 
         //Ein Stich
         one = findViewById(R.id.stich1);
-        one.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                countStitches = 1;
-                nextPopup();
-            }
+        one.setOnClickListener(view -> {
+            countStitches = 1;
+            nextPopup();
         });
 
         //Zwei Stiche
         two = findViewById(R.id.stich2);
-        two.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                countStitches = 2;
-                nextPopup();
-            }
+        two.setOnClickListener(view -> {
+            countStitches = 2;
+            nextPopup();
         });
 
         //Drei Stiche
         three = findViewById(R.id.stich3);
-        three.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                countStitches = 3;
-                nextPopup();
-            }
+        three.setOnClickListener(view -> {
+            countStitches = 3;
+            nextPopup();
         });
 
         //Vier Stiche
         four = findViewById(R.id.stich4);
-        four.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                countStitches = 4;
-                nextPopup();
-            }
+        four.setOnClickListener(view -> {
+            countStitches = 4;
+            nextPopup();
         });
     }
 
@@ -193,26 +173,18 @@ public class PopupStichansage extends AppCompatActivity {
                 Collections.rotate(players, howMuch);
                 Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
                 //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
-                startActivity(new Intent(PopupStichansage.this, Popup_selectAtout.class));
+                startActivity(new Intent(PopupStichansage.this, PopupSelectAtout.class));
             } else {
                 //Unter 6 Punkten, darf der Spieler keine Stiche ansagen
                 Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich), highestStitches);
-                try {
-                    Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
-                } catch (WhatTheFuckHowException e) {
-                    e.printStackTrace();
-                }
-                startActivity(new Intent(PopupStichansage.this, Popup_atout.class));
+                Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
+                startActivity(new Intent(PopupStichansage.this, PopupAtout.class));
             }
             //Wenn der Spieler weniger od gleich als 5 Punkte hat, kann er keine Stiche mehr ansagen
         } else {
             Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich), highestStitches);
-            try {
-                Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
-            } catch (WhatTheFuckHowException e) {
-                e.printStackTrace();
-            }
-            startActivity(new Intent(PopupStichansage.this, Popup_atout.class));
+            Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
+            startActivity(new Intent(PopupStichansage.this, PopupAtout.class));
         }
         finish();
     }

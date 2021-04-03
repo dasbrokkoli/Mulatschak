@@ -48,8 +48,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     PopupWindow logWindow;
     ConstraintLayout constraintLayout;
     /**
-     * Jeder Spieler spielt eine Karte.
-     * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
+     * Jeder Spieler spielt eine Karte. Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und
+     * wieder die Stichansage aufgerufen.
      */
     public long TIME_TO_WAIT_AFTER_CARD = 1000;
     ImageView anim2, anim3, anim4;
@@ -70,8 +70,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     /**
-     * Die gemachten Stiche sollen im Playground angezeigt werden.
-     * Dazu wird bei dem Spieler der gestochen hat die neue Stichanzahl angezeigt.
+     * Die gemachten Stiche sollen im Playground angezeigt werden. Dazu wird bei dem Spieler der gestochen hat die neue
+     * Stichanzahl angezeigt.
      *
      * @param player - Spieler der den Zug gewonnen hat
      * @param count  - neue Stichanzahl des Spielers
@@ -156,8 +156,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     /**
-     * Im dafür vorgesehenen Feld wird das geählte Atout angezeigt.
-     * Das Atout ist in der Konstante gespeichert welches angezeigt werden soll.
+     * Im dafür vorgesehenen Feld wird das geählte Atout angezeigt. Das Atout ist in der Konstante gespeichert welches
+     * angezeigt werden soll.
      */
     public synchronized static void showAtout() {
         //Wenn noch kein Atout gespeichert ist wird ein leeres Feld angezeigt
@@ -188,6 +188,37 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
     }
 
+    /**
+     * Neue runde die Karten werden neu ausgeteilt. Jeder Spieler bekommt einen neuen Algorithmus
+     */
+    public synchronized static void austeilen() {
+        new Thread(() -> {
+            synchronized (MainActivity.getCards()) {
+                HoldingCards.setAllCards(MainActivity.getCards());
+                players[0] = new Algorithm(MainActivity.getCards(), 1);
+                playerCardNumber = 5;
+                players[1] = new Algorithm(MainActivity.getCards(), 2);
+                players[2] = new Algorithm(MainActivity.getCards(), 3);
+                players[3] = new Algorithm(MainActivity.getCards(), 4);
+            }
+        }).start();
+    }
+
+    /**
+     * der Name des spielers wird ausgegebn.
+     *
+     * @param pl - Spielerid
+     */
+    public synchronized void showPlayersName(int pl) {
+        //Wenn kein Spielername gepeichert ist
+        if (PopupName.namen.get(pl - 1).equals("")) {
+            Toast.makeText(this, "Player" + pl, Toast.LENGTH_SHORT).show();
+            //Wenn ein Spielername gespeichert ist
+        } else {
+            Toast.makeText(this, PopupName.namen.get(pl - 1), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,16 +244,13 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
         //Tutorial Button
         View help = findViewById(R.id.help);
-        help.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String start = "start";
-                Intent intent = new Intent(Playground.this, TutorialActivity.class);
-                intent.putExtra(start, false);
-                startActivityForResult(intent, 0);
-                //startActivity(new Intent(Playground.this, TutorialActivity.class));
-                //startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
-                return;
-            }
+        help.setOnClickListener(v -> {
+            String start = "start";
+            Intent intent = new Intent(Playground.this, TutorialActivity.class);
+            intent.putExtra(start, false);
+            startActivityForResult(intent, 0);
+            //startActivity(new Intent(Playground.this, TutorialActivity.class));
+            //startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
         });
 
         //Fuer die Schwierigkeit
@@ -286,63 +314,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
         //Spielernamen anzeigen wenn auf die Katren gedrückt wird
         pl2 = findViewById(R.id.player4);
-        pl2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPlayersName(2);
-
-            }
-        });
+        pl2.setOnClickListener(view -> showPlayersName(2));
         pl3 = findViewById(R.id.player2);
-        pl3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPlayersName(3);
-            }
-        });
+        pl3.setOnClickListener(view -> showPlayersName(3));
         pl4 = findViewById(R.id.player3);
-        pl4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPlayersName(4);
-            }
-        });
-    }
-
-    /**
-     * der Name des spielers wird ausgegebn.
-     *
-     * @param pl - Spielerid
-     */
-    public synchronized void showPlayersName(int pl) {
-        //Wenn kein Spielername gepeichert ist
-        if (PopupName.namen.get(pl - 1).equals("")) {
-            Toast.makeText(this, "Player" + pl, Toast.LENGTH_SHORT).show();
-            //Wenn ein Spielername gespeichert ist
-        } else {
-            Toast.makeText(this, PopupName.namen.get(pl - 1), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Neue runde die Karten werden neu ausgeteilt.
-     * Jeder Spieler bekommt einen neuen Algorithmus
-     */
-    public synchronized static void austeilen() {
-        new Thread(() -> {
-            synchronized (MainActivity.getCards()) {
-                HoldingCards.setAllCards(MainActivity.getCards());
-                players[0] = new Algorithm(MainActivity.getCards(), 1);
-                playerCardNumber = 5;
-                players[1] = new Algorithm(MainActivity.getCards(), 2);
-                players[2] = new Algorithm(MainActivity.getCards(), 3);
-                players[3] = new Algorithm(MainActivity.getCards(), 4);
-            }
-        }).start();
+        pl4.setOnClickListener(view -> showPlayersName(4));
     }
 
     @Override
     public synchronized boolean onTouch(View v, MotionEvent event) {
+        v.performClick();
         if (beginner != 0) {
             Toast.makeText(this, R.string.playerNotDran, Toast.LENGTH_SHORT).show();
             return false;
@@ -350,35 +331,23 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         move = (ImageView) v;
         View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
         ClipData data = ClipData.newPlainText("", "");
-        v.startDrag(data, shadowBuilder, v, 0);
+        v.startDragAndDrop(data, shadowBuilder, v, 0);
         return true;
     }
 
     @Override
     public synchronized boolean onDrag(View v, DragEvent event) {
         new Thread(() -> {
-            switch (event.getAction()) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    break;
-                case DragEvent.ACTION_DRAG_ENTERED:
-                    break;
-                case DragEvent.ACTION_DRAG_EXITED:
-                    break;
-                case DragEvent.ACTION_DROP:
-                    break;
-                case DragEvent.ACTION_DRAG_ENDED:
-                    //Karte in das Feld gezogen
-                    if (event.getResult()) {
-                        runOnUiThread(() -> destination.setImageDrawable(move.getDrawable()));
-                        move.setVisibility(View.INVISIBLE);
-                        cardsOnFloor.put(beginner, getCardfromView(move));
-                        playerCardNumber--;
-                        System.out.println(getCardfromView(move).getColor() + "" + getCardfromView(move).getValue());
-                        rotateBeginner();
-                        play();
-                    }
-                default:
-                    break;
+            if (event.getAction() == DragEvent.ACTION_DRAG_ENDED) {//Karte in das Feld gezogen
+                if (event.getResult()) {
+                    runOnUiThread(() -> destination.setImageDrawable(move.getDrawable()));
+                    move.setVisibility(View.INVISIBLE);
+                    cardsOnFloor.put(beginner, getCardfromView(move));
+                    playerCardNumber--;
+                    System.out.println(getCardfromView(move).getColor() + "" + getCardfromView(move).getValue());
+                    rotateBeginner();
+                    play();
+                }
             }
         }).start();
         return true;
@@ -531,11 +500,11 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     protected void onResume() {
         super.onResume();
         //Neu austeilen wenn ausgestiegen
-        if (Popup_atout.alreadyLeft) {
+        if (PopupAtout.alreadyLeft) {
             neuAusteilen();
         }
 
-        //Das Atout wird angezeigt -> wird im Popup_kartentausch schon angezeigt
+        //Das Atout wird angezeigt -> wird im PopupKartentausch schon angezeigt
         //showAtout();
         anzeigen();
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -25,11 +24,10 @@ public class PopupName extends AppCompatActivity {
     public static List<String> namen;
 
     /**
-     * Estellt ein Window.
-     * Leitet bei Button Click auf die Spielfläche weiter.
-     * Dabei ist es egal, ob Namen angegeben wurden.
+     * Estellt ein Window. Leitet bei Button Click auf die Spielfläche weiter. Dabei ist es egal, ob Namen angegeben
+     * wurden.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState saved instance state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +38,9 @@ public class PopupName extends AppCompatActivity {
 
         //Leitet zum Playground weiter
         play = findViewById(R.id.play);
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new Thread(() -> {
-                    namen = getNames();
-                }).start();
-                startActivity(new Intent(PopupName.this, Playground.class));
-            }
+        play.setOnClickListener(view -> {
+            new Thread(() -> namen = getNames()).start();
+            startActivity(new Intent(PopupName.this, Playground.class));
         });
     }
 
@@ -57,7 +50,7 @@ public class PopupName extends AppCompatActivity {
      * @return names
      */
     public synchronized List<String> getNames() {
-        List<String> names = new ArrayList();
+        List<String> names = new ArrayList<>();
         String tmp;
         EditText ed;
 

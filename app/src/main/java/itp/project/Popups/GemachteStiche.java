@@ -1,7 +1,6 @@
 package itp.project.Popups;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,8 +10,8 @@ import itp.project.Mulatschak.Playground;
 import itp.project.Mulatschak.R;
 
 /**
- * Es werden alle bereits gemachten Stiche angezeigt.
- * Die Stiche werden der Reihe nach angezeigt und können mit den Buttons next und back durchlaufen werden.
+ * Es werden alle bereits gemachten Stiche angezeigt. Die Stiche werden der Reihe nach angezeigt und können mit den
+ * Buttons next und back durchlaufen werden.
  */
 public class GemachteStiche extends AppCompatActivity {
 
@@ -36,30 +35,19 @@ public class GemachteStiche extends AppCompatActivity {
 
         //Buttons
         back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                back();
-            }
-        });
+        back.setOnClickListener(view -> back());
 
         next = findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                next();
-            }
-        });
+        next.setOnClickListener(view -> next());
 
         //Anzahl wird die Anzahl der gemachten Stiche angezeigt
         max = Integer.parseInt((String) Playground.stitches[0].getText());
 
         //Wenn kein Stich vorhanden
-        if(Playground.gewonnene.isEmpty()||max ==0){
+        if (Playground.gewonnene.isEmpty() || max == 0) {
             Toast.makeText(this, "Noch keine gemachten Stiche", Toast.LENGTH_SHORT).show();
-
             //Wenn bereits Stiche vorhanden sind
-        }else {
+        } else {
 
             //Die Karten sind im Playground in einer Liste gespeichert die erste Seite
 
@@ -71,9 +59,7 @@ public class GemachteStiche extends AppCompatActivity {
             //Akt Zeigt den Stich an der gezeigt wird.
             //Beginnt bei 1
             seite = 1;
-
-
-            seiteAnzeiigen();
+            seiteAnzeigen();
         }
     }
 
@@ -84,13 +70,17 @@ public class GemachteStiche extends AppCompatActivity {
         if (seite < max) {
             seite++;
             //Die neuen Karten anzeigen
-            int beginn = (seite-1)*4;
-            card1.setImageDrawable(Playground.gewonnene.get(beginn).getPicture());
-            card2.setImageDrawable(Playground.gewonnene.get(beginn+1).getPicture());
-            card3.setImageDrawable(Playground.gewonnene.get(beginn+2).getPicture());
-            card4.setImageDrawable(Playground.gewonnene.get(beginn+3).getPicture());
-            seiteAnzeiigen();
+            showWonCards();
         }
+    }
+
+    private void showWonCards() {
+        int beginn = (seite - 1) * 4;
+        card1.setImageDrawable(Playground.gewonnene.get(beginn).getPicture());
+        card2.setImageDrawable(Playground.gewonnene.get(beginn + 1).getPicture());
+        card3.setImageDrawable(Playground.gewonnene.get(beginn + 2).getPicture());
+        card4.setImageDrawable(Playground.gewonnene.get(beginn + 3).getPicture());
+        seiteAnzeigen();
     }
 
     /**
@@ -100,19 +90,14 @@ public class GemachteStiche extends AppCompatActivity {
         if (seite > 1) {
             seite--;
             //Die neuen Karten anzeigen
-            int beginn = (seite-1)*4;
-            card1.setImageDrawable(Playground.gewonnene.get(beginn).getPicture());
-            card2.setImageDrawable(Playground.gewonnene.get(beginn+1).getPicture());
-            card3.setImageDrawable(Playground.gewonnene.get(beginn+2).getPicture());
-            card4.setImageDrawable(Playground.gewonnene.get(beginn+3).getPicture());
-            seiteAnzeiigen();
+            showWonCards();
         }
     }
 
     /**
-     * Zeigt an welcher der bereits gemachten Stiche angezeig wird.
+     * Zeigt an welcher der bereits gemachten Stiche angezeigt wird.
      */
-    public void seiteAnzeiigen() {
+    public void seiteAnzeigen() {
         akt.setText(seite + "/" + max);
     }
 }
