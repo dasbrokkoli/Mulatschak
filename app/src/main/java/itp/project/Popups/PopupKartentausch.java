@@ -40,23 +40,23 @@ public class PopupKartentausch extends AppCompatActivity implements View.OnTouch
         //Karten des Spielers anzeigen
         card1 = findViewById(R.id.card1);
         card1.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(0).getPicture());
-        System.out.println("card1: " + Playground.getCardfromView(card1).getColor());
+        System.out.println("card1: " + Playground.getCardFromView(card1).getColor());
 
         card2 = findViewById(R.id.card2);
         card2.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(1).getPicture());
-        System.out.println("card2: " + Playground.getCardfromView(card2).getColor());
+        System.out.println("card2: " + Playground.getCardFromView(card2).getColor());
 
         card3 = findViewById(R.id.card3);
         card3.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(2).getPicture());
-        System.out.println("card3: " + Playground.getCardfromView(card3).getColor());
+        System.out.println("card3: " + Playground.getCardFromView(card3).getColor());
 
         card4 = findViewById(R.id.card4);
         card4.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(3).getPicture());
-        System.out.println("card4: " + Playground.getCardfromView(card4).getColor());
+        System.out.println("card4: " + Playground.getCardFromView(card4).getColor());
 
         card5 = findViewById(R.id.card5);
         card5.setImageDrawable(Playground.getPlayer(1).getHoldingCards().get(4).getPicture());
-        System.out.println("card5: " + Playground.getCardfromView(card5).getColor());
+        System.out.println("card5: " + Playground.getCardFromView(card5).getColor());
 
         card1.setOnTouchListener(this);
         card2.setOnTouchListener(this);
@@ -143,7 +143,7 @@ public class PopupKartentausch extends AppCompatActivity implements View.OnTouch
      * @param v - Karte
      */
     public void changeCard(ImageView v) {
-        Card change = Playground.getCardfromView(v);
+        Card change = Playground.getCardFromView(v);
         Playground.getPlayer(1).changeCard(change, 5);
     }
 

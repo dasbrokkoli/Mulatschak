@@ -24,10 +24,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable {
-//    public static boolean alreadyLeft;
-
     //Gemachte Stiche
-    //public static TextView stitches_pl1, stitches_pl2, stitches_pl3, stitches_pl4;
     public static final TextView[] stitches = new TextView[4];
     //Algorithmen für Spieler
     static final Algorithm[] players = new Algorithm[4];
@@ -44,21 +41,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     //LogPopup
     Button showLogBtn;
     ImageButton closeLogView;
-    //View diffView = findViewById(R.layout.popup_difficulty);
     PopupWindow logWindow;
     ConstraintLayout constraintLayout;
-    /**
-     * Jeder Spieler spielt eine Karte. Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und
-     * wieder die Stichansage aufgerufen.
-     */
-    public long TIME_TO_WAIT_AFTER_CARD = 1000;
     ImageView anim2, anim3, anim4;
     //Gemachte Stiche Popup
     Button gemachteStiche;
-    //View anim2, anim3, anim4;
     //Cards
     ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
     long animationOffset = 0;
+
+    private ArrayList<ImageView> player2cards, player3cards, player4cards;
 
     /**
      * Spieler zurückgeben
@@ -131,7 +123,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }).start();
     }
 
-    public synchronized static Card getCardfromView(ImageView v) {
+    public synchronized static Card getCardFromView(ImageView v) {
         Card change;//Die zu tauschende Karte
         switch (v.getId()) {
             case R.id.card1:
@@ -205,12 +197,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     /**
-     * der Name des spielers wird ausgegebn.
+     * der Name des spielers wird ausgegeben.
      *
-     * @param pl - Spielerid
+     * @param pl spielerID
      */
     public synchronized void showPlayersName(int pl) {
-        //Wenn kein Spielername gepeichert ist
+        //Wenn kein Spielername gespeichert ist
         if (PopupName.namen.get(pl - 1).equals("")) {
             Toast.makeText(this, "Player" + pl, Toast.LENGTH_SHORT).show();
             //Wenn ein Spielername gespeichert ist
@@ -249,8 +241,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             Intent intent = new Intent(Playground.this, TutorialActivity.class);
             intent.putExtra(start, false);
             startActivityForResult(intent, 0);
-            //startActivity(new Intent(Playground.this, TutorialActivity.class));
-            //startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
         });
 
         //Fuer die Schwierigkeit
@@ -300,15 +290,13 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         pl2_announced = findViewById(R.id.pl1_announced);
         pl3_announced = findViewById(R.id.pl2_announced);
         pl4_announced = findViewById(R.id.pl3_announced);
-        //stitches_pl1 = findViewById(R.id.player_stitches);
-        //stitches_pl2 = findViewById(R.id.pl1_stitches);
-        //stitches_pl3 = findViewById(R.id.pl2_stitches);
-        //stitches_pl4 = findViewById(R.id.pl3_stitches);
 
         stitches[0] = findViewById(R.id.player_stitches);
         stitches[1] = findViewById(R.id.pl1_stitches);
         stitches[2] = findViewById(R.id.pl2_stitches);
         stitches[3] = findViewById(R.id.pl3_stitches);
+
+        setPlayerCards();
 
         gewonnene = new ArrayList<>();
 
@@ -319,6 +307,45 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         pl3.setOnClickListener(view -> showPlayersName(3));
         pl4 = findViewById(R.id.player3);
         pl4.setOnClickListener(view -> showPlayersName(4));
+    }
+
+    private void setPlayerCards() {
+        ImageView player2card1 = findViewById(R.id.player2_card1);
+        ImageView player2card2 = findViewById(R.id.player2_card2);
+        ImageView player2card3 = findViewById(R.id.player2_card3);
+        ImageView player2card4 = findViewById(R.id.player2_card4);
+        ImageView player2card5 = findViewById(R.id.player2_card5);
+        ImageView player3card1 = findViewById(R.id.player3_card1);
+        ImageView player3card2 = findViewById(R.id.player3_card2);
+        ImageView player3card3 = findViewById(R.id.player3_card3);
+        ImageView player3card4 = findViewById(R.id.player3_card4);
+        ImageView player3card5 = findViewById(R.id.player3_card5);
+        ImageView player4card1 = findViewById(R.id.player4_card1);
+        ImageView player4card2 = findViewById(R.id.player4_card2);
+        ImageView player4card3 = findViewById(R.id.player4_card3);
+        ImageView player4card4 = findViewById(R.id.player4_card4);
+        ImageView player4card5 = findViewById(R.id.player4_card5);
+
+        player2cards = new ArrayList<>();
+        player2cards.add(player2card1);
+        player2cards.add(player2card2);
+        player2cards.add(player2card3);
+        player2cards.add(player2card4);
+        player2cards.add(player2card5);
+
+        player3cards = new ArrayList<>();
+        player3cards.add(player3card1);
+        player3cards.add(player3card2);
+        player3cards.add(player3card3);
+        player3cards.add(player3card4);
+        player3cards.add(player3card5);
+
+        player4cards = new ArrayList<>();
+        player4cards.add(player4card1);
+        player4cards.add(player4card2);
+        player4cards.add(player4card3);
+        player4cards.add(player4card4);
+        player4cards.add(player4card5);
     }
 
     @Override
@@ -342,9 +369,9 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 if (event.getResult()) {
                     runOnUiThread(() -> destination.setImageDrawable(move.getDrawable()));
                     move.setVisibility(View.INVISIBLE);
-                    cardsOnFloor.put(beginner, getCardfromView(move));
+                    cardsOnFloor.put(beginner, getCardFromView(move));
                     playerCardNumber--;
-                    System.out.println(getCardfromView(move).getColor() + "" + getCardfromView(move).getValue());
+                    System.out.println(getCardFromView(move).getColor() + "" + getCardFromView(move).getValue());
                     rotateBeginner();
                     play();
                 }
@@ -383,7 +410,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             /* hier kommt die Animation hin */
 
             kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
-            //System.out.println("Ich habe Karte: "+ cardsOnFloor.get(beginner).getPicture().toString() );
             System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
             rotateBeginner();
             try {
@@ -400,13 +426,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         //Spielfeldkarten löschen
 
         /* Hier wird die Animation zurück gesetzt*/
-        //System.out.println("Karten löschen xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+
         cardsOnFloor.clear();
         kartenAnzeigen(0, null);
         kartenAnzeigen(1, null);
         kartenAnzeigen(2, null);
         kartenAnzeigen(3, null);
-        //System.out.println("Karten löschen Ende xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 
         animationOffset = 0;
 
@@ -450,6 +475,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 animationOffset += ANIMATION_DURATION;
                 animation.setFillAfter(true);
                 anim2.startAnimation(animation);
+                hideCards(1, player2cards);
                 break;
 
             case 2:
@@ -461,6 +487,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 animationOffset += ANIMATION_DURATION;
                 animation.setFillAfter(true);
                 anim3.startAnimation(animation);
+                hideCards(2, player3cards);
                 break;
 
             case 3:
@@ -472,6 +499,33 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 animationOffset += ANIMATION_DURATION;
                 animation.setFillAfter(true);
                 anim4.startAnimation(animation);
+                hideCards(3, player4cards);
+                break;
+        }
+    }
+
+    /**
+     * Die Anzahl der angezeigten Handkarten entspricht der tatsächlichen Anzahl der Handkarten des jeweiligen Spielers
+     *
+     * @param player der Spieler
+     * @param cards  die Karten des Spielers als ImageView
+     */
+    private void hideCards(int player, ArrayList<ImageView> cards) {
+        switch (players[player].getHoldingCards().size()) {
+            case 4:
+                cards.get(0).setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                cards.get(1).setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                cards.get(2).setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                cards.get(3).setVisibility(View.INVISIBLE);
+                break;
+            case 0:
+                cards.get(4).setVisibility(View.INVISIBLE);
                 break;
         }
     }
@@ -553,7 +607,15 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             card3.setVisibility(View.VISIBLE);
             card4.setVisibility(View.VISIBLE);
             card5.setVisibility(View.VISIBLE);
-
+            for (ImageView card : player2cards) {
+                card.setVisibility(View.VISIBLE);
+            }
+            for (ImageView card : player3cards) {
+                card.setVisibility(View.VISIBLE);
+            }
+            for (ImageView card : player4cards) {
+                card.setVisibility(View.VISIBLE);
+            }
             //gemachte Stiche zurücksetzen
             stitches[0].setText("0");
             stitches[1].setText("0");
@@ -586,29 +648,27 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         if (spieler == 0) {
             runOnUiThread(() -> destination.setImageDrawable(null));
         } else {
-            runOnUiThread (new Thread(new Runnable() {
-                public void run() {
-                    if (card != null) {
-                        animation(spieler, card);
-                        //runOnUiThread(() -> animation(spieler, card));
-                    } else {
-                        switch (spieler) {
-                            case 1:
-                                //cardsOnFloor.clear();
-                                card_pl2.setImageDrawable(null);
-                                anim2.setImageDrawable(null);
-                                break;
-                            case 2:
-                                //cardsOnFloor.clear();
-                                card_pl3.setImageDrawable(null);
-                                anim3.setImageDrawable(null);
-                                break;
-                            case 3:
-                                //cardsOnFloor.clear();
-                                card_pl4.setImageDrawable(null);
-                                anim4.setImageDrawable(null);
-                                break;
-                        }
+            runOnUiThread(new Thread(() -> {
+                if (card != null) {
+                    animation(spieler, card);
+                    //runOnUiThread(() -> animation(spieler, card));
+                } else {
+                    switch (spieler) {
+                        case 1:
+                            //cardsOnFloor.clear();
+                            card_pl2.setImageDrawable(null);
+                            anim2.setImageDrawable(null);
+                            break;
+                        case 2:
+                            //cardsOnFloor.clear();
+                            card_pl3.setImageDrawable(null);
+                            anim3.setImageDrawable(null);
+                            break;
+                        case 3:
+                            //cardsOnFloor.clear();
+                            card_pl4.setImageDrawable(null);
+                            anim4.setImageDrawable(null);
+                            break;
                     }
                 }
             }));
