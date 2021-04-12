@@ -452,6 +452,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 Thread.sleep(TIME_TO_WAIT_AFTER_ROUND);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
 
             //Gewinner ermitteln

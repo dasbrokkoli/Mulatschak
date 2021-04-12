@@ -12,6 +12,7 @@
     <string name="name2">Player 2</string>
     <string name="name3">Player 3</string>
     <string name="name4">Player 4</string>
+    <string name="uebernehmen">Stiche übernehmen</string>
     <string name="difficulty1">Easy</string>
     <string name="difficulty2">Medium</string>
     <string name="difficulty3">Hard</string>

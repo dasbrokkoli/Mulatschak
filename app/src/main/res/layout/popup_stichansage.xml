@@ -9,11 +9,6 @@
         android:screenOrientation="landscape">
 
 
-    <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp" app:srcCompat="@drawable/eye" android:id="@+id/eyeBtn"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp" android:layout_marginTop="16dp"/>
     <TextView
             android:text="@string/one"
             android:layout_width="50dp"
@@ -25,6 +20,11 @@
             android:layout_marginTop="16dp" android:id="@+id/stich1" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/stich2"
             app:layout_constraintHorizontal_chainStyle="packed"/>
+    <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp" app:srcCompat="@drawable/eye" android:id="@+id/eyeBtn"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" android:layout_marginTop="16dp"/>
     <TextView
             android:text="@string/zero"
             android:layout_width="50dp"
@@ -91,6 +91,14 @@
             app:layout_constraintTop_toTopOf="@+id/muli" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent" android:textColor="@color/white"
             android:background="@color/colorPrimary"/>
+    <Button
+            android:text="@string/uebernehmen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/uebernehmen"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/colorPrimary" android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/highest" android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/stich1" android:layout_marginEnd="8dp"/>
     <TextView
             android:text="@string/stichansage"
             android:layout_width="wrap_content"
