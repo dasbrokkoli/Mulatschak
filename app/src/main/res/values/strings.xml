@@ -83,7 +83,7 @@
         eleifend mi in nulla posuere sollicitudin aliquam ultrices. Justo donec enim diam vulputate ut pharetra sit amet
         aliquam. Tempor orci dapibus ultrices in iaculis nunc sed. Quis auctor elit sed vulputate mi sit amet. Sagittis
         purus sit amet volutpat consequat mauris nunc congue nisi.
-        Sapien nec sagittis aliquam malesuada bibendum. Egestas sed tempus urna et pharetra pharetra. At tempor commodo
+        Sapien nec sagittis aliquam malesuada bibendum. Egestas sed tempus urna et pharetra. At tempor commodo
         ullamcorper a lacus vestibulum sed arcu. Urna nunc id cursus metus aliquam eleifend. Venenatis urna cursus eget
         nunc scelerisque viverra mauris in aliquam. A arcu cursus vitae congue mauris. Justo donec enim diam vulputate
         ut pharetra sit. Vulputate mi sit amet mauris commodo quis imperdiet massa tincidunt. Vitae et leo duis ut diam
@@ -92,7 +92,7 @@
         vestibulum morbi blandit cursus. Praesent tristique magna sit amet purus gravida. Ac tortor dignissim convallis
         aenean. Accumsan sit amet nulla facilisi morbi. Porta non pulvinar neque laoreet suspendisse interdum
         consectetur libero id. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis. Et netus et malesuada
-        fames ac turpis. Nunc sed velit dignissim sodales. Urna et pharetra pharetra massa. Sagittis nisl rhoncus mattis
+        fames ac turpis. Nunc sed velit dignissim sodales. Urna et pharetra massa. Sagittis nisl rhoncus mattis
         rhoncus urna. Semper risus in hendrerit gravida rutrum quisque. Ultrices mi tempus imperdiet nulla malesuada
         pellentesque elit eget gravida. Massa tincidunt dui ut ornare lectus sit amet est. Cras pulvinar mattis nunc sed
         blandit libero volutpat sed. Volutpat consequat mauris nunc congue nisi vitae suscipit tellus. Tortor at auctor
@@ -118,4 +118,10 @@
     <string name="resume">Resume</string>
     <string name="quit">Quit</string>
     <string name="yourcards">Your Cards</string>
+    <string name="zero">0</string>
+    <string name="no_stitches">/</string>
+    <string name="stiche">Stiche</string>
+    <string name="name">Name</string>
+    <string name="gemachte_stiche">Gemachte Stiche</string>
+    <string name="_0_0">0/0</string>
 </resources>

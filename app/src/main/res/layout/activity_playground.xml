@@ -19,7 +19,7 @@
             app:layout_constraintStart_toEndOf="@+id/card_pl2" app:layout_constraintTop_toTopOf="@+id/card_pl2"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/card_pl1"/>
     <TextView
-            android:text="0"
+            android:text="@string/zero"
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/pl3_stitches"
             android:textAlignment="center"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toBottomOf="@+id/pl3_announced"
             app:layout_constraintStart_toStartOf="@+id/pl3_announced"/>
     <TextView
-            android:text="0"
+            android:text="@string/zero"
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/pl2_stitches"
             android:textAlignment="center"
@@ -57,7 +57,7 @@
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"/>
     <TextView
-            android:text="/"
+            android:text="@string/no_stitches"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/pl1_announced"
@@ -68,7 +68,7 @@
             android:textColor="@android:color/background_dark" app:layout_constraintBottom_toTopOf="@+id/pl1_stitches"
             android:layout_marginBottom="16dp"/>
     <TextView
-            android:text="/"
+            android:text="@string/no_stitches"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/pl3_announced"
@@ -78,7 +78,7 @@
             app:layout_constraintTop_toTopOf="@+id/player3" app:layout_constraintEnd_toStartOf="@+id/player3"
             android:layout_marginEnd="16dp" android:textColor="@android:color/background_dark"/>
     <TextView
-            android:text="/"
+            android:text="@string/no_stitches"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/player_announced"
@@ -90,15 +90,16 @@
             android:textColor="@android:color/background_dark"
             android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/player_stitches"/>
     <TextView
-            android:text="/"
+            android:text="@string/no_stitches"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/pl2_announced"
             android:background="@drawable/empty"
             android:textAlignment="center"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
-            android:paddingTop="15dp" app:layout_constraintEnd_toStartOf="@+id/player2"
-            android:layout_marginEnd="16dp" android:textColor="@android:color/background_dark"/>
+            android:paddingTop="15dp"
+            android:textColor="@android:color/background_dark"
+            app:layout_constraintEnd_toStartOf="@+id/player2" android:layout_marginEnd="16dp"/>
     <Button
             android:text="@string/log"
             android:layout_width="wrap_content"
@@ -157,18 +158,19 @@
             android:layout_width="200dp"
             android:layout_height="50sp" app:srcCompat="@drawable/card_standard_back"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/player2"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"/>
     <ImageView
             android:layout_width="50dp"
             android:layout_height="200dp" app:srcCompat="@drawable/card_standard_right" android:id="@+id/player3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/player4"/>
+            app:layout_constraintTop_toTopOf="@+id/player4" android:visibility="invisible"/>
     <ImageView
             android:layout_width="50dp"
             android:layout_height="200dp" app:srcCompat="@drawable/card_standard_left" android:id="@+id/player4"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-    />
+            android:visibility="invisible"/>
     <ImageView
             android:layout_width="55dp"
             android:layout_height="80dp" app:srcCompat="@android:drawable/menuitem_background"
@@ -201,7 +203,7 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.519"/>
     <TextView
-            android:text="0"
+            android:text="@string/zero"
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/player_stitches"
             android:background="@drawable/empty" android:textAlignment="center"
@@ -210,7 +212,7 @@
             app:layout_constraintEnd_toEndOf="@+id/player_announced"
             android:textColor="@android:color/background_dark"/>
     <TextView
-            android:text="0"
+            android:text="@string/zero"
             android:layout_width="50dp"
             android:layout_height="50dp" android:id="@+id/pl1_stitches"
             app:layout_constraintBottom_toBottomOf="@+id/player4"
@@ -218,7 +220,7 @@
             android:background="@drawable/empty" android:paddingTop="15dp"
             android:textColor="@android:color/background_dark"/>
     <Button
-            android:text="Stiche"
+            android:text="@string/stiche"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/gemachteStiche"
             app:layout_constraintStart_toEndOf="@+id/player2" app:layout_constraintTop_toTopOf="parent"

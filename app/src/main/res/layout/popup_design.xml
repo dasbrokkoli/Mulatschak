@@ -18,9 +18,10 @@
             android:layout_width="95dp"
             android:layout_height="148dp"
             android:id="@+id/chosen_card"
-            android:scrollbarThumbHorizontal="@drawable/hintergrund"
-            android:scrollbarThumbVertical="@drawable/hintergrund"
-            android:scrollbarTrackVertical="@drawable/hintergrund" android:foreground="@drawable/hintergrund"
+            android:scrollbarThumbHorizontal="@drawable/card_standard_backside"
+            android:scrollbarThumbVertical="@drawable/card_standard_backside"
+            android:scrollbarTrackVertical="@drawable/card_standard_backside"
+            android:foreground="@drawable/card_standard_backside"
             app:layout_constraintTop_toBottomOf="@+id/chosen_pack_name"
             app:layout_constraintBottom_toTopOf="@+id/select_pack" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>

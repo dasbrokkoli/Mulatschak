@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:background="@drawable/popup_border"
-        android:padding="10px"
+        android:padding="10dp"
         tools:context="itp.project.Popups.PopupDifficulty" android:id="@+id/diffView">
     <TextView
             android:layout_width="wrap_content"

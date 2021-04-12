@@ -23,10 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     //fuer PopUp - Schwierigkeit
     Button showPopupBtn;
-    ImageButton closePopupBtn;
     PopupWindow popupWindow;
     ConstraintLayout constraintLayout;
-    Button next;
 
     //LogPopup
     Button showLogBtn;
@@ -45,42 +43,26 @@ public class MainActivity extends AppCompatActivity {
         initCards();
 
         View settings = findViewById(R.id.settings);
-        settings.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            }
-        });
+        settings.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
 
         View help = findViewById(R.id.help);
-        help.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
-                intent.putExtra("start", true);
-                System.out.println("Main:" + intent.getExtras());
-                System.out.println("Main-ID:" + intent);
-                startActivity(intent);
+        help.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+            intent.putExtra("start", true);
+            System.out.println("Main:" + intent.getExtras());
+            System.out.println("Main-ID:" + intent);
+            startActivity(intent);
 
-                //startActivity(new Intent(MainActivity.this, TutorialActivity.class));
-            }
+            //startActivity(new Intent(MainActivity.this, TutorialActivity.class));
         });
 
         //PopUp
         showPopupBtn = findViewById(R.id.showPopupBtn);
-        showPopupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, PopupDifficulty.class));
-            }
-        });
+        showPopupBtn.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, PopupDifficulty.class)));
 
         //LogPopup
         showLogBtn = findViewById(R.id.log);
-        showLogBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, PopupLog.class));
-            }
-        });
+        showLogBtn.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, PopupLog.class)));
 
         /*constraintLayout = (ConstraintLayout) findViewById(R.id.mainConstraintLayout);
         showLogBtn = findViewById(R.id.log);
