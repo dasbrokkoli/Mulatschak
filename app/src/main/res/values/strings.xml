@@ -41,7 +41,7 @@
     <string name="save2">Save</string>
     <string name="tutorialText">
         ## Cards \n
-        At Mulatschak there are a total of 33 cards and 4 different suits; \n
+        At Mulatschak there are a total of 33 cards and 4 different suits \n
         * Hearts \n
         * Leaves \n
         * Acorns \n
@@ -55,7 +55,7 @@
         unless it is itself trumped by a higher card: \n
         7 &lt; 8 &lt; 9 &lt; 10 &lt; 11 &lt; Ober &lt; Unter &lt; King &lt; Weli &lt; Ace \n
         It should be noted that the atout suit has the very highest value and beats everything. This means that a card
-        played that matches the adout suit cannot be beaten by a higher card unless it also matches the atout suit. \n
+        played that matches the atout suit cannot be beaten by a higher card unless it also matches the atout suit. \n
         ## Atout and trick announcement \n
         After the cards are dealt, the players make trick announcements. A trick announcement is an estimate of how many
         tricks are likely to be made in that round. Each trick announcement MUST be achieved, otherwise points are
@@ -65,7 +65,7 @@
         Cards with the atout suit always have a higher value than cards with a different suit and can only be played by
         higher cards which themselves correspond to the atout suit. \n
         ## Deal and draw cards \n
-        After the turn, it is each player's turn to deal. The left/right neighbor may draw the weli. To do this, he
+        After the turn, it is each player\'s turn to deal. The left/right neighbor may draw the weli. To do this, he
         takes the pile of cards, divides it and looks to see if the card in the middle is the Weli. If it is the Weli,
         he shows the Weli to the other players and may keep it. If it is not the Weli, but another card, it is shuffled
         again among the cards. \n
