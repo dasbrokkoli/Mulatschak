@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/popup_border"
-        tools:context="itp.project.Popups.PopupName" android:id="@+id/cLayout">
+        tools:context="itp.project.popups.PopupName" android:id="@+id/cLayout">
 
     <TextView
             android:text="@string/names"

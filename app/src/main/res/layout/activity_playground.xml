@@ -143,17 +143,17 @@
             android:layout_height="80dp" android:id="@+id/animation_p3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" tools:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/player2"/>
+            app:layout_constraintBottom_toTopOf="parent"/>
     <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp" android:id="@+id/animation_p4"
-            app:layout_constraintEnd_toEndOf="@+id/player3" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="parent"/>
     <ImageView
             android:layout_width="50dp"
             android:layout_height="80dp" android:id="@+id/animation_p2"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="parent"/>
     <ImageView
             android:layout_width="200dp"
             android:layout_height="50sp" app:srcCompat="@drawable/card_standard_back"
@@ -223,6 +223,102 @@
             android:text="@string/stiche"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/gemachteStiche"
-            app:layout_constraintStart_toEndOf="@+id/player2" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="16dp"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/player2" android:layout_marginStart="24dp"
+    />
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" android:id="@+id/player2_card1" android:rotation="180"
+            app:srcCompat="@drawable/card_standard_backside"
+            app:layout_constraintBottom_toBottomOf="@+id/player2_card2"
+            app:layout_constraintStart_toEndOf="@+id/card_pl2" android:layout_marginStart="5dp"/>
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" android:id="@+id/player2_card2" android:rotation="180"
+            app:layout_constraintStart_toStartOf="@+id/player2_card1"
+            android:layout_marginStart="24dp"
+            app:srcCompat="@drawable/card_standard_backside" app:layout_constraintBottom_toBottomOf="@+id/player2"/>
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" android:id="@+id/player2_card3" android:rotation="180"
+            app:layout_constraintStart_toStartOf="@+id/player2_card2" android:layout_marginStart="24dp"
+            app:srcCompat="@drawable/card_standard_backside"
+            app:layout_constraintBottom_toBottomOf="@+id/player2_card4"/>
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" android:id="@+id/player2_card4" android:rotation="180"
+            tools:srcCompat="@drawable/card_standard_backside" app:srcCompat="@drawable/card_standard_backside"
+            app:layout_constraintStart_toStartOf="@+id/player2_card3" android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/player2_card5"/>
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" android:id="@+id/player2_card5" android:rotation="180"
+            app:srcCompat="@drawable/card_standard_backside"
+            app:layout_constraintStart_toEndOf="@+id/player2_card2" android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/player2"/>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp" android:id="@+id/player3_card1"
+            app:srcCompat="@drawable/card_standard_backside_rotated" android:rotation="180"
+            app:layout_constraintStart_toEndOf="@+id/pl3_announced" android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/pl2_stitches"/>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp" android:id="@+id/player3_card2"
+            app:srcCompat="@drawable/card_standard_backside_rotated" android:rotation="180"
+            app:layout_constraintTop_toTopOf="@+id/player3_card1" android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="@+id/player3_card1"/>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp" android:id="@+id/player3_card3"
+            app:srcCompat="@drawable/card_standard_backside_rotated"
+            app:layout_constraintTop_toTopOf="@+id/player3_card2" android:rotation="180"
+            android:layout_marginTop="24dp" app:layout_constraintStart_toStartOf="@+id/player3_card2"/>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp" android:id="@+id/player3_card4"
+            app:layout_constraintTop_toTopOf="@id/player3_card3" android:rotation="180"
+            app:layout_constraintStart_toStartOf="@+id/player3_card3" android:layout_marginTop="24dp"
+            app:srcCompat="@drawable/card_standard_backside_rotated"/>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp" android:id="@+id/player3_card5"
+            app:srcCompat="@drawable/card_standard_backside_rotated"
+            app:layout_constraintTop_toTopOf="@+id/player3_card4" android:rotation="180"
+            android:layout_marginTop="24dp" app:layout_constraintStart_toStartOf="@+id/player3_card4"/>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp" android:id="@+id/player4_card5"
+            app:srcCompat="@drawable/card_standard_backside_rotated"
+            app:layout_constraintEnd_toStartOf="@+id/pl1_announced"
+            android:layout_marginEnd="16dp" app:layout_constraintTop_toBottomOf="@+id/pl2_stitches"/>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp" android:id="@+id/player4_card4"
+            app:srcCompat="@drawable/card_standard_backside_rotated"
+            app:layout_constraintTop_toTopOf="@+id/player4_card5" android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/player4_card5"/>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp" android:id="@+id/player4_card3"
+            app:srcCompat="@drawable/card_standard_backside_rotated"
+            app:layout_constraintTop_toTopOf="@+id/player4_card4"
+            android:layout_marginTop="24dp" app:layout_constraintEnd_toEndOf="@+id/player4_card5"/>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp" android:id="@+id/player4_card2"
+            app:srcCompat="@drawable/card_standard_backside_rotated"
+            app:layout_constraintTop_toTopOf="@id/player4_card3"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/player4_card5"/>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="50dp" android:id="@+id/player4_card1"
+            app:srcCompat="@drawable/card_standard_backside_rotated"
+            app:layout_constraintTop_toTopOf="@id/player4_card2"
+            android:layout_marginTop="24dp" app:layout_constraintEnd_toEndOf="@+id/player4_card5"/>
+    <androidx.constraintlayout.widget.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                            android:id="@+id/player3_group"/>
+    <androidx.constraintlayout.widget.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                            android:id="@+id/player4_group"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
