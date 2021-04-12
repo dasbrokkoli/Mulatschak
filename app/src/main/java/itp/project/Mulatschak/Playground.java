@@ -22,6 +22,9 @@ import itp.project.Popups.*;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Playground extends AppCompatActivity implements View.OnTouchListener, View.OnDragListener, Serializable {
     //Gemachte Stiche
@@ -30,6 +33,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     static final Algorithm[] players = new Algorithm[4];
     private static final BiMap<Integer, Card> cardsOnFloor = HashBiMap.create();
     public static Thread playThread;
+    public static Thread animationThread;
     public static List<Card> gewonnene;
     static ImageView move;
     static ImageView atout;
@@ -43,6 +47,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ImageButton closeLogView;
     PopupWindow logWindow;
     ConstraintLayout constraintLayout;
+
+    //fuer play
+    final Lock lock = new ReentrantLock();
+    final Condition spielerSpielt = lock.newCondition();
+    /**
+     * Jeder Spieler spielt eine Karte.
+     * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
+     */
+    public long TIME_TO_WAIT_AFTER_CARD = 1000;
+    public long TIME_TO_WAIT_AFTER_ROUND = 3000;
     ImageView anim2, anim3, anim4;
     //Gemachte Stiche Popup
     Button gemachteStiche;
@@ -352,7 +366,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public synchronized boolean onTouch(View v, MotionEvent event) {
         v.performClick();
         if (beginner != 0) {
-            Toast.makeText(this, R.string.playerNotDran, Toast.LENGTH_SHORT).show();
+            runOnUiThread(()->Toast.makeText(this, R.string.playerNotDran, Toast.LENGTH_SHORT).show());
             return false;
         }
         move = (ImageView) v;
@@ -365,16 +379,28 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     @Override
     public synchronized boolean onDrag(View v, DragEvent event) {
         new Thread(() -> {
-            if (event.getAction() == DragEvent.ACTION_DRAG_ENDED) {//Karte in das Feld gezogen
-                if (event.getResult()) {
+            switch (event.getAction()) {
+                case DragEvent.ACTION_DRAG_STARTED:
+                    break;
+                case DragEvent.ACTION_DRAG_ENTERED:
+                    break;
+                case DragEvent.ACTION_DRAG_EXITED:
+                    break;
+                case DragEvent.ACTION_DROP:
+                    break;
+                case DragEvent.ACTION_DRAG_ENDED:
+                    lock.lock();
+                    //Karte in das Feld gezogen
                     runOnUiThread(() -> destination.setImageDrawable(move.getDrawable()));
                     move.setVisibility(View.INVISIBLE);
-                    cardsOnFloor.put(beginner, getCardFromView(move));
+                    cardsOnFloor.put(beginner, getCardfromView(move));
                     playerCardNumber--;
-                    System.out.println(getCardFromView(move).getColor() + "" + getCardFromView(move).getValue());
+                    System.out.println(getCardfromView(move).getColor() + "" + getCardfromView(move).getValue());
                     rotateBeginner();
-                    play();
-                }
+                    spielerSpielt.signal();
+                    lock.unlock();
+                default:
+                    break;
             }
         }).start();
         return true;
@@ -395,139 +421,155 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     }
 
     public synchronized void play() {
-        System.out.println("Play started");
-        while (cardsOnFloor.size() < 4) {
-            System.out.println("While: " + cardsOnFloor.size());
-            if (beginner == 0) {
-                System.out.println("Spieler ist dran");
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.playerDran, Toast.LENGTH_SHORT).show());
-                return;
+        System.out.println(Thread.currentThread().getName() + " handled play()");
+        new Thread(()-> {
+            System.out.println("Play started");
+            while (cardsOnFloor.size() < 4) {
+                System.out.println("While: " + cardsOnFloor.size());
+                if (beginner == 0) {
+                    lock.lock();
+                    System.out.println("Spieler ist dran");
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.playerDran, Toast.LENGTH_SHORT).show());
+                    try {
+                        System.out.println(Thread.currentThread().getName() + " is sleeping");
+                        spielerSpielt.await();
+                        System.out.println(Thread.currentThread().getName() + " is awake");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    lock.unlock();
+                    continue;
+                }
+                Card[] cArray = new Card[cardsOnFloor.size()];
+                cardsOnFloor.values().toArray(cArray);
+                cardsOnFloor.put(beginner, players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
+
+                /* hier kommt die Animation hin */
+
+                //animation(2,null);
+                // animation(3,null);
+                //animation(4,null);
+
+                kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
+                System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
+                rotateBeginner();
+                try {
+                    Thread.sleep(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            Card[] cArray = new Card[cardsOnFloor.size()];
-            cardsOnFloor.values().toArray(cArray);
-            cardsOnFloor.put(beginner, players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
-
-            /* hier kommt die Animation hin */
-
-            kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
-            System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
-            rotateBeginner();
             try {
-                Thread.sleep(0);
+                animationThread.join();
+                Thread.sleep(TIME_TO_WAIT_AFTER_ROUND);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
 
-        //Gewinner ermitteln
-        //Stich eintragen
-        this.whichCardWon();
+            //Gewinner ermitteln
+            //Stich eintragen
+            this.whichCardWon();
 
-        //Spielfeldkarten löschen
+            //Spielfeldkarten löschen
 
-        /* Hier wird die Animation zurück gesetzt*/
+            /* Hier wird die Animation zurück gesetzt*/
 
-        cardsOnFloor.clear();
-        kartenAnzeigen(0, null);
-        kartenAnzeigen(1, null);
-        kartenAnzeigen(2, null);
-        kartenAnzeigen(3, null);
+            cardsOnFloor.clear();
+            kartenAnzeigen(0, null);
+            kartenAnzeigen(1, null);
+            kartenAnzeigen(2, null);
+            kartenAnzeigen(3, null);
 
-        animationOffset = 0;
+            animationOffset = 0;
 
-        //Noch Karten vorhanden?
-        System.out.println("Playerkarten: " + playerCardNumber);
-        if (playerCardNumber == 0) {
-            System.out.println("Runde fertig");
-            //Gemachten Stiche löschen
-            gewonnene.clear();
-            try {
-                Algorithm.scoring(players);
-            } catch (WinException e) {
-                win(Integer.parseInt(e.getMessage()));
+            //Noch Karten vorhanden?
+            System.out.println("Playerkarten: " + playerCardNumber);
+            if (playerCardNumber == 0) {
+                System.out.println("Runde fertig");
+                //Gemachten Stiche löschen
+                gewonnene.clear();
+                try {
+                    Algorithm.scoring(players);
+                } catch (WinException e) {
+                    win(Integer.parseInt(e.getMessage()));
+                }
+                // Popup bei Gewinner anzeigen und Punkte anzeigen
+                startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
+                return;
             }
-            // Popup bei Gewinner anzeigen und Punkte anzeigen
-            startActivityForResult(new Intent(Playground.this, PopupLog.class).putExtra("newLine", true), 0); // zeigt PopupLog an, wartet auf Result (schließen)
-            return;
-        }
-        play();
+            play();
+        }).start();
     }
 
     public synchronized void animation(int spieler, Drawable card) {
         // Card card4, card1, card2, card3, card5
         // Destination destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
+        animationThread = new Thread(()->{
+                TranslateAnimation animation;
+                //runOnUiThread();
+                //TranslateAnimation animation = null;
+                //Mit Switch Case
+                switch (spieler) {
+                    case 0:
+                        System.out.println("No Animation needed");
+                        break;
 
-        TranslateAnimation animation;
-        //runOnUiThread();
-        //TranslateAnimation animation = null;
-        //Mit Switch Case
-        switch (spieler) {
-            case 0:
-                System.out.println("No Animation needed");
-                break;
+                    case 1:
+                        runOnUiThread(()-> anim2.setImageDrawable(card));
+                        animation = new TranslateAnimation(0, (card_pl2.getX() - anim2.getX()) + 7, 0, card_pl2.getY() - anim2.getY());
+                        animation.setRepeatMode(0);
+                        animation.setDuration(ANIMATION_DURATION);
+                        animation.setStartOffset(animationOffset);
+                        animationOffset += ANIMATION_DURATION;
+                        animation.setFillAfter(true);
+                        anim2.startAnimation(animation);
+                        try {
+                            Thread.sleep(animationOffset);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
 
-            case 1:
-                anim2.setImageDrawable(card);
-                animation = new TranslateAnimation(0, (card_pl2.getX() - anim2.getX()) + 7, 0, card_pl2.getY() - anim2.getY());
-                animation.setRepeatMode(0);
-                animation.setDuration(ANIMATION_DURATION);
-                animation.setStartOffset(animationOffset);
-                animationOffset += ANIMATION_DURATION;
-                animation.setFillAfter(true);
-                anim2.startAnimation(animation);
-                hideCards(1, player2cards);
-                break;
+                    case 2:
+                        runOnUiThread(()-> anim3.setImageDrawable(card));
+                        animation = new TranslateAnimation(0, (card_pl3.getX() - anim3.getX()) + 7, 0, card_pl3.getY() - anim3.getY());
+                        animation.setRepeatMode(0);
+                        animation.setDuration(ANIMATION_DURATION);
+                        animation.setStartOffset(animationOffset);
+                        animationOffset += ANIMATION_DURATION;
+                        animation.setFillAfter(true);
+                        anim3.startAnimation(animation);
+                        try {
+                            Thread.sleep(animationOffset);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
 
-            case 2:
-                anim3.setImageDrawable(card);
-                animation = new TranslateAnimation(0, (card_pl3.getX() - anim3.getX()) + 7, 0, card_pl3.getY() - anim3.getY());
-                animation.setRepeatMode(0);
-                animation.setDuration(ANIMATION_DURATION);
-                animation.setStartOffset(animationOffset);
-                animationOffset += ANIMATION_DURATION;
-                animation.setFillAfter(true);
-                anim3.startAnimation(animation);
-                hideCards(2, player3cards);
-                break;
-
-            case 3:
-                anim4.setImageDrawable(card);
-                animation = new TranslateAnimation(0, (card_pl4.getX() - anim4.getX()) + 7, 0, card_pl4.getY() - anim4.getY());
-                animation.setRepeatMode(0);
-                animation.setDuration(ANIMATION_DURATION);
-                animation.setStartOffset(animationOffset);
-                animationOffset += ANIMATION_DURATION;
-                animation.setFillAfter(true);
-                anim4.startAnimation(animation);
-                hideCards(3, player4cards);
-                break;
-        }
-    }
-
-    /**
-     * Die Anzahl der angezeigten Handkarten entspricht der tatsächlichen Anzahl der Handkarten des jeweiligen Spielers
-     *
-     * @param player der Spieler
-     * @param cards  die Karten des Spielers als ImageView
-     */
-    private void hideCards(int player, ArrayList<ImageView> cards) {
-        switch (players[player].getHoldingCards().size()) {
-            case 4:
-                cards.get(0).setVisibility(View.INVISIBLE);
-                break;
-            case 3:
-                cards.get(1).setVisibility(View.INVISIBLE);
-                break;
-            case 2:
-                cards.get(2).setVisibility(View.INVISIBLE);
-                break;
-            case 1:
-                cards.get(3).setVisibility(View.INVISIBLE);
-                break;
-            case 0:
-                cards.get(4).setVisibility(View.INVISIBLE);
-                break;
-        }
+                    case 3:
+                        runOnUiThread(()-> anim4.setImageDrawable(card));
+                        animation = new TranslateAnimation(0, (card_pl4.getX() - anim4.getX()) + 7, 0, card_pl4.getY() - anim4.getY());
+                        animation.setRepeatMode(0);
+                        animation.setDuration(ANIMATION_DURATION);
+                        animation.setStartOffset(animationOffset);
+                        animationOffset += ANIMATION_DURATION;
+                        animation.setFillAfter(true);
+                        anim4.startAnimation(animation);
+                        try {
+                            Thread.sleep(animationOffset);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+                //anim2.setBackground(null);
+                // anim3.setBackground(null);
+                //anim4.setBackground(null);
+//        anim2.setVisibility(View.INVISIBLE);
+//        anim3.setVisibility(View.INVISIBLE);
+//        anim4.setVisibility(View.INVISIBLE);
+        });
+        animationThread.start();
     }
 
     @Override
