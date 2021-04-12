@@ -1,12 +1,13 @@
 package itp.project.popups;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import itp.project.mulatschak.Listeners;
-import itp.project.mulatschak.R;
+import itp.project.mulatschak.*;
 
 public class PopupDesign extends AppCompatActivity {
 
@@ -17,6 +18,7 @@ public class PopupDesign extends AppCompatActivity {
 
         Listeners.newListener(this);
 
+        Drawable background = getDrawable(R.drawable.card_standard_back);
         // Auswählen des Packs
         TextView textView = findViewById(R.id.chosen_pack_name);
         ImageView card = findViewById(R.id.chosen_card);
@@ -26,29 +28,32 @@ public class PopupDesign extends AppCompatActivity {
         // je nach Id wechselt sich der Name und das Bild
         switch (chosenPack) {
             case R.id.pack1:
-                textView.setText("Mulatschak");
+                textView.setText("Standard");
                 card.setForeground(getDrawable(R.drawable.card_standard_backside));
+                background = getDrawable(R.drawable.card_standard_backside);
                 break;
             case R.id.pack2:
-                textView.setText("Red");
-                card.setForeground(getDrawable(R.drawable.hintergrund_test1));
+                textView.setText("Easter-Edition");
+                card.setForeground(getDrawable(R.drawable.ic_hintergrund_ostern));
+                background = getDrawable(R.drawable.ic_hintergrund_ostern);
                 break;
             case R.id.pack3:
-                textView.setText("Blue");
-                card.setForeground(getDrawable(R.drawable.hintergrund_test2));
+                textView.setText("Mulatschak");
+                card.setForeground(getDrawable(R.drawable.hintergrund_mulatschak));
+                background = getDrawable(R.drawable.hintergrund_mulatschak);
                 break;
         }
 
         // Auswählen
-        /*Button choosePack = findViewById(R.id.select_pack);
+        Button choosePack = findViewById(R.id.select_pack);
+        Drawable finalBackground = background;
         choosePack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DesignPackActivity.i1.set(20,20,20,20);
-                DesignPackActivity.i1.setBackgroundColor(Color.GREEN);
+                MainActivity.background = finalBackground;
                 finish();
             }
-        });*/
+        });
     }
 
     /**

@@ -13,7 +13,7 @@
             android:id="@+id/pack3" app:layout_constraintStart_toEndOf="@+id/pack2"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toStartOf="@+id/pack4" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/pack7"/>
+            app:layout_constraintBottom_toTopOf="@+id/pack7" android:foreground="@drawable/hintergrund_mulatschak"/>
     <ImageView
             android:src="@drawable/card_standard_schelle_acht"
             android:layout_width="95dp"
@@ -82,7 +82,7 @@
             android:scrollbarThumbHorizontal="@drawable/card_standard_backside"
             android:scrollbarThumbVertical="@drawable/card_standard_backside"
             android:scrollbarTrackVertical="@drawable/card_standard_backside"
-            android:foreground="@drawable/hintergrund_test1"
+            android:foreground="@drawable/ic_hintergrund_ostern"
             app:layout_constraintStart_toEndOf="@+id/pack1" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toStartOf="@+id/pack3" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/pack6"/>

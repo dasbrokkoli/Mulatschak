@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RotateDrawable;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -64,7 +65,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
     long animationOffset = 0;
 
-    private ArrayList<ImageView> player2cards, player3cards, player4cards;
+    private static ArrayList<ImageView> player2cards, player3cards, player4cards;
 
     /**
      * Spieler zurückgeben
@@ -272,7 +273,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         gemachteStiche = findViewById(R.id.gemachteStiche);
         gemachteStiche.setOnClickListener(view -> startActivity(new Intent(Playground.this, GemachteStiche.class)));
 
-        //Karten aus dem Algorithmus
+
 
 
         //Cards
@@ -360,6 +361,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         player4cards.add(player4card3);
         player4cards.add(player4card4);
         player4cards.add(player4card5);
+        setCardBackground();
     }
 
     @Override
@@ -802,4 +804,14 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public void onBackPressed() {
         //super.onBackPressed();
     }
+
+    public static void setCardBackground(){
+
+        for(int i = 0; i <5; i++){
+            player2cards.get(i).setImageDrawable(MainActivity.background);
+            player3cards.get(i).setImageDrawable(MainActivity.background);
+            player4cards.get(i).setImageDrawable(MainActivity.background);
+        }
+    }
+
 }
