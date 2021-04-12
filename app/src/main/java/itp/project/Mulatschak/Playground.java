@@ -455,7 +455,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 win(Integer.parseInt(e.getMessage()));
             }
             // Popup bei Gewinner anzeigen und Punkte anzeigen
-            startActivityForResult(new Intent(Playground.this, PopupLog.class), 0); // zeigt PopupLog an, wartet auf Result (schließen)
+            startActivityForResult(new Intent(Playground.this, PopupLog.class).putExtra("newLine", true), 0); // zeigt PopupLog an, wartet auf Result (schließen)
             return;
         }
         play();

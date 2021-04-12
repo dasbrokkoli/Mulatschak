@@ -17,49 +17,62 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PopupLog extends AppCompatActivity {
+    FlexboxLayout names;
+    private List<FlexboxLayout> points;
     private final TextView[] tvNames = new TextView[4];
     private final TextView[] tvPoints = new TextView[4];
     private LinearLayout outerLayout;
-    private FlexboxLayout nameLayout;
-    private FlexboxLayout pointLayout;
-    private PopupName popName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_log);
         outerLayout = findViewById(R.id.linlayout);
-        nameLayout = new FlexboxLayout(outerLayout.getContext());
-        pointLayout = new FlexboxLayout(outerLayout.getContext());
-        outerLayout.addView(nameLayout);
-        outerLayout.addView(pointLayout);
-        popName = new PopupName();
+        new PopupName();
 
-        for (int i = 0; i < tvNames.length; i++) {
-            tvNames[i] = new TextView(this);
-            nameLayout.addView(tvNames[i]);
+        boolean newLine = false;
+
+        try {
+            newLine = (boolean) getIntent().getExtras().get("newLine");
+        } catch (NullPointerException ignored) {
         }
 
-        for (int i = 0; i < tvPoints.length; i++) {
-            tvPoints[i] = new TextView(this);
-            pointLayout.addView(tvPoints[i]);
+        if (newLine || points.isEmpty()) {
+            newLine();
         }
 
         Listeners.newListener(this);
 
-        //Methodenaufruf
+        names.setJustifyContent(JustifyContent.SPACE_BETWEEN);
+        points.get(points.size() - 1).setMinimumWidth(names.getWidth());
+        points.get(points.size() - 1).setJustifyContent(JustifyContent.SPACE_BETWEEN);
+    }
+
+    private void newLine() {
+        names = new FlexboxLayout(outerLayout.getContext());
+        points.add(new FlexboxLayout(outerLayout.getContext()));
+        outerLayout.addView(names);
+        outerLayout.addView(points.get(points.size() - 1));
+        System.out.println("Points.size: " + points.size());
+
+        for (int i = 0; i < tvNames.length; i++) {
+            tvNames[i] = new TextView(this);
+            names.addView(tvNames[i]);
+        }
+
+        for (int i = 0; i < tvPoints.length; i++) {
+            tvPoints[i] = new TextView(this);
+            points.get(points.size() - 1).addView(tvPoints[i]);
+        }
+
         setNames();
         setScoring();
-
-        nameLayout.setJustifyContent(JustifyContent.SPACE_BETWEEN);
-        pointLayout.setMinimumWidth(nameLayout.getWidth());
-        pointLayout.setJustifyContent(JustifyContent.SPACE_BETWEEN);
     }
 
     /**
      * Setzt die  in die TextView
      */
-    public void setScoring() {
+    private void setScoring() {
         List<Integer> points = Algorithm.getPoints();
         for (int i = 0; i < points.size(); i++) {
             System.out.println("Spieler " + i + " hat " + points.get(i) + " Punkte");
@@ -70,17 +83,13 @@ public class PopupLog extends AppCompatActivity {
     /**
      * Setzt die Namen in die TextView
      */
-    public void setNames() {
+    private void setNames() {
         SharedPreferences sp = getApplicationContext().getSharedPreferences("PlayerNames", Context.MODE_PRIVATE);
         List<String> names = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             names.add(sp.getString("PlayerName" + i, "Player " + (i + 1)));
         }
         for (int i = 0; i < names.size(); i++) {
-//            if(names.get(i) == null) { //Wenn keine Namen eingegeben wurden, dann wird eine ID gesetzt
-//                System.out.println("No Value");
-//                names.set(i,String.valueOf(i));
-//            }
             tvNames[i].setText(names.get(i));
         }
     }

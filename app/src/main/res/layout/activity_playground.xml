@@ -138,6 +138,22 @@
             android:layout_marginBottom="16dp" android:id="@+id/card5"
             android:layout_marginStart="16dp" app:layout_constraintStart_toEndOf="@+id/card4"/>
     <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" android:id="@+id/animation_p3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" tools:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/player2"/>
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" android:id="@+id/animation_p4"
+            app:layout_constraintEnd_toEndOf="@+id/player3" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+            android:layout_width="50dp"
+            android:layout_height="80dp" android:id="@+id/animation_p2"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    <ImageView
             android:layout_width="200dp"
             android:layout_height="50sp" app:srcCompat="@drawable/card_standard_back"
             app:layout_constraintTop_toTopOf="parent" android:id="@+id/player2"
@@ -207,19 +223,4 @@
             android:layout_height="wrap_content" android:id="@+id/gemachteStiche"
             app:layout_constraintStart_toEndOf="@+id/player2" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="16dp"/>
-    <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp" android:id="@+id/animation_p4"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp" android:id="@+id/animation_p2"
-            app:layout_constraintTop_toTopOf="@+id/player2" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" tools:visibility="visible"/>
-    <ImageView
-            android:layout_width="50dp"
-            android:layout_height="80dp" android:id="@+id/animation_p3"
-            app:layout_constraintEnd_toEndOf="@+id/player3" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
