@@ -11,6 +11,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="AllowBackup">
+        <activity android:name="itp.project.popups.PopupCard6">
+        </activity>
         <activity
                 android:name="itp.project.popups.PopupPauseMenu"
                 android:screenOrientation="sensorLandscape"
@@ -19,11 +21,13 @@
         <activity
                 android:name="itp.project.popups.GemachteStiche"
                 android:screenOrientation="landscape">
-<!--                android:theme="@style/AppTheme.Popup">-->
+
+            <!-- android:theme="@style/AppTheme.Popup"> -->
         </activity>
-        <activity android:name="itp.project.popups.PopupHoldingCards"
-                  android:screenOrientation="landscape"
-                  android:theme="@style/AppTheme.Popup">
+        <activity
+                android:name="itp.project.popups.PopupHoldingCards"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.popups.PopupTutorialVideo"
@@ -36,8 +40,8 @@
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name="itp.project.mulatschak.DesignPackActivity"
-                android:parentActivityName="itp.project.mulatschak.SettingsActivity"
+                android:name=".DesignPackActivity"
+                android:parentActivityName=".SettingsActivity"
                 android:screenOrientation="sensorLandscape">
         </activity>
         <activity
@@ -85,21 +89,21 @@
                 android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
-                android:name="itp.project.mulatschak.TutorialActivity"
-                android:parentActivityName="itp.project.mulatschak.MainActivity"
+                android:name=".TutorialActivity"
+                android:parentActivityName=".MainActivity"
                 android:screenOrientation="sensorLandscape">
         </activity>
         <activity
-                android:name="itp.project.mulatschak.Playground"
+                android:name=".Playground"
                 android:screenOrientation="sensorLandscape"
                 android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
-                android:name="itp.project.mulatschak.SettingsActivity"
+                android:name=".SettingsActivity"
                 android:screenOrientation="sensorLandscape">
         </activity>
         <activity
-                android:name="itp.project.mulatschak.MainActivity"
+                android:name=".MainActivity"
                 android:screenOrientation="sensorLandscape"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
