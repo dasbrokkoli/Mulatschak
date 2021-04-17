@@ -165,7 +165,7 @@ public class PopupStichansage extends AppCompatActivity {
         System.out.println("Dealer:" + dealer);
         if(dealer == 1) {
             isDealer = true;
-            System.out.println("MMM: if");
+            //System.out.println("MMM: if");
             //Wenn man die Stiche uebernimmt
             uebernehmen = findViewById(R.id.uebernehmen);
             uebernehmen.setOnClickListener(view -> {
@@ -173,7 +173,7 @@ public class PopupStichansage extends AppCompatActivity {
                 nextPopup();
             });
         }else{
-            System.out.println("MMM: else");
+            //System.out.println("MMM: else");
             uebernehmen = findViewById(R.id.uebernehmen);
             uebernehmen.setVisibility(View.GONE);
         }
