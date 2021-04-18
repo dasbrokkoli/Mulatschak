@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.muddzdev.styleabletoast.StyleableToast;
 import itp.project.exceptions.WinException;
 import itp.project.popups.*;
 
@@ -41,6 +44,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     private static int beginner;
     private static int playerCardNumber;
     final long ANIMATION_DURATION = 500;
+    private static Context context;
+
     //Liste für die Karten
     //LogPopup
     Button showLogBtn;
@@ -83,18 +88,22 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                     switch (player) {
                         case 1:
                             stitches[0].setText(String.valueOf(count));
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p1_winner_text), R.style.player1).show());
                             System.out.println("Player 1 won: " + count);
                             break;
                         case 2:
                             stitches[1].setText(String.valueOf(count));
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p2_winner_text), R.style.player2).show());
                             System.out.println("Player 2 won: " + count);
                             break;
                         case 3:
                             stitches[2].setText(String.valueOf(count));
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p3_winner_text), R.style.player3).show());
                             System.out.println("Player 3 won: " + count);
                             break;
                         case 4:
                             stitches[3].setText(String.valueOf(count));
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p4_winner_text), R.style.player4).show());
                             System.out.println("Player 4 won: " + count);
                             break;
                     }
@@ -223,7 +232,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
-
+        Playground.context = getApplicationContext();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -360,7 +369,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public synchronized boolean onTouch(View v, MotionEvent event) {
         v.performClick();
         if (beginner != 0) {
-            runOnUiThread(()->Toast.makeText(this, R.string.playerNotDran, Toast.LENGTH_SHORT).show());
+            runOnUiThread(() -> Toast.makeText(this, R.string.playerNotDran, Toast.LENGTH_SHORT).show());
             return false;
         }
         move = (ImageView) v;
@@ -404,7 +413,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     public synchronized void play() {
         System.out.println(Thread.currentThread().getName() + " handled play()");
-        new Thread(()-> {
+        new Thread(() -> {
             System.out.println("Play started");
             while (cardsOnFloor.size() < 4) {
                 System.out.println("While: " + cardsOnFloor.size());
@@ -501,36 +510,36 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 System.out.println("No Animation needed");
                 break;
 
-                    case 1:
-                        runOnUiThread(()-> anim2.setImageDrawable(card));
-                        animation = new TranslateAnimation(0, (card_pl2.getX() - anim2.getX()) + 7, 0, card_pl2.getY() - anim2.getY());
-                        animation.setRepeatMode(0);
-                        animation.setDuration(ANIMATION_DURATION);
-                        animation.setFillAfter(true);
-                        anim2.startAnimation(animation);
-                        hideCards(1, player2cards);
-                        break;
+            case 1:
+                runOnUiThread(() -> anim2.setImageDrawable(card));
+                animation = new TranslateAnimation(0, (card_pl2.getX() - anim2.getX()) + 7, 0, card_pl2.getY() - anim2.getY());
+                animation.setRepeatMode(0);
+                animation.setDuration(ANIMATION_DURATION);
+                animation.setFillAfter(true);
+                anim2.startAnimation(animation);
+                hideCards(1, player2cards);
+                break;
 
-                    case 2:
-                        runOnUiThread(()-> anim3.setImageDrawable(card));
-                        animation = new TranslateAnimation(0, (card_pl3.getX() - anim3.getX()) + 7, 0, card_pl3.getY() - anim3.getY());
-                        animation.setRepeatMode(0);
-                        animation.setDuration(ANIMATION_DURATION);
-                        animation.setFillAfter(true);
-                        anim3.startAnimation(animation);
-                        hideCards(2, player3cards);
-                        break;
+            case 2:
+                runOnUiThread(() -> anim3.setImageDrawable(card));
+                animation = new TranslateAnimation(0, (card_pl3.getX() - anim3.getX()) + 7, 0, card_pl3.getY() - anim3.getY());
+                animation.setRepeatMode(0);
+                animation.setDuration(ANIMATION_DURATION);
+                animation.setFillAfter(true);
+                anim3.startAnimation(animation);
+                hideCards(2, player3cards);
+                break;
 
-                    case 3:
-                        runOnUiThread(()-> anim4.setImageDrawable(card));
-                        animation = new TranslateAnimation(0, (card_pl4.getX() - anim4.getX()) + 7, 0, card_pl4.getY() - anim4.getY());
-                        animation.setRepeatMode(0);
-                        animation.setDuration(ANIMATION_DURATION);
-                        animation.setFillAfter(true);
-                        anim4.startAnimation(animation);
-                        hideCards(3, player4cards);
-                        break;
-                }
+            case 3:
+                runOnUiThread(() -> anim4.setImageDrawable(card));
+                animation = new TranslateAnimation(0, (card_pl4.getX() - anim4.getX()) + 7, 0, card_pl4.getY() - anim4.getY());
+                animation.setRepeatMode(0);
+                animation.setDuration(ANIMATION_DURATION);
+                animation.setFillAfter(true);
+                anim4.startAnimation(animation);
+                hideCards(3, player4cards);
+                break;
+        }
     }
 
     /**
