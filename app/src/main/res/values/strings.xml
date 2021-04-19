@@ -95,5 +95,5 @@
     <string name="p4_winner_text">Player 4 won</string>
     <string name="p3_winner_text">Player 3 won</string>
     <string name="p2_winner_text">Player 2 won</string>
-    <string name="p1_winner_text">Player 1 won</string>
+    <string name="p1_winner_text">You won</string>
 </resources>
