@@ -2,6 +2,7 @@ package itp.project.popups;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class PopupStichansage extends AppCompatActivity {
 
-    Button skip, muli;
+    Button skip, muli, uebernehmen;
     TextView one, two, three, four, highest;//Stichanzahl
     int countStitches, said;
     ImageView eyeBtn;
@@ -27,6 +28,7 @@ public class PopupStichansage extends AppCompatActivity {
     int currentStiche;
     int indexOfHighestStich;
     int howMuch;
+    boolean isDealer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class PopupStichansage extends AppCompatActivity {
         setContentView(R.layout.popup_stichansage);
 
         dealer = Algorithm.getDealer();
+        isDealer = false;
         rundenStichansage();
     }
 
@@ -157,6 +160,23 @@ public class PopupStichansage extends AppCompatActivity {
             countStitches = 4;
             nextPopup();
         });
+
+        // Wenn Spieler dealer ist, kann er Stiche uebernehmen
+        System.out.println("Dealer:" + dealer);
+        if(dealer == 1) {
+            isDealer = true;
+            //System.out.println("MMM: if");
+            //Wenn man die Stiche uebernimmt
+            uebernehmen = findViewById(R.id.uebernehmen);
+            uebernehmen.setOnClickListener(view -> {
+                countStitches = Integer.parseInt(highest.getText().toString());
+                nextPopup();
+            });
+        }else{
+            //System.out.println("MMM: else");
+            uebernehmen = findViewById(R.id.uebernehmen);
+            uebernehmen.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -169,12 +189,12 @@ public class PopupStichansage extends AppCompatActivity {
 
 
         if (userPoints > 5) {
-            if (countStitches > said) {
+            if ((countStitches > said) || isDealer) {
                 Collections.rotate(players, howMuch);
                 Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
                 //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
                 startActivity(new Intent(PopupStichansage.this, PopupSelectAtout.class));
-            } else {
+            }else {
                 //Unter 6 Punkten, darf der Spieler keine Stiche ansagen
                 Playground.angesagteSticheAnzeigen(players.get(indexOfHighestStich), highestStitches);
                 Algorithm.setAtout(players.get(indexOfHighestStich).getAtoutFromPlayers());
