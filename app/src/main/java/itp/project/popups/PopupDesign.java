@@ -44,8 +44,8 @@ public class PopupDesign extends AppCompatActivity {
                 break;
             case R.id.pack4:
                 textView.setText("Mathe");
-                card.setForeground(getDrawable(R.drawable.hintergrund_mulatschak));
-                background = getDrawable(R.drawable.hintergrund_mulatschak);
+                card.setForeground(getDrawable(R.drawable.mathe));
+                background = getDrawable(R.drawable.mathe);
                 break;
             case R.id.pack5:
                 textView.setText("Totenkopf");

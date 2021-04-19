@@ -70,7 +70,7 @@
             android:scrollbarThumbHorizontal="@drawable/card_standard_backside"
             android:scrollbarThumbVertical="@drawable/card_standard_backside"
             android:scrollbarTrackVertical="@drawable/card_standard_backside"
-            android:foreground="@drawable/card_standard_backside"
+            android:foreground="@drawable/mathe"
             app:layout_constraintStart_toEndOf="@+id/pack3"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/pack8"/>
