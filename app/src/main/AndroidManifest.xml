@@ -11,7 +11,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="AllowBackup">
-        <activity android:name="itp.project.popups.PopupCard6">
+        <activity
+                android:name="itp.project.popups.PopupCard6"
+                android:screenOrientation="sensorLandscape"
+                android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
                 android:name="itp.project.popups.PopupPauseMenu"

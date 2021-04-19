@@ -91,4 +91,5 @@
     <string name="name">Name</string>
     <string name="gemachte_stiche">Gemachte Stiche</string>
     <string name="_0_0">0/0</string>
+    <string name="card6">Please choose which card you want to throw away</string>
 </resources>
