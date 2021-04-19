@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RotateDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.muddzdev.styleabletoast.StyleableToast;
 import itp.project.exceptions.WinException;
 import itp.project.popups.*;
 
@@ -42,6 +45,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     private static int beginner;
     private static int playerCardNumber;
     final long ANIMATION_DURATION = 500;
+    private static Context context;
+
     //Liste für die Karten
     //LogPopup
     Button showLogBtn;
@@ -52,18 +57,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     //fuer play
     final Lock lock = new ReentrantLock();
     final Condition spielerSpielt = lock.newCondition();
-    /**
-     * Jeder Spieler spielt eine Karte.
-     * Dann wird die beste Karte ausgewertet, in das Log eingetragen neu ausgeteilt und wieder die Stichansage aufgerufen.
-     */
-    public long TIME_TO_WAIT_AFTER_CARD = 1000;
     public long TIME_TO_WAIT_AFTER_ROUND = 3000;
     ImageView anim2, anim3, anim4;
     //Gemachte Stiche Popup
     Button gemachteStiche;
     //Cards
     ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
-    long animationOffset = 0;
 
     private static ArrayList<ImageView> player2cards, player3cards, player4cards;
 
@@ -90,18 +89,22 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                     switch (player) {
                         case 1:
                             stitches[0].setText(String.valueOf(count));
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p1_winner_text), R.style.player1).show());
                             System.out.println("Player 1 won: " + count);
                             break;
                         case 2:
                             stitches[1].setText(String.valueOf(count));
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p2_winner_text), R.style.player2).show());
                             System.out.println("Player 2 won: " + count);
                             break;
                         case 3:
                             stitches[2].setText(String.valueOf(count));
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p3_winner_text), R.style.player3).show());
                             System.out.println("Player 3 won: " + count);
                             break;
                         case 4:
                             stitches[3].setText(String.valueOf(count));
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p4_winner_text), R.style.player4).show());
                             System.out.println("Player 4 won: " + count);
                             break;
                     }
@@ -230,7 +233,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
-
+        Playground.context = getApplicationContext();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -368,7 +371,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public synchronized boolean onTouch(View v, MotionEvent event) {
         v.performClick();
         if (beginner != 0) {
-            runOnUiThread(()->Toast.makeText(this, R.string.playerNotDran, Toast.LENGTH_SHORT).show());
+            runOnUiThread(() -> Toast.makeText(this, R.string.playerNotDran, Toast.LENGTH_SHORT).show());
             return false;
         }
         move = (ImageView) v;
@@ -412,7 +415,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
     public synchronized void play() {
         System.out.println(Thread.currentThread().getName() + " handled play()");
-        new Thread(()-> {
+        new Thread(() -> {
             System.out.println("Play started");
             while (cardsOnFloor.size() < 4) {
                 System.out.println("While: " + cardsOnFloor.size());
@@ -436,21 +439,17 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
                 /* hier kommt die Animation hin */
 
-                //animation(2,null);
-                // animation(3,null);
-                //animation(4,null);
+                Drawable pic = null;
+                try {
+                    pic = cardsOnFloor.get(beginner).getPicture();
+                } catch (NullPointerException ignored) {
+                }
+                kartenAnzeigen(beginner, pic);
 
-                kartenAnzeigen(beginner, cardsOnFloor.get(beginner).getPicture());
                 System.out.println(("Ich bin " + players[beginner].getName() + " und spiele " + cardsOnFloor.get(beginner).getColor() + cardsOnFloor.get(beginner).getValue() + ". Ich habe folgende Karten: " + players[beginner].getHoldingCardsString()));
                 rotateBeginner();
-                try {
-                    Thread.sleep(0);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
             try {
-                animationThread.join();
                 Thread.sleep(TIME_TO_WAIT_AFTER_ROUND);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -472,7 +471,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             kartenAnzeigen(2, null);
             kartenAnzeigen(3, null);
 
-            animationOffset = 0;
 
             //Noch Karten vorhanden?
             System.out.println("Playerkarten: " + playerCardNumber);
@@ -493,78 +491,59 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }).start();
     }
 
-    public synchronized void animation(int spieler, Drawable card) {
+    public synchronized void animate(int spieler, Drawable card, boolean waitForIt) {
+        animation(spieler, card);
+        if (waitForIt) {
+            try {
+                Thread.sleep(ANIMATION_DURATION);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private synchronized void animation(int spieler, Drawable card) {
         // Card card4, card1, card2, card3, card5
         // Destination destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
-        animationThread = new Thread(()->{
-                TranslateAnimation animation;
-                //runOnUiThread();
-                //TranslateAnimation animation = null;
-                //Mit Switch Case
-                switch (spieler) {
-                    case 0:
-                        System.out.println("No Animation needed");
-                        break;
+        TranslateAnimation animation;
+        //runOnUiThread();
+        //TranslateAnimation animation = null;
+        //Mit Switch Case
+        switch (spieler) {
+            case 0:
+                System.out.println("No Animation needed");
+                break;
 
-                    case 1:
-                        runOnUiThread(()-> anim2.setImageDrawable(card));
-                        animation = new TranslateAnimation(0, (card_pl2.getX() - anim2.getX()) + 7, 0, card_pl2.getY() - anim2.getY());
-                        animation.setRepeatMode(0);
-                        animation.setDuration(ANIMATION_DURATION);
-                        animation.setStartOffset(animationOffset);
-                        animationOffset += ANIMATION_DURATION;
-                        animation.setFillAfter(true);
-                        anim2.startAnimation(animation);
-                        hideCards(1, player2cards);
-                        try {
-                            Thread.sleep(animationOffset);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        break;
+            case 1:
+                runOnUiThread(() -> anim2.setImageDrawable(card));
+                animation = new TranslateAnimation(0, (card_pl2.getX() - anim2.getX()) + 7, 0, card_pl2.getY() - anim2.getY());
+                animation.setRepeatMode(0);
+                animation.setDuration(ANIMATION_DURATION);
+                animation.setFillAfter(true);
+                anim2.startAnimation(animation);
+                hideCards(1, player2cards);
+                break;
 
-                    case 2:
-                        runOnUiThread(()-> anim3.setImageDrawable(card));
-                        animation = new TranslateAnimation(0, (card_pl3.getX() - anim3.getX()) + 7, 0, card_pl3.getY() - anim3.getY());
-                        animation.setRepeatMode(0);
-                        animation.setDuration(ANIMATION_DURATION);
-                        animation.setStartOffset(animationOffset);
-                        animationOffset += ANIMATION_DURATION;
-                        animation.setFillAfter(true);
-                        anim3.startAnimation(animation);
-                        hideCards(2, player3cards);
-                        try {
-                            Thread.sleep(animationOffset);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        break;
+            case 2:
+                runOnUiThread(() -> anim3.setImageDrawable(card));
+                animation = new TranslateAnimation(0, (card_pl3.getX() - anim3.getX()) + 7, 0, card_pl3.getY() - anim3.getY());
+                animation.setRepeatMode(0);
+                animation.setDuration(ANIMATION_DURATION);
+                animation.setFillAfter(true);
+                anim3.startAnimation(animation);
+                hideCards(2, player3cards);
+                break;
 
-                    case 3:
-                        runOnUiThread(()-> anim4.setImageDrawable(card));
-                        animation = new TranslateAnimation(0, (card_pl4.getX() - anim4.getX()) + 7, 0, card_pl4.getY() - anim4.getY());
-                        animation.setRepeatMode(0);
-                        animation.setDuration(ANIMATION_DURATION);
-                        animation.setStartOffset(animationOffset);
-                        animationOffset += ANIMATION_DURATION;
-                        animation.setFillAfter(true);
-                        anim4.startAnimation(animation);
-                        hideCards(3, player4cards);
-                        try {
-                            Thread.sleep(animationOffset);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                }
-            //anim2.setBackground(null);
-            // anim3.setBackground(null);
-            //anim4.setBackground(null);
-//        anim2.setVisibility(View.INVISIBLE);
-//        anim3.setVisibility(View.INVISIBLE);
-//        anim4.setVisibility(View.INVISIBLE);
-        });
-        animationThread.start();
+            case 3:
+                runOnUiThread(() -> anim4.setImageDrawable(card));
+                animation = new TranslateAnimation(0, (card_pl4.getX() - anim4.getX()) + 7, 0, card_pl4.getY() - anim4.getY());
+                animation.setRepeatMode(0);
+                animation.setDuration(ANIMATION_DURATION);
+                animation.setFillAfter(true);
+                anim4.startAnimation(animation);
+                hideCards(3, player4cards);
+                break;
+        }
     }
 
     /**
@@ -691,8 +670,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
             //Atout zurücksetzen
             atout.setImageResource(R.drawable.empty);
-
-            animationOffset = 0;
         });
     }
 
@@ -713,8 +690,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         } else {
             runOnUiThread(new Thread(() -> {
                 if (card != null) {
-                    animation(spieler, card);
-                    //runOnUiThread(() -> animation(spieler, card));
+                    animate(spieler, card, true);
                 } else {
                     switch (spieler) {
                         case 1:
@@ -735,7 +711,6 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                     }
                 }
             }));
-
         }
     }
 

@@ -13,4 +13,56 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="player1">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">@color/colorPrimary</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stIconStart">@drawable/player_one_icon</item>
+        <item name="stColorBackground">#fff</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#fff</item>
+        <item name="stLength">LONG</item>
+        <item name="stGravity">top</item>
+        <item name="stRadius">5dp</item>
+    </style>
+    <style name="player2">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">@color/colorPrimary</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stIconStart">@drawable/player_two_icon</item>
+        <item name="stColorBackground">#fff</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#fff</item>
+        <item name="stLength">LONG</item>
+        <item name="stGravity">top</item>
+        <item name="stRadius">5dp</item>
+    </style>
+    <style name="player3">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">@color/colorPrimary</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stIconStart">@drawable/player_three_icon</item>
+        <item name="stColorBackground">#fff</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#fff</item>
+        <item name="stLength">LONG</item>
+        <item name="stGravity">top</item>
+        <item name="stRadius">5dp</item>
+    </style>
+    <style name="player4">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">@color/colorPrimary</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stIconStart">@drawable/player_four_icon</item>
+        <item name="stColorBackground">#fff</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#fff</item>
+        <item name="stLength">LONG</item>
+        <item name="stGravity">top</item>
+        <item name="stRadius">5dp</item>
+    </style>
 </resources>

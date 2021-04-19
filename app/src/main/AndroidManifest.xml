@@ -18,11 +18,11 @@
         </activity>
         <activity
                 android:name="itp.project.popups.GemachteStiche"
-                android:screenOrientation="landscape">
-<!--                android:theme="@style/AppTheme.Popup">-->
+                android:screenOrientation="sensorLandscape">
+            <!--                android:theme="@style/AppTheme.Popup">-->
         </activity>
         <activity android:name="itp.project.popups.PopupHoldingCards"
-                  android:screenOrientation="landscape"
+                  android:screenOrientation="sensorLandscape"
                   android:theme="@style/AppTheme.Popup">
         </activity>
         <activity
