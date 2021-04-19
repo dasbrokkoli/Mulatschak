@@ -114,6 +114,7 @@ public class Algorithm {
     public synchronized static void rundenbeginn() {
         Random r = new Random();
         dealer = 1 + r.nextInt(4);
+        System.out.println("Rundenbeginn: dealer = " + dealer);
         Arrays.fill(tricks, 0);
         Collections.fill(points, MAX_POINTS);
     }
@@ -187,6 +188,10 @@ public class Algorithm {
 
     public static int getDealer() {
         return dealer;
+    }
+
+    public static void setDealer(int dealer) {
+        Algorithm.dealer = dealer;
     }
 
     /**

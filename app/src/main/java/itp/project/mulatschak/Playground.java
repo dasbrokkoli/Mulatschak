@@ -668,6 +668,16 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             //Atout zurücksetzen
             atout.setImageResource(R.drawable.empty);
         });
+
+        //Damit sich der dealer jede Runde aendert
+        int dealer = Algorithm.getDealer();
+        if (dealer < 4) {
+            int i = dealer + 1;
+            Algorithm.setDealer(i);
+        } else {
+            Algorithm.setDealer(1);
+        }
+        System.out.println("Runde: reset, dealer: " + Algorithm.getDealer());
     }
 
     private synchronized void rotateBeginner() {
