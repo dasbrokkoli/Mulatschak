@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RotateDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -89,22 +88,22 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                     switch (player) {
                         case 1:
                             stitches[0].setText(String.valueOf(count));
-                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p1_winner_text), R.style.player1).show());
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, context.getString(R.string.p1_winner_text), R.style.player1).show());
                             System.out.println("Player 1 won: " + count);
                             break;
                         case 2:
                             stitches[1].setText(String.valueOf(count));
-                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p2_winner_text), R.style.player2).show());
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, context.getString(R.string.p2_winner_text), R.style.player2).show());
                             System.out.println("Player 2 won: " + count);
                             break;
                         case 3:
                             stitches[2].setText(String.valueOf(count));
-                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p3_winner_text), R.style.player3).show());
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, context.getString(R.string.p3_winner_text), R.style.player3).show());
                             System.out.println("Player 3 won: " + count);
                             break;
                         case 4:
                             stitches[3].setText(String.valueOf(count));
-                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, String.valueOf(R.string.p4_winner_text), R.style.player4).show());
+                            new Handler(Looper.getMainLooper()).post(() -> StyleableToast.makeText(context, context.getString(R.string.p4_winner_text), R.style.player4).show());
                             System.out.println("Player 4 won: " + count);
                             break;
                     }
@@ -451,9 +450,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             }
             try {
                 Thread.sleep(TIME_TO_WAIT_AFTER_ROUND);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
+            } catch (InterruptedException | NullPointerException e) {
                 e.printStackTrace();
             }
 
