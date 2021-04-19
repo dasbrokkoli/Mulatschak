@@ -34,7 +34,7 @@
             android:scrollbarThumbHorizontal="@drawable/card_standard_backside"
             android:scrollbarThumbVertical="@drawable/card_standard_backside"
             android:scrollbarTrackVertical="@drawable/card_standard_backside"
-            android:foreground="@drawable/card_standard_backside"
+            android:foreground="@drawable/totenkopf"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toStartOf="@+id/pack6" app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/pack1"/>

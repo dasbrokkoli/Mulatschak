@@ -13,6 +13,8 @@ public class DesignPackActivity extends AppCompatActivity {
     ImageView i1;
     ImageView i2;
     ImageView i3;
+    ImageView i4;
+    ImageView i5;
 
 
 
@@ -30,6 +32,8 @@ public class DesignPackActivity extends AppCompatActivity {
         i1 = findViewById(R.id.pack1);
         i2 = findViewById(R.id.pack2);
         i3 = findViewById(R.id.pack3);
+        i4 = findViewById(R.id.pack4);
+        i5 = findViewById(R.id.pack5);
 
         // für das gewählte Popup wird die Id mitgegeben
         i1.setOnClickListener(v -> {
@@ -47,6 +51,18 @@ public class DesignPackActivity extends AppCompatActivity {
         i3.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), PopupDesign.class);
             intent.putExtra(choosePackId, i3.getId());
+            startActivity(intent);
+        });
+
+        i4.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), PopupDesign.class);
+            intent.putExtra(choosePackId, i4.getId());
+            startActivity(intent);
+        });
+
+        i5.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), PopupDesign.class);
+            intent.putExtra(choosePackId, i5.getId());
             startActivity(intent);
         });
     }

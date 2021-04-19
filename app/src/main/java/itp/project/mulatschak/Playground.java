@@ -779,11 +779,15 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         //super.onBackPressed();
     }
 
+    /**
+     * Die Karten der anderen Spieler werden angezeigt
+     */
     public static void setCardBackground(){
 
         for(int i = 0; i <5; i++){
             player2cards.get(i).setImageDrawable(MainActivity.background);
-            player3cards.get(i).setRotation(90);
+            //Karten um 90 Grad drehen
+            player3cards.get(i).setRotation(-90);
             player4cards.get(i).setRotation(90);
             player3cards.get(i).setImageDrawable(MainActivity.background);
             player4cards.get(i).setImageDrawable(MainActivity.background);
