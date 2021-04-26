@@ -12,7 +12,7 @@
     <string name="name2">Player 2</string>
     <string name="name3">Player 3</string>
     <string name="name4">Player 4</string>
-    <string name="uebernehmen">Stiche übernehmen</string>
+    <string name="uebernehmen">carry over</string>
     <string name="difficulty1">Easy</string>
     <string name="difficulty2">Medium</string>
     <string name="difficulty3">Hard</string>
@@ -90,7 +90,7 @@
     <string name="no_stitches">/</string>
     <string name="stiche">Stiche</string>
     <string name="name">Name</string>
-    <string name="gemachte_stiche">Gemachte Stiche</string>
+    <string name="gemachte_stiche">made stiches</string>
     <string name="_0_0">0/0</string>
     <string name="p4_winner_text">Player 4 won</string>
     <string name="p3_winner_text">Player 3 won</string>
