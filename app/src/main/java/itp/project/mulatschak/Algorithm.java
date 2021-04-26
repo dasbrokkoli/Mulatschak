@@ -273,7 +273,7 @@ public class Algorithm {
 
     private synchronized void setValues() {
         for (Card card : cards) {
-            if (card.getColor() == Algorithm.getAtout()) {
+            if (card.getColor() == Algorithm.getAtout()||card.getColor() == Colors.WELI) {
                 card.setTempValue(card.getValue() + 10);
             } else {
                 card.setTempValue(card.getValue());
