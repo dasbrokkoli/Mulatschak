@@ -28,6 +28,7 @@ public class PopupStichansage extends AppCompatActivity {
     int currentStiche;
     int indexOfHighestStich;
     int howMuch;
+    boolean skips;
     boolean isDealer;
 
     @Override
@@ -38,6 +39,7 @@ public class PopupStichansage extends AppCompatActivity {
 
         dealer = Algorithm.getDealer();
         isDealer = false;
+        skips = false;
         rundenStichansage();
     }
 
@@ -130,6 +132,7 @@ public class PopupStichansage extends AppCompatActivity {
         skip = findViewById(R.id.skip);
         skip.setOnClickListener(view -> {
             countStitches = 0;
+            skips = true;
             nextPopup();
         });
 
@@ -165,7 +168,6 @@ public class PopupStichansage extends AppCompatActivity {
         System.out.println("Dealer:" + dealer);
         if(dealer == 1) {
             isDealer = true;
-            //System.out.println("MMM: if");
             //Wenn man die Stiche uebernimmt
             uebernehmen = findViewById(R.id.uebernehmen);
             uebernehmen.setOnClickListener(view -> {
@@ -189,7 +191,8 @@ public class PopupStichansage extends AppCompatActivity {
 
 
         if (userPoints > 5) {
-            if ((countStitches > said) || isDealer) {
+
+            if ((countStitches > said) || (isDealer && !skips)) {
                 Collections.rotate(players, howMuch);
                 Playground.angesagteSticheAnzeigen(players.get(0), countStitches);
                 //man hat die höchsten Stiche angesagt und kann jetzt das Atout wählen
