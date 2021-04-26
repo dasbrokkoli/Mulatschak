@@ -197,6 +197,22 @@ public class Algorithm {
     }
 
     /**
+     * Wenn man alle 5 Karten tauscht und 6 erhält
+     */
+
+    public void addCard6(){
+        this.playerCards.addCard6();
+    }
+
+    /**
+     * Die 6 Karte löschen
+     */
+
+    public void deleteCard6(Card card){
+        this.playerCards.deleteHoldingCard(card);
+    }
+
+    /**
      * @param inputCard the highest Card currently laying on the floor
      * @return the best {@link Card} the Computer could play in this move
      */

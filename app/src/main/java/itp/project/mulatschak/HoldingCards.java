@@ -35,6 +35,33 @@ public class HoldingCards {
     }
 
     /**
+     * Methode für den Kartentausch
+     * löscht die übergebene Card un weißt dem Spieler eine neue zu
+     * <p>
+     * anzNew entspricht der GESAMTEN Kartenanzahl, also auch inkl. der nicht-getauschten Karten
+     */
+    public void addCard6() {
+        Random r = new Random();
+        int zz;
+        Card card;
+
+            if (HoldingCards.allCards.isEmpty()) {
+                System.err.println("Alle Karten wurde ausgeteilt"); //Später evtl. entfernen
+                return;
+            }
+
+            //eine zufällige Karte wird ausgewählt
+            zz = r.nextInt(HoldingCards.allCards.size());
+
+            //neue Card wird erstellt
+            card = HoldingCards.allCards.get(zz);
+
+
+            //Karte wird dem Spieler zugewiesen
+            this.player.add(card);
+    }
+
+    /**
      * Initialisiert die Karten für einen Spieler
      */
     public void initPlayer(int cardAnz) {
