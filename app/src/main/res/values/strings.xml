@@ -97,4 +97,5 @@
     <string name="p2_winner_text">Player 2 won</string>
     <string name="p1_winner_text">You won</string>
     <string name="card6">Please choose which card you want to throw away</string>
+    <string name="backgroundRestart">After changing background, you have to restart.</string>
 </resources>

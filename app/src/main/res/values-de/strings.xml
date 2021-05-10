@@ -93,4 +93,5 @@
         Hearts: die gemachten Punkte zählen doppelt \n
         Glocken: kein Spieler kann aus der Runde aussteigen \n
     </string>
+    <string name="backgroundRestart">Nach dem ändern des Hintergrundes muss die App neu gestartet werden.</string>
 </resources>

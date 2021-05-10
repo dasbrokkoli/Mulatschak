@@ -1,7 +1,6 @@
 package itp.project.mulatschak;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -27,7 +26,6 @@ public class DesignPackActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        MainActivity.background = getDrawable(R.drawable.card_standard_backside);
         final String choosePackId = "pack";
         i1 = findViewById(R.id.pack1);
         i2 = findViewById(R.id.pack2);

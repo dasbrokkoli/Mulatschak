@@ -839,15 +839,39 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     /**
      * Die Karten der anderen Spieler werden angezeigt
      */
-    public static void setCardBackground(){
+    public void setCardBackground() {
 
-        for(int i = 0; i <5; i++){
-            player2cards.get(i).setImageDrawable(MainActivity.background);
+        SharedPreferences pref = getSharedPreferences("Design", MODE_PRIVATE);
+        String background = pref.getString("background", "standard");
+
+        getDrawable(R.drawable.card_standard_backside);
+
+        int backgroundInt;
+
+        switch (background) {
+            case "easter":
+                backgroundInt = R.drawable.ic_hintergrund_ostern;
+                break;
+            case "math":
+                backgroundInt = R.drawable.mathe;
+                break;
+            case "mulatschak":
+                backgroundInt = R.drawable.hintergrund_mulatschak;
+                break;
+            case "dead":
+                backgroundInt = R.drawable.totenkopf;
+                break;
+            default:
+                backgroundInt = R.drawable.card_standard_backside;
+        }
+
+        for (int i = 0; i < 5; i++) {
+            player2cards.get(i).setImageDrawable(getDrawable(backgroundInt));
             //Karten um 90 Grad drehen
             player3cards.get(i).setRotation(-90);
             player4cards.get(i).setRotation(90);
-            player3cards.get(i).setImageDrawable(MainActivity.background);
-            player4cards.get(i).setImageDrawable(MainActivity.background);
+            player3cards.get(i).setImageDrawable(getDrawable(backgroundInt));
+            player4cards.get(i).setImageDrawable(getDrawable(backgroundInt));
         }
     }
 

@@ -1,7 +1,6 @@
 package itp.project.mulatschak;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
     Button showLogBtn;
     ImageButton closeLogView;
     PopupWindow logWindow;
-
-    public static Drawable background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
         //HoldingCards
         HoldingCards.setWeliStatus(false);
-
-        background = getDrawable(R.drawable.card_standard_backside);
     }
 
     private void initCards() {
