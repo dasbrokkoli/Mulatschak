@@ -21,10 +21,10 @@
     <string name="choose">Choose</string>
     <string name="video">Video</string>
     <string name="hstich">Highest trick</string>
-    <string name="one">1</string>
-    <string name="two">2</string>
-    <string name="three">3</string>
-    <string name="four">4</string>
+    <string name="one" translatable="false">1</string>
+    <string name="two" translatable="false">2</string>
+    <string name="three" translatable="false">3</string>
+    <string name="four" translatable="false">4</string>
     <string name="skip">Skip</string>
     <string name="muli">Muli</string>
     <string name="stichansage">Trick taking</string>
@@ -47,7 +47,7 @@
         * Leaves \n
         * Acorns \n
         * Bells \n
-        For each suit there are eight cards. These include the number cards 7 - 10, Ober, Unter, King, Ace \n.
+        For each suit there are eight cards. These include the number cards 7 - 10, Ober, Unter, King, Ace. \n
         Then there is the Weli. The Weli is not assigned to any suit and is the second highest card after the Ace. \n
         ## Tricks and values \n
         As in Schnapsen, the highest card in the round is the trick and the player who plays this card receives a point.
@@ -86,12 +86,12 @@
     <string name="resume">Resume</string>
     <string name="quit">Quit</string>
     <string name="yourcards">Your Cards</string>
-    <string name="zero">0</string>
-    <string name="no_stitches">/</string>
-    <string name="stiche">Stiche</string>
+    <string name="zero" translatable="false">0</string>
+    <string name="no_stitches" translatable="false">/</string>
+    <string name="stiche">stiches</string>
     <string name="name">Name</string>
     <string name="gemachte_stiche">made stiches</string>
-    <string name="_0_0">0/0</string>
+    <string name="_0_0" translatable="false">0/0</string>
     <string name="p4_winner_text">Player 4 won</string>
     <string name="p3_winner_text">Player 3 won</string>
     <string name="p2_winner_text">Player 2 won</string>

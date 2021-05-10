@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mulatschak</string>
+    <string name="play">Spielen</string>
+    <string name="log">Protokoll</string>
+    <string name="difficulty">Schwierigkeit</string>
+    <string name="next">Weiter</string>
+    <string name="settings_name">Einstellungen</string>
+    <string name="tutorial_name">Tutorial</string>
+    <string name="logHead">Letzte Spiele:</string>
+    <string name="names">Spielernamen (Optional)</string>
+    <string name="name1">Spieler 1 - Du</string>
+    <string name="name2">Spieler 2</string>
+    <string name="name3">Spieler 3</string>
+    <string name="name4">Spieler 4</string>
+    <string name="uebernehmen">Stiche übernehmen</string>
+    <string name="difficulty1">Einfach</string>
+    <string name="difficulty2">Mittel</string>
+    <string name="difficulty3">Schwer</string>
+    <string name="difficulty4">Unbesiegbar</string>
+    <string name="design">Aussehen</string>
+    <string name="choose">Wählen</string>
+    <string name="video">Video</string>
+    <string name="hstich">Höchster Stich</string>
+    <string name="skip">Überspringen</string>
+    <string name="muli">Muli</string>
+    <string name="stichansage">Stichansage</string>
+    <string name="atout">Atout</string>
+    <string name="mitgehen">mitgehen</string>
+    <string name="aussteigen">aussteigen</string>
+    <string name="selectAtout">Atout wählen</string>
+    <string name="change">Kartentausch</string>
+    <string name="weliDraw">Weli ziehen</string>
+    <string name="withdraw">ziehen</string>
+    <string name="okay">OK</string>
+    <string name="save">Spiel speichern</string>
+    <string name="game_name">Name:</string>
+    <string name="del">Löschen</string>
+    <string name="save2">Speichern</string>
+    <string name="playerNotDran">Du bist nicht dran! Bitte warte!</string>
+    <string name="playerDran">Jetzt kannst du spielen!</string>
+    <string name="winMessage">hat gewonnen!</string>
+    <string name="back">&lt;Zurück</string>
+    <string name="next1">Weiter&gt;</string>
+    <string name="resume">fortsetzen</string>
+    <string name="quit">Spiel beenden</string>
+    <string name="yourcards">Deine Karten</string>
+    <string name="stiche">Stiche</string>
+    <string name="name">Name</string>
+    <string name="gemachte_stiche">gemachte Stiche</string>
+    <string name="p4_winner_text">Spieler 4 hat gewonnen</string>
+    <string name="p3_winner_text">Spieler 3 hat gewonnen</string>
+    <string name="p2_winner_text">Spieler 2 hat gewonnen</string>
+    <string name="p1_winner_text">Du hast gewonnen</string>
+    <string name="card6">Bitte wähle, welche Karte du wegwerfen möchtest</string>
+    <string name="tutorialText">
+        ## Karten \n
+        Bei Mulatschak gibt es insgesamt 33 Karten und 4 verschiedene Farben \n
+        * Herzen \n
+        * Blätter \n
+        * Eicheln \n
+        * Glocken \n
+        Für jede Farbe gibt es 8 Karten. Dazu gehören die Zahlenkarten 7 - 10, Ober, Unter, König, Ass. \n
+        Dann gibt es noch den Weli. Der Weli ist keiner Farbe zugeordnet und ist die zweithöchste Karte nach dem Ass. \n
+        ## Tricks und Werte \n
+        Wie beim Schnapsen ist die höchste Karte in der Runde der Stich und der Spieler, der diese Karte ausspielt,
+        erhält einen Punkt. \n
+        Die Karten haben die folgenden Werte (unabhängig von der Farbe). Eine höhere Karte übertrumpft automatisch alle
+        niedrigeren Karten, es sei denn, sie wird selbst von einer höheren Karte übertrumpft: \n
+        7 &lt; 8 &lt; 9 &lt; 10 &lt; 11 &lt; Ober &lt; Unter &lt; König &lt; Weli &lt; Ass \n
+        Es ist zu beachten, dass die Atout-Farbe den allerhöchsten Wert hat und alles übertrifft. Das bedeutet, dass
+        eine Karte die mit der Ausgangsfarbe übereinstimmt, nicht von einer höheren Karte geschlagen werden kann, es sei
+        denn, sie stimmt auch mit der Ausgangsfarbe überein. \n
+        ## Atout und Stichansage \n
+        Nachdem die Karten ausgeteilt wurden, machen die Spieler Stichansagen. Eine Stichansage ist eine Schätzung, wie
+        viele Stiche wahrscheinlich in dieser Runde gemacht werden. Jede Stichansage MUSS erreicht werden, sonst werden
+        die Punkte wieder aufgeschrieben. \n
+        Der Spieler, der die höchste Stichansage macht, darf das Atout ansagen. \n
+        Das Atout entspricht einer der vier Farben (Herzen, Blätter, Eicheln, Glocken) und wird jede Runde neu bestimmt.
+        Karten mit der Atout-Farbe haben immer einen höheren Wert als Karten mit einer anderen Farbe und können nur von
+        höhere Karten, die ihrerseits der
+        Atout-Farbe entsprechen. \n
+        ## Karten austeilen und ziehen \n
+        Nach dem Spielzug ist jeder Spieler an der Reihe zu geben. Der linke/rechte Nachbar darf die Weli ziehen. Um
+        dies zu tun, nimmt er nimmt den Kartenstapel, teilt ihn und schaut nach, ob die Karte in der Mitte das Weli ist.
+        Wenn es das Weli ist, zeigt er das Weli den anderen Spielern und darf es behalten. Wenn es nicht das Weli ist,
+        sondern eine andere Karte, wird sie wieder unter die Karten gemischt. \n
+        ## Wie man spielt \n
+        Der Spieler, der den Atout angekündigt hat, darf die erste Karte ausspielen. Nachdem jeder Spieler eine Karte
+        gespielt hat (die gespielte Karte muss höher sein als die zuvor gespielte Karte), gewinnt der Spieler mit der
+        höchsten Karte (siehe **Tricks und Werte**) und darf die nächste Runde beginnen. \n
+        ## Sonderausspielregeln: \n
+        Hearts: die gemachten Punkte zählen doppelt \n
+        Glocken: kein Spieler kann aus der Runde aussteigen \n
+    </string>
+</resources>

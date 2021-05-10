@@ -64,6 +64,8 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
 
     private static ArrayList<ImageView> player2cards, player3cards, player4cards;
+    private int firstPlayerIndex;
+    private List<Card> playerPlayedCards;
 
     /**
      * Spieler zurückgeben
@@ -275,7 +277,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         gemachteStiche = findViewById(R.id.gemachteStiche);
         gemachteStiche.setOnClickListener(view -> startActivity(new Intent(Playground.this, GemachteStiche.class)));
 
-
+        playerPlayedCards = new ArrayList<>();
 
 
         //Cards
@@ -374,9 +376,25 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             return false;
         }
         move = (ImageView) v;
+        try {
+            if (getCardFromView(move).getColor() != cardsOnFloor.get(firstPlayerIndex).getColor()) {
+                // && getCardFromView(move).getColor() != Algorithm.getAtout() && getCardFromView(move).getColor() != Colors.WELI
+                for (Card card : getPlayer(1).getHoldingCards()) {
+                    if (playerPlayedCards.contains(card)) continue;
+                    if (card.getColor() == cardsOnFloor.get(firstPlayerIndex).getColor()) {
+                        Toast.makeText(this, "Farbzwang", Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                }
+            }
+        } catch (NullPointerException ignored) {
+            System.out.println("Player is first.");
+            System.out.println("Beginner: " + firstPlayerIndex);
+        }
         View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
         ClipData data = ClipData.newPlainText("", "");
         v.startDragAndDrop(data, shadowBuilder, v, 0);
+        playerPlayedCards.add(getCardFromView(move));
         return true;
     }
 
@@ -417,6 +435,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         new Thread(() -> {
             System.out.println("Play started");
             while (cardsOnFloor.size() < 4) {
+                boolean first = cardsOnFloor.isEmpty();
                 System.out.println("While: " + cardsOnFloor.size());
                 if (beginner == 0) {
                     lock.lock();
@@ -435,6 +454,9 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 Card[] cArray = new Card[cardsOnFloor.size()];
                 cardsOnFloor.values().toArray(cArray);
                 cardsOnFloor.put(beginner, players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
+                if (first) {
+                    firstPlayerIndex = beginner;
+                }
 
                 /* hier kommt die Animation hin */
 
@@ -607,6 +629,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             }
         });
         playThread.start();
+        stitches[Algorithm.getDealer() - 1].setBackgroundResource(R.drawable.empty_magenta);
     }
 
     public void neuAusteilen() {
@@ -667,6 +690,12 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
 
             //Atout zurücksetzen
             atout.setImageResource(R.drawable.empty);
+
+            for (TextView view : stitches) {
+                view.setBackgroundResource(R.drawable.empty);
+            }
+
+            playerPlayedCards.clear();
         });
 
         //Damit sich der dealer jede Runde aendert
