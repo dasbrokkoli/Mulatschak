@@ -376,6 +376,21 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
             return false;
         }
         move = (ImageView) v;
+        try {
+            if (getCardFromView(move).getColor() != cardsOnFloor.get(firstPlayerIndex).getColor()) {
+                // && getCardFromView(move).getColor() != Algorithm.getAtout() && getCardFromView(move).getColor() != Colors.WELI
+                for (Card card : getPlayer(1).getHoldingCards()) {
+                    if (playerPlayedCards.contains(card)) continue;
+                    if (card.getColor() == cardsOnFloor.get(firstPlayerIndex).getColor()) {
+                        Toast.makeText(this, "Farbzwang", Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                }
+            }
+        } catch (NullPointerException ignored) {
+            System.out.println("Player is first.");
+            System.out.println("Beginner: " + firstPlayerIndex);
+        }
         View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
         ClipData data = ClipData.newPlainText("", "");
         v.startDragAndDrop(data, shadowBuilder, v, 0);
