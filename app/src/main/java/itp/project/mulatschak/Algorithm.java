@@ -10,6 +10,8 @@ import itp.project.popups.PopupAtout;
 import javax.annotation.Nullable;
 import java.util.*;
 
+import static itp.project.mulatschak.Playground.beginner;
+
 public class Algorithm {
 
     private static final Integer MAX_POINTS = 21;
@@ -237,6 +239,12 @@ public class Algorithm {
             System.out.println("Random");
             int random = new Random().nextInt(playerCards.getCards().size());
             Card card = playerCards.getCards().get(random);
+            if (!validMove(card)) {
+                while (!validMove(card)) {
+                    random = new Random().nextInt(playerCards.getCards().size());
+                    card = playerCards.getCards().get(random);
+                }
+            }
             playerCards.deleteHoldingCard(card);
             return card;
         }
@@ -267,13 +275,33 @@ public class Algorithm {
         if (lowestValue.getTempValue() < moreThan) {
             return null;
         }
-        playerCards.deleteHoldingCard(lowestValue);
+        if (!validMove(lowestValue)) {
+            lowestCardValue(moreThan + 1);
+        } else {
+            playerCards.deleteHoldingCard(lowestValue);
+        }
         return lowestValue;
+    }
+
+    private boolean validMove(Card playedCard) {
+        try {
+            if (playedCard.getColor() != Playground.cardsOnFloor.get(Playground.firstPlayerIndex).getColor()) {
+                // && getCardFromView(move).getColor() != Algorithm.getAtout() && getCardFromView(move).getColor() != Colors.WELI
+                for (Card card : playerCards.getCards()) {
+                    if (card.getColor() == Playground.cardsOnFloor.get(Playground.firstPlayerIndex).getColor()) {
+                        return false;
+                    }
+                }
+            }
+        } catch (NullPointerException ignored) {
+            System.out.println(beginner + " is first.");
+        }
+        return true;
     }
 
     private synchronized void setValues() {
         for (Card card : cards) {
-            if (card.getColor() == Algorithm.getAtout()||card.getColor() == Colors.WELI) {
+            if (card.getColor() == Algorithm.getAtout() || card.getColor() == Colors.WELI) {
                 card.setTempValue(card.getValue() + 10);
             } else {
                 card.setTempValue(card.getValue());

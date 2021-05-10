@@ -34,14 +34,14 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     public static final TextView[] stitches = new TextView[4];
     //Algorithmen für Spieler
     static final Algorithm[] players = new Algorithm[4];
-    private static final BiMap<Integer, Card> cardsOnFloor = HashBiMap.create();
+    public static final BiMap<Integer, Card> cardsOnFloor = HashBiMap.create();
     public static Thread playThread;
     public static Thread animationThread;
     public static List<Card> gewonnene;
     static ImageView move;
     static ImageView atout;
     private static TextView pl1_announced, pl2_announced, pl3_announced, pl4_announced;
-    private static int beginner;
+    public static int beginner;
     private static int playerCardNumber;
     final long ANIMATION_DURATION = 500;
     private static Context context;
@@ -64,7 +64,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     ImageView card4, card1, card2, card3, card5, destination, card_pl2, card_pl3, card_pl4, pl2, pl3, pl4;
 
     private static ArrayList<ImageView> player2cards, player3cards, player4cards;
-    private int firstPlayerIndex;
+    public static int firstPlayerIndex;
     private List<Card> playerPlayedCards;
 
     /**
@@ -453,7 +453,25 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 }
                 Card[] cArray = new Card[cardsOnFloor.size()];
                 cardsOnFloor.values().toArray(cArray);
-                cardsOnFloor.put(beginner, players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray)));
+                Card temp = null;
+                while (temp == null) {
+                    temp = players[beginner].getResponseCard(Algorithm.getWinnerFromCards(cArray));
+                    try {
+                        if (temp.getColor() != cardsOnFloor.get(firstPlayerIndex).getColor()) {
+                            // && getCardFromView(move).getColor() != Algorithm.getAtout() && getCardFromView(move).getColor() != Colors.WELI
+                            for (Card card : getPlayer(beginner + 1).getHoldingCards()) {
+                                if (card.getColor() == cardsOnFloor.get(firstPlayerIndex).getColor()) {
+                                    temp = null;
+                                    break;
+                                }
+                            }
+                        }
+                    } catch (NullPointerException ignored) {
+                        System.out.println(beginner + " is first.");
+                        System.out.println("Beginner: " + firstPlayerIndex);
+                    }
+                }
+                cardsOnFloor.put(beginner, temp);
                 if (first) {
                     firstPlayerIndex = beginner;
                 }
