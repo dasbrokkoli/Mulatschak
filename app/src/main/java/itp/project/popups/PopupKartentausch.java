@@ -71,13 +71,13 @@ public class PopupKartentausch extends AppCompatActivity implements View.OnTouch
             //Es können nicht 4 Karten getauscht werden
             if (count != 4) {
                 //startActivity(new Intent(PopupKartentausch.this, Playground.class));
+                for (ImageView imageView : cardsToChange) {
+                    changeCard(imageView);
+                    //cardsToChange.get(i).setVisibility(View.INVISIBLE);
+                }
                 if(count == 5) {
                     startActivity(new Intent(PopupKartentausch.this, PopupCard6.class));
                 } else {
-                    for (ImageView imageView : cardsToChange) {
-                        changeCard(imageView);
-                        //cardsToChange.get(i).setVisibility(View.INVISIBLE);
-                    }
                     synchronized (Playground.playThread) {
                         Playground.playThread.notify();
                     }
