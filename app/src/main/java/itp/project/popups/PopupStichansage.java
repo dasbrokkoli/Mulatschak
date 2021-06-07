@@ -58,6 +58,9 @@ public class PopupStichansage extends AppCompatActivity {
                 popup();
             } else {
                 if (player1 + currentStiche > currentStiche) {
+                    if (currentStiche > 5) {
+                        break;
+                    }
                     currentStiche++;
                     indexOfHighestStich = 0;
                     player1--;
@@ -69,6 +72,9 @@ public class PopupStichansage extends AppCompatActivity {
                 popup();
             } else {
                 if (player2 + currentStiche > currentStiche) {
+                    if (currentStiche > 5) {
+                        break;
+                    }
                     currentStiche++;
                     indexOfHighestStich = 1;
                     player2--;
@@ -80,6 +86,9 @@ public class PopupStichansage extends AppCompatActivity {
                 popup();
             } else {
                 if (player3 + currentStiche > currentStiche) {
+                    if (currentStiche > 5) {
+                        break;
+                    }
                     currentStiche++;
                     indexOfHighestStich = 2;
                     player3--;
@@ -91,6 +100,9 @@ public class PopupStichansage extends AppCompatActivity {
                 popup();
             } else {
                 if (player4 + currentStiche > currentStiche) {
+                    if (currentStiche > 5) {
+                        break;
+                    }
                     currentStiche++;
                     indexOfHighestStich = 3;
                     player4--;

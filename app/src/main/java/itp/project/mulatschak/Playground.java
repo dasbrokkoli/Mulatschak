@@ -20,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.muddzdev.styleabletoast.StyleableToast;
+import itp.project.enums.Colors;
 import itp.project.exceptions.WinException;
 import itp.project.popups.*;
 
@@ -56,7 +57,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
     //fuer play
     final Lock lock = new ReentrantLock();
     final Condition spielerSpielt = lock.newCondition();
-    public long TIME_TO_WAIT_AFTER_ROUND = 3000;
+    public long TIME_TO_WAIT_AFTER_ROUND = 30000;
     ImageView anim2, anim3, anim4;
     //Gemachte Stiche Popup
     Button gemachteStiche;
@@ -377,8 +378,7 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
         }
         move = (ImageView) v;
         try {
-            if (getCardFromView(move).getColor() != cardsOnFloor.get(firstPlayerIndex).getColor()) {
-                // && getCardFromView(move).getColor() != Algorithm.getAtout() && getCardFromView(move).getColor() != Colors.WELI
+            if (getCardFromView(move).getColor() != cardsOnFloor.get(firstPlayerIndex).getColor() && getCardFromView(move).getColor() != Algorithm.getAtout() && getCardFromView(move).getColor() != Colors.WELI) {
                 for (Card card : getPlayer(1).getHoldingCards()) {
                     if (playerPlayedCards.contains(card)) continue;
                     if (card.getColor() == cardsOnFloor.get(firstPlayerIndex).getColor()) {
@@ -489,6 +489,10 @@ public class Playground extends AppCompatActivity implements View.OnTouchListene
                 rotateBeginner();
             }
             try {
+                Thread current = Thread.currentThread();
+                runOnUiThread(() -> findViewById(R.id.playgroundConstraintLayout).setOnClickListener(view -> {
+                    current.interrupt();
+                }));
                 Thread.sleep(TIME_TO_WAIT_AFTER_ROUND);
             } catch (InterruptedException | NullPointerException e) {
                 e.printStackTrace();
